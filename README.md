@@ -11,9 +11,9 @@ This repository contains work-in-progress for describing a mechanism how to perf
 
 ## Example Use
 
-- Generate self-signed certificate and publish in metadata as authn/authz
-- Fetch all clients or servers from metadata, add all authn certificates to list of trusted certificate issuers.
+- Generate self-signed certificate and publish in metadata as issuer. One could also use any webtrust CA and publish the root CA as issuer.
+- Fetch all clients or servers from metadata, add all issuers certificates to list of trusted certificate issuers.
 - Authenticate connections using trusted certificate issuers.
-- Authorized connections via authz data.
+- Validate authenticated certificates using certificate pinning directives (RFC 7469).
 
-Servers can authenticate connections when terminating TLS and transfer the client certificate to the server application who can authorize the connection based on authz information (certificate pinning).
+Servers can authenticate connections when terminating TLS and transfer the client certificate to the server application who can validate the connection based on certificate pinning information.
