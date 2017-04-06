@@ -12,10 +12,10 @@ properties:
 definitions:
   entity:
     type: object
+    additionalProperties: false
     required:
       - entity_id
       - authn
-      - endpoints
     properties:
       entity_id:
         type: string
@@ -24,12 +24,17 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/authn_entry'
-      endpoints:
+      servers:
+        type: array
+        items:
+          $ref: '#/definitions/endpoint'
+      clients:
         type: array
         items:
           $ref: '#/definitions/endpoint'
   endpoint:
     type: object
+    additionalProperties: false
     required:
       - fqdn
       - authz
@@ -37,23 +42,24 @@ definitions:
       fqdn:
         title: Fully Qualified Domain Name of endpoint
         type: string
-    authn:
-      title: Endpoint authentication entries
-      type: array
-      items:
-        $ref: '#/definitions/authn_entry'
-    authz:
-      title: Endpoint authorization entries
-      type: array
-      items:
-        $ref: '#/definitions/authz_entry'
-    server_uri:
-      title: Endpoint server URI
-      type: string
-      format: uri
+      authn:
+        title: Endpoint authentication entries
+        type: array
+        items:
+          $ref: '#/definitions/authn_entry'
+      authz:
+        title: Endpoint authorization entries
+        type: array
+        items:
+          $ref: '#/definitions/authz_entry'
+      uri:
+        title: Endpoint URI
+        type: string
+        format: uri
   authn_entry:
     title: Authentication entry
     type: object
+    additionalProperties: false
     properties:
       x509certificate:
         title: X.509 Certificate (PEM)
@@ -61,8 +67,9 @@ definitions:
   authz_entry:
     title: Authorization entry
     type: object
+    additionalProperties: false
     properties:
-      certificate_sha256:
+      x509certificate_sha256:
         description: SHA-256 fingerprint of entity certificate
         type: string
         pattern: "^[0-9a-f]{64}$"
