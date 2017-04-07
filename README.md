@@ -8,6 +8,9 @@ This repository contains work-in-progress for describing a mechanism how to perf
 - Authorization via certificate pinning (implicit whitelist)
 - Server endpoint discovery via metadata
 
+## Metadata Publication
+
+- Metadata is signed by the federation using JSON Web Signature (RFC 7515) and published via HTTPS.
 
 ## Example Use
 
