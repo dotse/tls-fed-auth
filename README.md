@@ -12,6 +12,12 @@ This repository contains work-in-progress for describing a mechanism how to perf
 
 - Metadata is signed by the federation using JSON Web Signature (RFC 7515) and published via HTTPS.
 
+### Mandatory Signature Headers
+
+- alg
+- iat
+- exp
+
 ## Example Use
 
 - Generate self-signed certificate and publish in metadata as issuer. One could also use any webtrust CA and publish the root CA as issuer.
