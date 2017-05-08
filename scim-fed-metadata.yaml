@@ -51,8 +51,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/pin_directive'
-      uri:
-        title: Endpoint URI
+      base_uri:
+        title: Endpoint base URI
         type: string
         format: uri
   cert_issers:

@@ -10,7 +10,7 @@
 			"servers": [
 				{
 					"name": "scim.example.com",
-					"uri": "https://scim.example.com/",
+					"base_uri": "https://scim.example.com/",
 					"pins": [
 						{
 							"name": "sha256",
