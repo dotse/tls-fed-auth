@@ -1,0 +1,12 @@
+{
+	"keys": [
+		{
+			"kid": "metadata_signer",
+			"crv": "P-256",
+			"d": "m0UZNxHwHLJGV5p4BXVn4F3Ynr6doSWM5Lrgy2trnAM",
+			"kty": "EC",
+			"x": "D8XKCkm65q5nfLOPZhB6bxW1EGmrVBS8ghNktoSCBEE",
+			"y": "QGSJGtd9EMwqgCE8O4yulEs-y7lgJhSZljCNBcB96oI"
+		}
+	]
+}
