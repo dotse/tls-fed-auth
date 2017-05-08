@@ -18,6 +18,14 @@
         [author.address]
         email="jakob@kirei.se"
 
+    [[author]]
+    initials="P."
+    surname="Girgensohn"
+    fullname="Palle Girgensohn"
+    organization="Ping Pong BA"
+        [author.address]
+        email="girgen@pingpong.net"
+
 %%%
 
 .# Abstract
