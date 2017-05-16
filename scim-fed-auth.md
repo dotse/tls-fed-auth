@@ -64,9 +64,20 @@ Metadata contains a list of entities that wish to communicate. Each entity has t
 
 Servers and clients has a name (for identification) and a list of public key pins used to limit valid endpoint certificates. Public key pinning syntax and semantics is similar to [@RFC7469]. Server endpoints also include a base URI to connect to the endpoint.
 
+## Metadata Schema
+
+A metadata JSON schema (in YAML format) can be found at [https://github.com/kirei/scim-fed-auth](https://github.com/kirei/scim-fed-auth/blob/master/scim-fed-metadata.yaml).
+
+
 ## Metadata Signing
 
-Metadata is in JSON format, signed with JWS [@RFC7515] and published using JWS JSON Serialization.
+Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization.
+
+The following metadata signature headers are mandatory:
+
+- alg
+- iat
+- exp
 
 
 # Usage Examples
