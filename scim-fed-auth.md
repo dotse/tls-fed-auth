@@ -6,7 +6,6 @@
     docName = "draft-schlyter-scim-fed-authn-00"
     ipr= "trust200902"
     area = "Internet"
-    workgroup = "DNSOP"
  
     date = 2017-05-04T00:00:00Z
  
