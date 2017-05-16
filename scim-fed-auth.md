@@ -73,11 +73,12 @@ A metadata JSON schema (in YAML format) can be found at [https://github.com/kire
 
 Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization.
 
-The following metadata signature headers are mandatory:
+The following metadata signature protected headers are REQUIRED:
 
-- alg
-- iat
-- exp
+- alg (_algorithm_)
+- exp (_expiration time_)
+
+It is RECOMMENDED that metadata signatures are created wih algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
 
 
 # Usage Examples
