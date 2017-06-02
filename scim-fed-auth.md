@@ -21,7 +21,7 @@
     initials="P."
     surname="Girgensohn"
     fullname="Palle Girgensohn"
-    organization="Ping Pong BA"
+    organization="Ping Pong AB"
         [author.address]
         email="girgen@pingpong.net"
 
