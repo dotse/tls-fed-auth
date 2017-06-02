@@ -3,11 +3,11 @@
     Title = "SCIM Federated Authentication"
     abbrev = "SCIM Federated AuthN"
     category = "std"
-    docName = "draft-schlyter-scim-fed-authn-00"
+    docName = "draft-schlyter-scim-fed-authn-pre00"
     ipr= "trust200902"
     area = "Internet"
  
-    date = 2017-05-04T00:00:00Z
+    date = 2017-06-01T00:00:00Z
  
     [[author]]
     initials="J."
