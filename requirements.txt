@@ -1,5 +1,4 @@
 jsonschema
-jwkest
 pycryptodomex
 pyjwkest
 PyYAML
