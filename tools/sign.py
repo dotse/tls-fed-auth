@@ -6,8 +6,8 @@ import argparse
 import logging
 import json
 import time
-from jwkest.jwk import key_from_jwk_dict
-from jwkest.jws import JWS
+from cryptojwt.jwk import key_from_jwk_dict
+from cryptojwt.jws import JWS
 
 
 def main():

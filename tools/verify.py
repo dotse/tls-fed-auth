@@ -5,9 +5,9 @@
 import argparse
 import logging
 import json
-from jwkest import b64d, BadSignature
-from jwkest.jwk import key_from_jwk_dict
-from jwkest.jws import JWS
+from cryptojwt import b64d
+from cryptojwt.jwk import key_from_jwk_dict
+from cryptojwt.jws import JWS, BadSignature
 
 
 def extract_headers(data: str) -> dict:
