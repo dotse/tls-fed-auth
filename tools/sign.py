@@ -3,11 +3,12 @@
 """Metadata signer"""
 
 import argparse
-import logging
 import json
+import logging
 import time
-from cryptojwt.jwk import key_from_jwk_dict
-from cryptojwt.jws import JWS
+
+from cryptojwt.jws.jws import JWS
+from cryptojwt.jwx import key_from_jwk_dict
 
 
 def main():

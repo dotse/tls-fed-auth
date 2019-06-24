@@ -3,11 +3,13 @@
 """Metadata verifier"""
 
 import argparse
-import logging
 import json
-from cryptojwt import b64d
-from cryptojwt.jwk import key_from_jwk_dict
-from cryptojwt.jws import JWS, BadSignature
+import logging
+
+from cryptojwt.exception import BadSignature
+from cryptojwt.jws.jws import JWS
+from cryptojwt.jwx import key_from_jwk_dict
+from cryptojwt.utils import b64d
 
 
 def extract_headers(data: str) -> dict:

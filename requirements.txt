@@ -1,4 +1,3 @@
+cryptojwt
 jsonschema
-pycryptodomex
-pyjwkest
 PyYAML
