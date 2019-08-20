@@ -28,7 +28,7 @@ definitions:
         title: Entity certificate issuers
         type: array
         items:
-          $ref: '#/definitions/cert_issers'
+          $ref: '#/definitions/cert_issuers'
       servers:
         type: array
         items:
@@ -55,7 +55,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/pin_directive'
-  cert_issers:
+  cert_issuers:
     title: Certificate issuers
     type: object
     additionalProperties: false
