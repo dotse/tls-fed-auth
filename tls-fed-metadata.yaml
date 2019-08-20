@@ -18,8 +18,9 @@ definitions:
       - issuers
     properties:
       entity_id:
-        title: Entity identifier (e.g. domain name)
+        title: Entity identifier
         type: string
+        format: uri
       organization:
         title: Name of entity organization
         type: string
