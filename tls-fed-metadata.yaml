@@ -46,6 +46,11 @@ definitions:
       description:
         title: Endpoint description
         type: string
+      tags:
+        title: Endpoint tags
+        type: array
+        items:
+          type: string
       base_uri:
         title: Endpoint base URI
         type: string

@@ -16,6 +16,9 @@
 							"name": "sha256",
 							"value": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
 						}
+					],
+					"tags": [
+						"scim"
 					]
 				}
 			],

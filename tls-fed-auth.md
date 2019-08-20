@@ -61,7 +61,7 @@ Upon connection, endpoints validate the peer's certificate against the published
 
 Metadata contains a list of entities that may be used for communication within the federation. Each entity has the following properties:
 
-- an entity identifier (usually a domain name)
+- an entity identifier
 - a list of certificate issuers that are allowed to issue certificates for the entity's endpoints
 - a list of the entity's servers and clients
 
@@ -93,9 +93,9 @@ A certificate is issued for the SCIM client and the issuer published in the meta
 
 When the SCIM client wants to connect to a remote server, the following steps need to be taken:
 
-1. Find server base URI in metadata.
+1. Find the entity for the remote entity_id.
 2. Populate list of trusted CAs using the entity's published issuers.
-3. Connect to the server URI.
+3. Connect to the server URI (possibly selected by endpoint tag).
 4. Validate the received server certificate using the entity's published pins.
 5. Commence SCIM transactions.
 
