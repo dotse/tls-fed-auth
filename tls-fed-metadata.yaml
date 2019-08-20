@@ -12,12 +12,16 @@ properties:
 definitions:
   entity:
     type: object
-    additionalProperties: false
+    additionalProperties: true
     required:
       - entity_id
       - issuers
     properties:
       entity_id:
+        title: Entity identifier (e.g. domain name)
+        type: string
+      organization:
+        title: Name of entity organization
         type: string
       issuers:
         title: Entity certificate issuers
