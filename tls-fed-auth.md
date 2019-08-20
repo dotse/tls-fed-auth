@@ -1,13 +1,18 @@
 %%%
 
-    Title = "TLS Federated Authentication"
+    title = "TLS Federated Authentication"
     abbrev = "SCIM Federated AuthN"
     category = "std"
-    docName = "draft-schlyter-scim-fed-authn-pre00"
-    ipr= "trust200902"
+    ipr = "trust200902"
     area = "Internet"
- 
-    date = 2017-06-01T00:00:00Z
+
+    [seriesInfo]
+    status = "informational"
+    name = "Internet-Draft"
+    value = "draft-tls-fed-auth-00"
+    stream = "IETF"
+
+    date = 2018-08-20T00:00:00Z
  
     [[author]]
     initials="J."
