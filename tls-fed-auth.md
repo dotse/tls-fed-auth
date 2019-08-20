@@ -1,6 +1,6 @@
 %%%
 
-    Title = "SCIM Federated Authentication"
+    Title = "TLS Federated Authentication"
     abbrev = "SCIM Federated AuthN"
     category = "std"
     docName = "draft-schlyter-scim-fed-authn-pre00"
@@ -18,18 +18,18 @@
         email="jakob@kirei.se"
 
     [[author]]
-    initials="P."
-    surname="Girgensohn"
-    fullname="Palle Girgensohn"
-    organization="Ping Pong AB"
+    initials="S."
+    surname="Halén"
+    fullname="Stefan Halén"
+    organization="Internetstiftelsen i Sverige"
         [author.address]
-        email="girgen@pingpong.net"
+        email="stefan.halen@iis.se"
 
 %%%
 
 .# Abstract
 
-This document describes a mechanism how to federate authentication SCIM [@RFC7642].
+This document describes a mechanism how to federate TLS authentication [@RFC7642].
 
 {mainmatter}
 
@@ -65,7 +65,7 @@ Servers and clients has a name (for identification) and a list of public key pin
 
 ## Metadata Schema
 
-A metadata JSON schema (in YAML format) can be found at [https://github.com/kirei/scim-fed-auth](https://github.com/kirei/scim-fed-auth/blob/master/scim-fed-metadata.yaml).
+A metadata JSON schema (in YAML format) can be found at [https://github.com/kirei/tls-fed-auth](https://github.com/kirei/tls-fed-auth/blob/master/tls-fed-metadata.yaml).
 
 
 ## Metadata Signing
