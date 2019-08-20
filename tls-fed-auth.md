@@ -50,18 +50,18 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Authentication
 
-All sessions are authenticated via mutual (client & server) TLS authentication. Trust is limited to a set of certificate issuers published in the federation metadata and further constrained by certificate public key pins for each endpoint (also published in metadata).
+All sessions are authenticated via mutual (client and server) TLS authentication. Trust is limited to a set of certificate issuers published in the federation metadata and further constrained by certificate public key pins for each endpoint (also published in metadata).
 
-Upon connection, endpoints validate the peer's certificate against the published certificate issuers as well as the matching public key pin. If a TLS session is terminated separately from the application (e.g., when using a a load balancer), the TLS session termination point can validate the certificate issuer and defer public key pin matching the to application (given that the peer certificate is transferred to the application).
+Upon connection, endpoints validate the peer's certificate against the published certificate issuers as well as the matching public key pin. If a TLS session is terminated separately from the application (e.g., when using a front-end proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching the to application given that the peer certificate is transferred to the application (e.g. via a HTTP header).
 
 
-# Metadata
+# Federation Metadata
 
 ## Metadata Contents
 
 Metadata contains a list of entities that may be used for communication within the federation. Each entity has the following properties:
 
-- an identity (usually a domain name)
+- an entity identifier (usually a domain name)
 - a list of certificate issuers that are allowed to issue certificates for the entity's endpoints
 - a list of the entity's servers and clients
 

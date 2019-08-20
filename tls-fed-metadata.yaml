@@ -34,7 +34,7 @@ definitions:
           $ref: '#/definitions/endpoint'
   endpoint:
     type: object
-    additionalProperties: false
+    additionalProperties: true
     required:
       - pins
     properties:
