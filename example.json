@@ -9,7 +9,7 @@
 			],
 			"servers": [
 				{
-					"name": "scim.example.com",
+					"description": "SCIM Server 1",
 					"base_uri": "https://scim.example.com/",
 					"pins": [
 						{
@@ -21,7 +21,7 @@
 			],
 			"clients": [
 				{
-					"name": "xyzzy.example.com",
+					"description": "SCIM Client 1",
 					"pins": [
 						{
 							"name": "sha256",

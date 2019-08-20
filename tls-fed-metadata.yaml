@@ -43,23 +43,18 @@ definitions:
     required:
       - pins
     properties:
-      name:
-        title: Endpoint name
+      description:
+        title: Endpoint description
         type: string
-      issuers:
-        title: Endpoint certificate issuers
-        type: array
-        items:
-          $ref: '#/definitions/cert_issers'
+      base_uri:
+        title: Endpoint base URI
+        type: string
+        format: uri
       pins:
         title: Certificate pin set
         type: array
         items:
           $ref: '#/definitions/pin_directive'
-      base_uri:
-        title: Endpoint base URI
-        type: string
-        format: uri
   cert_issers:
     title: Certificate issuers
     type: object
