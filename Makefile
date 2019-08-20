@@ -1,4 +1,4 @@
-DRAFT=		scim-fed-auth
+DRAFT=		tls-fed-auth
 
 # https://github.com/miekg/mmark
 MMARK=		mmark
@@ -34,4 +34,4 @@ clean:
 	rm -f $(XML) $(TXT) $(HTML)
 
 test:
-	python3 schemacheck.py --input example.json scim-fed-metadata.yaml
+	python3 schemacheck.py --input example.json tls-fed-metadata.yaml

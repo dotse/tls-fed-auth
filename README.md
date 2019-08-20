@@ -1,6 +1,6 @@
-# Federated SCIM Authentication
+# Federated TLS Authentication
 
-This repository contains work-in-progress for describing a mechanism how to perform federate authentication for SCIM.
+This repository contains work-in-progress for describing a mechanism how to perform federate authentication for TLS.
 
 ## Requirements
 
