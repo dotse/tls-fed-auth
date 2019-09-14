@@ -68,15 +68,11 @@ Upon connection, endpoints validate the peer's certificate against the published
 
 # Federation Metadata
 
-## Metadata Contents
+Entities has an organization claim (for identification). Servers and clients have a list of public key pins used to limit valid endpoint certificates. Public key pinning syntax and semantics is similar to [@RFC7469]. Server endpoints also include a base URI to connect to the endpoint.
 
-Metadata contains a list of entities that may be used for communication within the federation. Each entity has the following properties:
+The following is a non-normative example of a metadata statement.
 
-- an entity identifier
-- a list of certificate issuers that are allowed to issue certificates for the entity's endpoints
-- a list of the entity's servers and clients
-
-Servers and clients has a name (for identification) and a list of public key pins used to limit valid endpoint certificates. Public key pinning syntax and semantics is similar to [@RFC7469]. Server endpoints also include a base URI to connect to the endpoint.
+<{{example.json}}
 
 
 ## Metadata Schema
