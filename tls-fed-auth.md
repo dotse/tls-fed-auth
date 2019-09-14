@@ -52,6 +52,13 @@ Authentication is performed with Mutual TLS Authentication (mTLS) [@!RFC8446]. B
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [@!RFC2119].
 
 
+# Federation Chain of Trust
+
+The members of the federation upload their metadata including issuer certificates to the federation. The metadata registrar validates the issuer of metadata and aggregates and signs the metadata with its private key. By verifying the metadata signature, federation members trust the metadata content.
+
+The root of the chain of trust is the metadata signature and the trust anchor is the federation's public key certificate. The certificate needs to be securely distributed, there MUST be an out-of-band function to verify the certificate.
+
+
 # Authentication
 
 All sessions are authenticated via mutual (client and server) TLS authentication. Trust is limited to a set of certificate issuers published in the federation metadata and further constrained by certificate public key pins for each endpoint (also published in metadata).
