@@ -26,9 +26,10 @@
     initials="S."
     surname="Halén"
     fullname="Stefan Halén"
-    organization="Internetstiftelsen i Sverige"
+    organization="The Swedish Internet Foundation"
         [author.address]
-        email="stefan.halen@iis.se"
+        email="stefan.halen@internetstiftelsen.se"
+
 %%%
 
 .# Abstract
