@@ -75,6 +75,27 @@ The following is a non-normative example of a metadata statement.
 <{{example.json}}
 
 
+## entities
+
+Metadata contains a list of entities that may be used for communication within the federation. Each entity has the following properties:
+
+*   entity_id REQUIRED
+
+    URI that identifies the entity. MUST be globally unique.
+
+*   organization OPTIONAL
+
+    Name identifying the organization that the entity’s metadata represents
+
+*   issuers REQUIRED
+
+    A list of certificate issuers that are allowed to issue certificates for the entity's endpoints
+
+*   x509certificate REQUIRED
+
+    PEM-encoded certificate converted to an one-line format where line feed is substituted with \n.
+
+
 ## Metadata Schema
 
 A metadata JSON schema (in YAML format) can be found at [https://github.com/kirei/tls-fed-auth](https://github.com/kirei/tls-fed-auth/blob/master/tls-fed-metadata.yaml).
