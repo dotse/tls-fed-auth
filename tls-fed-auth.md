@@ -176,6 +176,21 @@ The following metadata signature protected headers are REQUIRED:
 
 # Usage Examples
 
+The following is a non-normative example of an server and client setup.
+
+<{{usage-example.ascii-art}}
+
+{type="A"}
+1.  Entities collects metadata from the federation metadata endpoint
+2.  The client pins the server's public key pins
+3.  The reverse proxy trust anchor is setup with the clients certificate
+    issuers
+4.  The client establish a connection to the server using the base_uri from metadata
+5.  The reverse proxy forwards the certificate to the application
+6.  The application converts the certificate to a public key pin and checks
+    the metadata for the pin and extracts the entity_id that will be used for authorization.
+
+
 ## SCIM Client
 
 A certificate is issued for the SCIM client and the issuer published in the metadata together with client's name and certificate public key pin.
