@@ -96,6 +96,35 @@ Metadata contains a list of entities that may be used for communication within t
     PEM-encoded certificate converted to an one-line format where line feed is substituted with \n.
 
 
+### servers
+
+A list of the entity's servers.
+
+*   description OPTIONAL
+
+    A human readable text describing the server.
+
+*   base_uri REQUIRED
+
+    Base URL of the server.
+
+*   pins REQUIRED
+
+    A List of Public Key Pins. Each Pin has the following properties:
+
+    *   name REQUIRED
+
+        The name of the cryptographic hash algorithm. The only allowed value at this time is "sha256".
+
+    *   value REQUIRED
+
+        Base64 encoded Subject Public Key Information (SPKI) fingerprint.
+
+*   tags OPTIONAL
+
+    A list of strings that describe the functionality of the server. To discover interoperability the client SHOULD do a conditional comparison of the tags. If an entity has multiple servers that are compatible, the client SHOULD arbitrarily connect to one of the servers. If connection to a server fails, the client SHOULD try with the next server. If the claim is missing or is empty, there MUST be an out-of-band agreement of the servers funtionality
+
+
 ## Metadata Schema
 
 A metadata JSON schema (in YAML format) can be found at [https://github.com/kirei/tls-fed-auth](https://github.com/kirei/tls-fed-auth/blob/master/tls-fed-metadata.yaml).
