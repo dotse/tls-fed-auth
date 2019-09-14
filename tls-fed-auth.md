@@ -205,16 +205,16 @@ When the client wants to connect to a remote server, the following steps need to
 5. Commence transactions
 
 
-## SCIM Server
+## Server
 
-A certificate is issued for the SCIM server and the issuer published in the metadata together with server's name and certificate public key pin.
+A certificate is issued for the server and the issuer published in the metadata together with server's name and certificate public key pin.
 
-When the SCIM server receives a connection from a a remote client, the following steps need to be taken:
+When the server receives a connection from a a remote client, the following steps need to be taken:
 
 1. Populate list of trusted CAs using all known entities' published issuers.
 2. The server should require TLS client certificate authentication.
 3. One a connection has been accepted, validate the received client certificate using the client's published pins.
-4. Commence SCIM transactions.
+4. Commence transactions.
 
 
 <!--
