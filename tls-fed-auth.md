@@ -191,17 +191,19 @@ The following is a non-normative example of an server and client setup.
     the metadata for the pin and extracts the entity_id that will be used for authorization.
 
 
-## SCIM Client
+## Client
 
-A certificate is issued for the SCIM client and the issuer published in the metadata together with client's name and certificate public key pin.
+A certificate is issued to the client and the issuer published in the metadata together with the client's certificate public key pins
 
-When the SCIM client wants to connect to a remote server, the following steps need to be taken:
+When the client wants to connect to a remote server, the following steps need to be taken:
 
-1. Find the entity for the remote entity_id.
-2. Populate list of trusted CAs using the entity's published issuers.
+1. Find the entity for the remote entity_id. Check that the entity statement is issued by the correct federation by examining the iss claim.
+2. Pin the entity's published pins or populate list of trusted issuer using the entity's published issuers.
 3. Connect to the server URI (possibly selected by endpoint tag).
-4. Validate the received server certificate using the entity's published pins.
-5. Commence SCIM transactions.
+4. If not pinning, validate the received server certificate using the
+   entity's published pins.
+5. Commence transactions
+
 
 ## SCIM Server
 
