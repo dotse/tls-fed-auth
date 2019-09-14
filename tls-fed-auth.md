@@ -153,14 +153,25 @@ A metadata JSON schema (in YAML format) can be found at [https://github.com/kire
 
 ## Metadata Signing
 
-Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization.
+Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization. It is RECOMMENDED that metadata signatures are created wih algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
 
 The following metadata signature protected headers are REQUIRED:
 
-- alg (_algorithm_)
-- exp (_expiration time_)
+*   alg (_algorithm_) REQUIRED
 
-It is RECOMMENDED that metadata signatures are created wih algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
+    Identifies the algorithm used to generate the JWT signature [@RFC7515] section 4.1.1.
+
+*   exp (_expiration time_) REQUIRED
+
+    Identifies the expiration time on and after which the signature and metadata are no longer valid. The expiration time of the metadata MUST be set to the value of exp. The value must be a JSON number representing seconds that have elapsed since 1970-01-01T00:00:00Z.
+
+*   iss (_issuer_) REQUIRED
+
+    URI that identifies the publisher of metadata. The issuer claim MUST be used to prevent conflicts of entities of the same name from different federations.
+
+*   kid (_key ID_) REQUIRED
+
+    The key ID is used to identify the signing key in the key set used to sign the JWT.
 
 
 # Usage Examples
