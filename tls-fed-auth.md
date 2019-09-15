@@ -52,6 +52,13 @@ Authentication is performed with Mutual TLS Authentication (mTLS) [@!RFC8446]. B
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [@!RFC2119].
 
 
+# Federation Chain of Trust
+
+The members of the federation upload their metadata including issuer certificates to the federation. The metadata registrar validates the issuer of metadata and aggregates and signs the metadata with its private key. By verifying the metadata signature, federation members trust the metadata content.
+
+The root of the chain of trust is the metadata signature and the trust anchor is the federation's public key certificate. The certificate needs to be securely distributed, there MUST be an out-of-band function to verify the certificate.
+
+
 # Authentication
 
 All sessions are authenticated via mutual (client and server) TLS authentication. Trust is limited to a set of certificate issuers published in the federation metadata and further constrained by certificate public key pins for each endpoint (also published in metadata).
@@ -61,15 +68,82 @@ Upon connection, endpoints validate the peer's certificate against the published
 
 # Federation Metadata
 
-## Metadata Contents
+Entities has an organization claim (for identification). Servers and clients have a list of public key pins used to limit valid endpoint certificates. Public key pinning syntax and semantics is similar to [@RFC7469]. Server endpoints also include a base URI to connect to the endpoint.
+
+The following is a non-normative example of a metadata statement.
+
+<{{example.json}}
+
+
+## entities
 
 Metadata contains a list of entities that may be used for communication within the federation. Each entity has the following properties:
 
-- an entity identifier
-- a list of certificate issuers that are allowed to issue certificates for the entity's endpoints
-- a list of the entity's servers and clients
+*   entity_id REQUIRED
 
-Servers and clients has a name (for identification) and a list of public key pins used to limit valid endpoint certificates. Public key pinning syntax and semantics is similar to [@RFC7469]. Server endpoints also include a base URI to connect to the endpoint.
+    URI that identifies the entity. MUST be globally unique.
+
+*   organization OPTIONAL
+
+    Name identifying the organization that the entity’s metadata represents
+
+*   issuers REQUIRED
+
+    A list of certificate issuers that are allowed to issue certificates for the entity's endpoints
+
+*   x509certificate REQUIRED
+
+    PEM-encoded certificate converted to an one-line format where line feed is substituted with \n.
+
+
+### servers
+
+A list of the entity's servers.
+
+*   description OPTIONAL
+
+    A human readable text describing the server.
+
+*   base_uri REQUIRED
+
+    Base URL of the server.
+
+*   pins REQUIRED
+
+    A List of Public Key Pins. Each Pin has the following properties:
+
+    *   name REQUIRED
+
+        The name of the cryptographic hash algorithm. The only allowed value at this time is "sha256".
+
+    *   value REQUIRED
+
+        Base64 encoded Subject Public Key Information (SPKI) fingerprint.
+
+*   tags OPTIONAL
+
+    A list of strings that describe the functionality of the server. To discover interoperability the client SHOULD do a conditional comparison of the tags. If an entity has multiple servers that are compatible, the client SHOULD arbitrarily connect to one of the servers. If connection to a server fails, the client SHOULD try with the next server. If the claim is missing or is empty, there MUST be an out-of-band agreement of the servers funtionality
+
+
+### clients  
+
+A list of the entity's clients.
+
+*   description OPTIONAL
+
+    A human readable text describing the client.
+
+*   pins REQUIRED
+
+    A List of Public Key Pins. Each Pin has the following properties:
+
+    *   name REQUIRED
+
+         The name of the cryptographic hash algorithm. The only allowed value at this time is "sha256".
+
+    *   value REQUIRED
+
+        Base64 encoded Subject Public Key Information (SPKI) fingerprint.
 
 
 ## Metadata Schema
@@ -79,40 +153,68 @@ A metadata JSON schema (in YAML format) can be found at [https://github.com/kire
 
 ## Metadata Signing
 
-Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization.
+Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization. It is RECOMMENDED that metadata signatures are created wih algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
 
 The following metadata signature protected headers are REQUIRED:
 
-- alg (_algorithm_)
-- exp (_expiration time_)
+*   alg (_algorithm_) REQUIRED
 
-It is RECOMMENDED that metadata signatures are created wih algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
+    Identifies the algorithm used to generate the JWT signature [@RFC7515] section 4.1.1.
+
+*   exp (_expiration time_) REQUIRED
+
+    Identifies the expiration time on and after which the signature and metadata are no longer valid. The expiration time of the metadata MUST be set to the value of exp. The value must be a JSON number representing seconds that have elapsed since 1970-01-01T00:00:00Z.
+
+*   iss (_issuer_) REQUIRED
+
+    URI that identifies the publisher of metadata. The issuer claim MUST be used to prevent conflicts of entities of the same name from different federations.
+
+*   kid (_key ID_) REQUIRED
+
+    The key ID is used to identify the signing key in the key set used to sign the JWT.
 
 
 # Usage Examples
 
-## SCIM Client
+The following is a non-normative example of an server and client setup.
 
-A certificate is issued for the SCIM client and the issuer published in the metadata together with client's name and certificate public key pin.
+<{{usage-example.ascii-art}}
 
-When the SCIM client wants to connect to a remote server, the following steps need to be taken:
+{type="A"}
+1.  Entities collects metadata from the federation metadata endpoint
+2.  The client pins the server's public key pins
+3.  The reverse proxy trust anchor is setup with the clients certificate
+    issuers
+4.  The client establish a connection to the server using the base_uri from metadata
+5.  The reverse proxy forwards the certificate to the application
+6.  The application converts the certificate to a public key pin and checks
+    the metadata for the pin and extracts the entity_id that will be used for authorization.
 
-1. Find the entity for the remote entity_id.
-2. Populate list of trusted CAs using the entity's published issuers.
+
+## Client
+
+A certificate is issued to the client and the issuer published in the metadata together with the client's certificate public key pins
+
+When the client wants to connect to a remote server, the following steps need to be taken:
+
+1. Find the entity for the remote entity_id. Check that the entity statement is issued by the correct federation by examining the iss claim.
+2. Pin the entity's published pins or populate list of trusted issuer using the entity's published issuers.
 3. Connect to the server URI (possibly selected by endpoint tag).
-4. Validate the received server certificate using the entity's published pins.
-5. Commence SCIM transactions.
+4. If not pinning, validate the received server certificate using the
+   entity's published pins.
+5. Commence transactions
 
-## SCIM Server
 
-A certificate is issued for the SCIM server and the issuer published in the metadata together with server's name and certificate public key pin.
+## Server
 
-When the SCIM server receives a connection from a a remote client, the following steps need to be taken:
+A certificate is issued for the server and the issuer published in the metadata together with server's name and certificate public key pin.
+
+When the server receives a connection from a a remote client, the following steps need to be taken:
 
 1. Populate list of trusted CAs using all known entities' published issuers.
 2. The server should require TLS client certificate authentication.
 3. One a connection has been accepted, validate the received client certificate using the client's published pins.
-4. Commence SCIM transactions.
+4. Commence transactions.
 
 
 <!--
