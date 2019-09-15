@@ -1,7 +1,7 @@
 %%%
 
-    title = "TLS Federated Authentication"
-    abbrev = "SCIM Federated AuthN"
+    title = "Federated TLS Authentication"
+    abbrev = "Federated TLS AuthN"
     category = "std"
     ipr = "trust200902"
     area = "Internet"
@@ -9,7 +9,7 @@
     [seriesInfo]
     status = "informational"
     name = "Internet-Draft"
-    value = "draft-tls-fed-auth-00"
+    value = "draft-fed-tls-auth-00"
     stream = "IETF"
 
     date = 2018-08-20T00:00:00Z
@@ -26,9 +26,9 @@
     initials="S."
     surname="Halén"
     fullname="Stefan Halén"
-    organization="Internetstiftelsen i Sverige"
+    organization="The Swedish Internet Foundation"
         [author.address]
-        email="stefan.halen@iis.se"
+        email="stefan.halen@internetstiftelsen.se"
 
 %%%
 
