@@ -179,7 +179,7 @@ The following is a non-normative example of an server and client setup.
 
 <{{usage-example.ascii-art}}
 
-{type="A"}
+{style="letters"}
 1.  Entities collects metadata from the federation metadata endpoint
 2.  The client pins the server's public key pins
 3.  The reverse proxy trust anchor is setup with the clients certificate
