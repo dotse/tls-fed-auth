@@ -62,7 +62,7 @@ The root of the chain of trust is the metadata signature and the trust anchor is
 
 All sessions are authenticated via mutual (client and server) TLS authentication. Trust is limited to a set of certificate issuers published in the federation metadata and further constrained by certificate public key pins for each endpoint (also published in metadata).
 
-Upon connection, endpoints validate the peer's certificate against the published certificate issuers as well as the matching public key pin. If a TLS session is terminated separately from the application (e.g., when using a front-end proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching the to application given that the peer certificate is transferred to the application (e.g. via a HTTP header).
+Upon connection, endpoints validate the peer's certificate against the published certificate issuers as well as the matching public key pin. If a TLS session is terminated separately from the application (e.g., when using a reverse proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching the to application given that the peer certificate is transferred to the application (e.g. via a HTTP header).
 
 
 # Federation Metadata
@@ -74,75 +74,71 @@ The following is a non-normative example of a metadata statement.
 <{{example.json}}
 
 
-## entities
+## Entities
 
 Metadata contains a list of entities that may be used for communication within the federation. Each entity has the following properties:
 
-*   entity_id REQUIRED
+-   entity_id (REQUIRED)
 
     URI that identifies the entity. MUST be globally unique.
 
-*   organization OPTIONAL
+    Example: `https://example.com`
 
-    Name identifying the organization that the entity’s metadata represents
+-   organization (OPTIONAL)
 
-*   issuers REQUIRED
+    Name identifying the organization that the entity’s metadata represents.
 
-    A list of certificate issuers that are allowed to issue certificates for the entity's endpoints
+    Example: `Example Org.`
 
-*   x509certificate REQUIRED
+-   issuers (REQUIRED)
 
-    PEM-encoded certificate converted to an one-line format where line feed is substituted with \n.
+    A list of certificate issuers that are allowed to issue certificates for the entity's endpoints. For each issuer, the issuer's root CA certificate is included in the x509certificate property (PEM-encoded).
+
+-   servers (OPTIONAL)
+
+    List of the entity's servers (syntax described in next section)
+
+-   clients (OPITIONAL)
+
+    List of the entity's clients (syntax described in next section).
 
 
-### servers
+### Servers / Clients
 
-A list of the entity's servers.
+A list of the entity's servers and clients.
 
-*   description OPTIONAL
+-   description (OPTIONAL)
 
     A human readable text describing the server.
 
-*   base_uri REQUIRED
+    Example: `SCIM Server 1`
 
-    Base URL of the server.
+-   base_uri (OPTIONAL)
 
-*   pins REQUIRED
+    Base URL of the server (hence required for endpoints describing servers).
+    Example: `https://scim.example.com/`
 
-    A List of Public Key Pins. Each Pin has the following properties:
+-   pins (REQUIRED)
 
-    *   name REQUIRED
+    A list of Public Key Pins [@RFC7469]. Each pin has the following properties:
+
+    -   name (REQUIRED)
 
         The name of the cryptographic hash algorithm. The only allowed value at this time is "sha256".
 
-    *   value REQUIRED
+        Example: `sha256`
+
+    -   value (REQUIRED)
 
         Base64 encoded Subject Public Key Information (SPKI) fingerprint.
 
-*   tags OPTIONAL
+        Example: `+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ=`
 
-    A list of strings that describe the functionality of the server. To discover interoperability the client SHOULD do a conditional comparison of the tags. If an entity has multiple servers that are compatible, the client SHOULD arbitrarily connect to one of the servers. If connection to a server fails, the client SHOULD try with the next server. If the claim is missing or is empty, there MUST be an out-of-band agreement of the servers funtionality
+-   tags (OPTIONAL)
 
+    A list of strings that describe the functionality of the server. To discover interoperability the client SHOULD do a conditional comparison of the tags. If an entity has multiple servers that are compatible, the client SHOULD arbitrarily connect to one of the servers. If connection to a server fails, the client SHOULD try with the next server. If the claim is missing or is empty, there MUST be an out-of-band agreement of the servers functionality.
 
-### clients  
-
-A list of the entity's clients.
-
-*   description OPTIONAL
-
-    A human readable text describing the client.
-
-*   pins REQUIRED
-
-    A List of Public Key Pins. Each Pin has the following properties:
-
-    *   name REQUIRED
-
-         The name of the cryptographic hash algorithm. The only allowed value at this time is "sha256".
-
-    *   value REQUIRED
-
-        Base64 encoded Subject Public Key Information (SPKI) fingerprint.
+    Example: `["scim", "xyzzy"]`
 
 
 ## Metadata Schema
@@ -156,19 +152,23 @@ Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serializatio
 
 The following metadata signature protected headers are REQUIRED:
 
-*   alg (_algorithm_) REQUIRED
+*   `alg` (Algorithm)
 
     Identifies the algorithm used to generate the JWT signature [@RFC7515] section 4.1.1.
 
-*   exp (_expiration time_) REQUIRED
+*   `iat` (Issued At)
 
-    Identifies the expiration time on and after which the signature and metadata are no longer valid. The expiration time of the metadata MUST be set to the value of exp. The value must be a JSON number representing seconds that have elapsed since 1970-01-01T00:00:00Z.
+    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value.
 
-*   iss (_issuer_) REQUIRED
+*   `exp` (Expiration Time)
+
+    Identifies the expiration time on and after which the signature and metadata are no longer valid. The expiration time of the metadata MUST be set to the value of exp. Its value MUST be a number containing a NumericDate value.
+
+*   `iss` (Issuer)
 
     URI that identifies the publisher of metadata. The issuer claim MUST be used to prevent conflicts of entities of the same name from different federations.
 
-*   kid (_key ID_) REQUIRED
+*   `kid` (Key Identifier)
 
     The key ID is used to identify the signing key in the key set used to sign the JWT.
 
@@ -180,28 +180,24 @@ The following is a non-normative example of an server and client setup.
 <{{usage-example.ascii-art}}
 
 {style="letters"}
-1.  Entities collects metadata from the federation metadata endpoint
-2.  The client pins the server's public key pins
-3.  The reverse proxy trust anchor is setup with the clients certificate
-    issuers
-4.  The client establish a connection to the server using the base_uri from metadata
-5.  The reverse proxy forwards the certificate to the application
-6.  The application converts the certificate to a public key pin and checks
-    the metadata for the pin and extracts the entity_id that will be used for authorization.
+1. Entities collects metadata from the federation metadata endpoint.
+2. The client pins the server's public key pins.
+3. The reverse proxy trust anchor is setup with the clients certificate issuers.
+4. The client establish a connection to the server using the base_uri from metadata.
+5. The reverse proxy forwards the certificate to the application.
+6. The application converts the certificate to a public key pin and the metadata for the pin and extracts the entity_id that will be used for authorization.
 
 
 ## Client
 
 A certificate is issued to the client and the issuer published in the metadata together with the client's certificate public key pins
 
-When the client wants to connect to a remote server, the following steps need to be taken:
+When the client wants to connect to a remote server (identified by an entity identifier) the following steps need to be taken:
 
-1. Find the entity for the remote entity_id. Check that the entity statement is issued by the correct federation by examining the iss claim.
-2. Pin the entity's published pins or populate list of trusted issuer using the entity's published issuers.
-3. Connect to the server URI (possibly selected by endpoint tag).
-4. If not pinning, validate the received server certificate using the
-   entity's published pins.
-5. Commence transactions
+1. Find possible server candidates by filtering the remote entity's list of clients based on tags.
+2. Connect to the server URI. Include the entity's list of certificate issuers in the TLS clients list of trusted CAs, or trust the listed pins explicitly.
+3. If pinning was not used, validate the received server certificate using the entity's published pins.
+4. Commence transactions
 
 
 ## Server
@@ -210,10 +206,9 @@ A certificate is issued for the server and the issuer published in the metadata 
 
 When the server receives a connection from a a remote client, the following steps need to be taken:
 
-1. Populate list of trusted CAs using all known entities' published issuers.
-2. The server should require TLS client certificate authentication.
-3. One a connection has been accepted, validate the received client certificate using the client's published pins.
-4. Commence transactions.
+1. Populate list of trusted CAs using all known entities' published issuers and required TLS client certificate authentication, or configure optional untrusted TLS client certificate authentication (e.g., `optional_no_ca`).
+2. One a connection has been accepted, validate the received client certificate using the client's published pins.
+3. Commence transactions.
 
 
 {backmatter}
