@@ -51,6 +51,7 @@ definitions:
         type: array
         items:
           type: string
+          pattern: "^[a-z0-9]{1,64}$"
       base_uri:
         title: Endpoint base URI
         type: string
