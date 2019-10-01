@@ -138,7 +138,7 @@ A list of the entity's servers and clients.
 
     A list of strings that describe the functionality of the server. To discover interoperability the client SHOULD do a conditional comparison of the tags. If an entity has multiple servers that are compatible, the client SHOULD arbitrarily connect to one of the servers. If connection to a server fails, the client SHOULD try with the next server. If the claim is missing or is empty, there MUST be an out-of-band agreement of the servers functionality.
 
-    Pattern: `^[a-z0-9]{1,64}$`
+    Pattern: `^[a-z0-9]{1,64}$`  
     Example: `["scim", "xyzzy"]`
 
 
