@@ -39,11 +39,7 @@ This document describes a mechanism how to federate TLS authentication.
 
 # Introduction
 
-This document describes how to establish a secure end-to-end channel between two parties where both client and server are mutually authenticated. To make it possible for two or more trust domains to interact, the trust relationship is based upon trust anchors held and published by a trusted third-party, i.e. the federation.
-
-The federation publishes an aggregate of metadata containing information about all entities. The chain of trust in the federation is based upon the metadata and the entities' trust anchors that are published in the metadata
-
-Authentication is performed with Mutual TLS Authentication (mTLS) [@!RFC8446]. Both side of the channel cryptographically authenticating each other.
+This document describes how to, with TLS [@!RFC8446], establish a secure end-to-end channel between two parties, where both client and server are mutually authenticated. Authentication is performed with Mutual TLS Authentication (mTLS) [@!RFC8446]. The trust relationship is based upon a trust anchor held and published by a federation. A federation is a trusted third party that inter-connect different trust domains with a common set of policies and standards. The federation aggregates and publish information about all the federated entities including certificate issuers and public key information.
 
 
 ##  Reserved Words
