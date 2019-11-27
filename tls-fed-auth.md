@@ -56,9 +56,9 @@ The root of the chain of trust is the metadata signature and the trust anchor is
 
 # Authentication
 
-All sessions are authenticated via mutual (client and server) TLS authentication. Trust is limited to a set of certificate issuers published in the federation metadata and further constrained by certificate public key pins for each endpoint (also published in metadata).
+All sessions are authenticated via mutual (client and server) TLS authentication. Trust is limited to a set of certificate issuers published in the federation metadata and further constrained by certificate public key pins for each endpoint (also published in metadata). Public key pinning associates a public key with an endpoint to reduce the risk of attacks with rogue certificates.
 
-Upon connection, endpoints validate the peer's certificate against the published certificate issuers as well as the matching public key pin. If a TLS session is terminated separately from the application (e.g., when using a reverse proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching the to application given that the peer certificate is transferred to the application (e.g. via a HTTP header).
+Upon connection, endpoints validate the peer's certificate against the published certificate issuers as well as the matching public key pin. If a TLS session is terminated separately from the application (e.g., when using a reverse proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching to the application given that the peer certificate is transferred to the application (e.g. via a HTTP header).
 
 
 # Federation Metadata
