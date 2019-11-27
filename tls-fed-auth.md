@@ -49,7 +49,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Federation Chain of Trust
 
-The members of the federation upload their metadata including issuer certificates to the federation. The metadata registrar validates the issuer of metadata and aggregates and signs the metadata with its private key. By verifying the metadata signature, federation members trust the metadata content.
+The members of the federation submit their metadata including issuer certificates to the federation. Both the authenticity of the submitted metadata and the submitting member MUST be assured by the federation. How this is achieved is out of scope for this document. A federation operator aggregate, sign and publish the metadata. By trusting the federation and its certificate, federation members trust the metadata content.
 
 The root of the chain of trust is the metadata signature and the trust anchor is the federation's public key certificate. The certificate needs to be securely distributed, there MUST be an out-of-band function to verify the certificate.
 
