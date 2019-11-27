@@ -63,7 +63,7 @@ Upon connection, endpoints validate the peer's certificate against the published
 
 # Federation Metadata
 
-Entities has an organization claim (for identification). Servers and clients have a list of public key pins used to limit valid endpoint certificates. Public key pinning syntax and semantics is similar to [@RFC7469]. Server endpoints also include a base URI to connect to the endpoint.
+Entities has an organization claim (for identification). Servers and clients have a list of public key pins used to limit valid endpoint certificates. Public key pinning syntax and semantics is similar to [@RFC7469]. The key differences are that the pin is located in metadata and that the pinning is done by the peers. Server endpoints also include a base URI to connect to the endpoint.
 
 The following is a non-normative example of a metadata statement.
 
