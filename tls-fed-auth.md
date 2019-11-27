@@ -33,7 +33,7 @@
 
 .# Abstract
 
-This document describes a mechanism how to federate TLS authentication [@RFC7642].
+This document describes a mechanism how to federate TLS authentication.
 
 {mainmatter}
 
