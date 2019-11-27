@@ -145,7 +145,7 @@ A metadata JSON schema (in YAML format) can be found at [https://github.com/kire
 
 ## Metadata Signing
 
-Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization. It is RECOMMENDED that metadata signatures are created wih algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
+Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization. It is RECOMMENDED that metadata signatures are created with algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
 
 The following metadata signature protected headers are REQUIRED:
 
