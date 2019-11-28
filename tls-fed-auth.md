@@ -33,17 +33,13 @@
 
 .# Abstract
 
-This document describes a mechanism how to federate TLS authentication [@RFC7642].
+This document describes a mechanism how to federate TLS authentication.
 
 {mainmatter}
 
 # Introduction
 
-This document describes how to establish a secure end-to-end channel between two parties where both client and server are mutually authenticated. To make it possible for two or more trust domains to interact, the trust relationship is based upon trust anchors held and published by a trusted third-party, i.e. the federation.
-
-The federation publishes an aggregate of metadata containing information about all entities. The chain of trust in the federation is based upon the metadata and the entities' trust anchors that are published in the metadata
-
-Authentication is performed with Mutual TLS Authentication (mTLS) [@!RFC8446]. Both side of the channel cryptographically authenticating each other.
+This document describes how to, with TLS [@!RFC8446], establish a secure end-to-end channel between two parties, where both client and server are mutually authenticated. Authentication is performed with Mutual TLS Authentication (mTLS) [@!RFC8446]. The trust relationship is based upon a trust anchor held and published by a federation. A federation is a trusted third party that inter-connect different trust domains with a common set of policies and standards. The federation aggregates and publish information about all the federated entities including certificate issuers and public key information.
 
 
 ##  Reserved Words
@@ -53,21 +49,21 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Federation Chain of Trust
 
-The members of the federation upload their metadata including issuer certificates to the federation. The metadata registrar validates the issuer of metadata and aggregates and signs the metadata with its private key. By verifying the metadata signature, federation members trust the metadata content.
+The members of the federation submit their metadata including issuer certificates to the federation. Both the authenticity of the submitted metadata and the submitting member MUST be assured by the federation. How this is achieved is out of scope for this document. A federation operator aggregate, sign and publish the metadata. By trusting the federation and its certificate, federation members trust the metadata content.
 
 The root of the chain of trust is the metadata signature and the trust anchor is the federation's public key certificate. The certificate needs to be securely distributed, there MUST be an out-of-band function to verify the certificate.
 
 
 # Authentication
 
-All sessions are authenticated via mutual (client and server) TLS authentication. Trust is limited to a set of certificate issuers published in the federation metadata and further constrained by certificate public key pins for each endpoint (also published in metadata).
+All sessions are authenticated via mutual (client and server) TLS authentication. Trust is limited to a set of certificate issuers published in the federation metadata and further constrained by certificate public key pins for each endpoint (also published in metadata). Public key pinning associates a public key with an endpoint to reduce the risk of attacks with rogue certificates.
 
-Upon connection, endpoints validate the peer's certificate against the published certificate issuers as well as the matching public key pin. If a TLS session is terminated separately from the application (e.g., when using a reverse proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching the to application given that the peer certificate is transferred to the application (e.g. via a HTTP header).
+Upon connection, endpoints validate the peer's certificate against the published certificate issuers as well as the matching public key pin. If a TLS session is terminated separately from the application (e.g., when using a reverse proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching to the application given that the peer certificate is transferred to the application (e.g. via a HTTP header).
 
 
 # Federation Metadata
 
-Entities has an organization claim (for identification). Servers and clients have a list of public key pins used to limit valid endpoint certificates. Public key pinning syntax and semantics is similar to [@RFC7469]. Server endpoints also include a base URI to connect to the endpoint.
+Entities has an organization claim (for identification). Servers and clients have a list of public key pins used to limit valid endpoint certificates. Public key pinning syntax and semantics is similar to [@RFC7469]. The key differences are that the pin is located in metadata and that the pinning is done by the peers. Server endpoints also include a base URI to connect to the endpoint.
 
 The following is a non-normative example of a metadata statement.
 
@@ -138,6 +134,7 @@ A list of the entity's servers and clients.
 
     A list of strings that describe the functionality of the server. To discover interoperability the client SHOULD do a conditional comparison of the tags. If an entity has multiple servers that are compatible, the client SHOULD arbitrarily connect to one of the servers. If connection to a server fails, the client SHOULD try with the next server. If the claim is missing or is empty, there MUST be an out-of-band agreement of the servers functionality.
 
+    Pattern: `^[a-z0-9]{1,64}$`  
     Example: `["scim", "xyzzy"]`
 
 
@@ -148,7 +145,7 @@ A metadata JSON schema (in YAML format) can be found at [https://github.com/kire
 
 ## Metadata Signing
 
-Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization. It is RECOMMENDED that metadata signatures are created wih algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
+Metadata is signed with JWS [@RFC7515] and published using JWS JSON Serialization. It is RECOMMENDED that metadata signatures are created with algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
 
 The following metadata signature protected headers are REQUIRED:
 
