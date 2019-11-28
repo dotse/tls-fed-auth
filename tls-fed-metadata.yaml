@@ -1,9 +1,30 @@
+---
+
+# JSON Schema for Federated TLS Authentication
+# Version: 1.0.0
+
 $schema: http://json-schema.org/schema#
 
 type: object
+additionalProperties: true
 required:
+  - version
   - entities
 properties:
+  version:
+    title: Metadata schema version
+    descripton: Schema version follows semantic versioning (https://semver.org)
+    type: string
+    pattern: "^\\d+\\.\\d+\\.\\d+$"
+    example: "1.0.0"
+  cache_ttl:
+    title: Metadata cache TTL
+    description: |
+      How long (in seconds) to cache metadata.
+      Effective maximum TTL is the minimum of HTTP Expire and TTL
+    type: integer
+    minimum: 0
+    example: 3600
   entities:
     type: array
     items:
@@ -19,13 +40,23 @@ definitions:
     properties:
       entity_id:
         title: Entity identifier
+        description: Globally unique identifier for the entity.
         type: string
         format: uri
+        example: "https://example.com"
       organization:
         title: Name of entity organization
+        description: |
+          Name identifying the organization that the entity’s
+          metadata represents.
         type: string
+        example: "Example Org"
       issuers:
         title: Entity certificate issuers
+        description: |
+          A list of certificate issuers that are allowed to issue certificates
+          for the entity's endpoints. For each issuer, the issuer's root CA
+          certificate is included in the x509certificate property (PEM-encoded).
         type: array
         items:
           $ref: '#/definitions/cert_issuers'
@@ -46,16 +77,27 @@ definitions:
       description:
         title: Endpoint description
         type: string
+        example: "SCIM Server 1"
       tags:
         title: Endpoint tags
+        description: |
+          A list of strings that describe the functionality of the server.
+          To discover interoperability the client SHOULD do a conditional
+          comparison of the tags. If an entity has multiple servers that are
+          compatible, the client SHOULD arbitrarily connect to one of the
+          servers. If connection to a server fails, the client SHOULD try
+          with the next server. If the claim is missing or is empty,
+          there MUST be an out-of-band agreement of the servers functionality.
         type: array
         items:
           type: string
           pattern: "^[a-z0-9]{1,64}$"
+          example: "xyzzy"
       base_uri:
         title: Endpoint base URI
         type: string
         format: uri
+        example: "https://scim.example.com"
       pins:
         title: Certificate pin set
         type: array
@@ -82,7 +124,9 @@ definitions:
         type: string
         enum:
           - sha256
+        example: sha256
       value:
         title: Directive value (Base64)
         type: string
         pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+        example: "HiMkrb4phPSP+OvGqmZd6sGvy7AUn4k3XEe8OMBrzt8="

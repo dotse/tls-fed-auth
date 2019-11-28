@@ -1,6 +1,6 @@
 {
-  "exp": 1570028347,
-  "iss": "https://federation.example.com",
+  "version": "1.0.0",
+  "cache_ttl": 3600,
   "entities": [
     {
       "entity_id": "https://example.com",
