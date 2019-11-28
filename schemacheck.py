@@ -22,7 +22,7 @@ def main():
         with open(filename) as file:
             print("Checking schema", filename, file=sys.stderr)
             if filename.endswith('.json'):
-                schema = json.load(file)
+                schema = json.safe_load(file)
             elif filename.endswith('.yaml'):
                 schema = yaml.load(file, Loader=yaml.SafeLoader)
             else:
@@ -36,7 +36,7 @@ def main():
                 if args.input.endswith('.json'):
                     data = json.load(file)
                 elif args.input.endswith('.yaml'):
-                    data = yaml.load(file, Loader=yaml.SafeLoader)
+                    data = yaml.safe_load(file, Loader=yaml.SafeLoader)
                 else:
                     raise Exception("Unknown input format")
                 jsonschema.validate(data, schema)
