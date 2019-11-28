@@ -51,6 +51,10 @@ definitions:
           metadata represents.
         type: string
         example: "Example Org"
+      organization_id:
+        title: Organization identifier
+        type: string
+        example: "SE8024050190"
       issuers:
         title: Entity certificate issuers
         description: |

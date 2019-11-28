@@ -5,6 +5,7 @@
     {
       "entity_id": "https://example.com",
       "organization": "Example Org",
+      "organization_id": "SE8024050190",
       "issuers": [
         {
           "x509certificate":
