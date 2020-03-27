@@ -151,7 +151,7 @@ The following metadata signature protected headers are REQUIRED:
 
 *   `alg` (Algorithm)
 
-    Identifies the algorithm used to generate the JWT signature [@RFC7515] section 4.1.1.
+    Identifies the algorithm used to generate the JWS signature [@RFC7515] section 4.1.1.
 
 *   `iat` (Issued At)
 
@@ -167,7 +167,7 @@ The following metadata signature protected headers are REQUIRED:
 
 *   `kid` (Key Identifier)
 
-    The key ID is used to identify the signing key in the key set used to sign the JWT.
+    The key ID is used to identify the signing key in the key set used to sign the JWS.
 
 
 # Usage Examples
