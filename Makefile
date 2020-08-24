@@ -25,7 +25,7 @@ html: $(HTML)
 	$(XML2RFC) $< $@
 
 %.xml: %.md
-	$(MMARK) -2 $< > $@
+	$(MMARK) $< > $@
 
 %.html: %.md
 	$(MMARK) -html $< > $@
