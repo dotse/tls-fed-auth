@@ -18,8 +18,8 @@
           "base_uri": "https://scim.example.com/",
           "pins": [
             {
-              "name": "sha256",
-              "value": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
+              "alg": "sha256",
+              "digest": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
             }
           ],
           "tags": [
@@ -32,8 +32,8 @@
           "description": "SCIM Client 1",
           "pins": [
             {
-              "name": "sha256",
-              "value": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
+              "alg": "sha256",
+              "digest": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
             }
           ]
         }
