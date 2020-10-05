@@ -99,13 +99,13 @@ Metadata contains a list of entities that may be used for communication within t
 
     URI that identifies the entity. It MUST be globally unique.
 
-    E.g. "https://example.com"
+    Example: "https://example.com"
 
 -   organization (OPTIONAL)
 
     A name identifying the organization that the entity's metadata represents.
 
-    E.g. “Example Org”.
+    Example: “Example Org”.
 
 -   issuers (REQUIRED)
 
@@ -128,13 +128,13 @@ A list of the entity's servers and clients.
 
     A human readable text describing the server.
 
-    E.g. "SCIM Server 1"
+    Example: "SCIM Server 1"
 
 -   base_uri (OPTIONAL)
 
     The base URL of the server (hence required for endpoints describing servers).
 
-    E.g. "https://scim.example.com/"
+    Example: "https://scim.example.com/"
 
 -   pins (REQUIRED)
 
@@ -144,13 +144,13 @@ A list of the entity's servers and clients.
 
         The name of the cryptographic hash algorithm. The only allowed value is "sha256".
 
-        E.g. "sha256"
+        Example: "sha256"
 
     -   digest (REQUIRED)
 
         End-entity certificate base64 encoded Subject Public Key Information (SPKI) fingerprint [@!RFC7469], for client the digest MUST be globally unique. MAY, locally in the same entity_id object, be assigned to multiple clients.
 
-        E.g. "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
+        Example: "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
 
 -   tags (OPTIONAL)
 
@@ -158,7 +158,7 @@ A list of the entity's servers and clients.
 
     Pattern: `^[a-z0-9]{1,64}$`
 
-    E.g. `["scim", "xyzzy"]`
+    Example: `["scim", "xyzzy"]`
 
 
 ## Metadata Schema
