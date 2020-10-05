@@ -64,7 +64,7 @@ All TLS sessions between clients and servers are authenticated via mutual TLS au
 
 Upon connection, the endpoints (client and server) MUST validate the other endpoint's certificate against the published matching public key pin. Issuers in metadata are only used to help validate the server and client certificate. It is up to each implementation to decide if these are needed. Failure to validate triggers termination of the connection.
 
-If a TLS session is terminated separately from the application (e.g. when using a reverse proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching to the application given that the peer certificate is transferred to the application (e.g. via a HTTP header).
+If a TLS session is terminated separately from the application (e.g., when using a reverse proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching to the application given that the peer certificate is transferred to the application (e.g., via a HTTP header).
 
 
 # Federation Metadata
