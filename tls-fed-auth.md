@@ -369,15 +369,11 @@ To ensure the validity of the metadata the refresh process must verify the signa
 
 The authors would like to thank the following people for the detailed review and suggestions:
 
-Rasmus Larsson
-
-Mats Dufberg
-
-Joe Siltberg
-
-Stefan Norberg
-
-Petter Blomberg
+*   Rasmus Larsson
+*   Mats Dufberg
+*   Joe Siltberg
+*   Stefan Norberg
+*   Petter Blomberg
 
 The authors would also like to thank participants in the EGIL working group for their comments on this specification.
 
