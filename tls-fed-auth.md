@@ -358,12 +358,12 @@ Security considerations for TLS 1.3 [@!RFC8446] are described in Section 10 and 
 
 ## Federation Metadata Updates
 
-To ensure the validity of the federation metadata the refresh process must verify the signature on each and every federation metadata fetch. The federation's public key authenticity must be assured and verified in a secure way.
+Frequent check of the federation metadata aggregate to use the most recent version is required. It is required to check the federation metadata periodically to find out if entities, pins and issuers are still active.
 
 
 ## Federation Metadata Signing Key
 
-To ensure the validity of the metadata the refresh process must verify the signature on each and every metadata fetch. The federation's public key authenticity must be assured and verified in a secure way.
+To ensure the validity of the federation metadata the refresh process must verify the signature on each and every federation metadata fetch. The federation's public key authenticity must be assured and verified in a secure way.
 
 # Acknowledgements
 
