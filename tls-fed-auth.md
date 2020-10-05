@@ -269,7 +269,31 @@ The examples in this section are non-normative.
 
 The example below is from the federation called "Skolfederation" where federated TLS authentication is already in use. Clients and servers are registered in the federation. The clients intend to manage cross-domain user accounts within the service. The standard used for account management is SS 12000:2018 (i.e., a SCIM extension).
 
-<{{usage-example.ascii-art}}
+~~~ ascii-art
++---------------------------------------------+
+|                                             |
+|             Federation Metadata             |
+|                                             |
++---+--------------------------+--------------+
+    |                          |
+   (A)                        (A)
+    |                          |
+    v                          v
++---+----+        +------------+--------------+
+|Local MD|        |         Local MD          |
++---+----+        +----+------------- ---+----+
+    |                  |                 |
+   (B)                (C)               (F)
+    |                  |                 |
+    v                  v                 v
++---+----+        +----+---+        +----+---+
+|        |        |        |        |        |
+| Client |        | Reverse|        |  App   |
+|        +--(D)-->+ Proxy  +--(E)-->+        |
+|        |        |        |        |        |
+|        |        |        |        |        |
++--------+        +--------+        +--------+
+~~~
 
 {type="A"}
 1. Entities collect member metadata from the federation metadata.
