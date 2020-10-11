@@ -201,64 +201,50 @@ The following is a non-normative example of a federation metadata statement. Lin
 {
   "version": "1.0.0",
   "cache_ttl": 3600,
-  "entities": [
-    {
-      "entity_id": "https://example.com",
-      "organization": "Example Org",
-      "issuers": [
-        {
-          "x509certificate":
-            "-----BEGIN CERTIFICATE-----\nMIIDDDCCAfSgAwIBAgIJAIOsf
-            JBStJQhMA0GCSqGSIb3DQEBCwUAMBsxGTAXBgNV\nBAMMEHNjaW0uZX
-            hhbXBsZS5jb20wHhcNMTcwNDA2MDc1MzE3WhcNMTcwNTA2MDc1\nMzE
-            3WjAbMRkwFwYDVQQDDBBzY2ltLmV4YW1wbGUuY29tMIIBIjANBgkqhk
-            iG9w0B\nAQEFAAOCAQ8AMIIBCgKCAQEAyr+3dXTC8YXoi0LDJTH0lTf
-            v8omQivWFOr3+/PBE\n6hmpLSNXK/EZJBD6ZT4Q+tY8dPhyhzT5RFZC
-            VlrDse/kY00F4yoflKiqx9WSuCrq\nZFr1AUtIfGR/LvRUvDFtuHo1M
-            zFttiK8WrwskMYZrw1zLHTIVwBkfMw1qr2XzxFK\njt0CcDmFxNdY5Q
-            8kuBojH9+xt5sZbrJ9AVH/OI8JamSqDjk9ODyGg+GrEZFClP/B\nxa4
-            Fsl04En/9GfaJnCU1NpU0cqvWbVUlLOy8DaQMN14HIdkTdmegEsg2LR
-            /XrJkt\nho16diAXrgS253xbkdD3T5d6lHiZCL6UxkBh4ZHRcoftSwI
-            DAQABo1MwUTAdBgNV\nHQ4EFgQUs1dXuhGhGc2UNb7ikn3t6cBuU34w
-            HwYDVR0jBBgwFoAUs1dXuhGhGc2U\nNb7ikn3t6cBuU34wDwYDVR0TA
-            QH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEA\nrR9wxPhUa2XfQ0
-            agAC0oC8TFf8wbTYb0ElP5Ej834xMMW/wWTSAN8/3WqOWNQJ23\nf0v
-            EeYQwfvbD2fjLvYTyM2tSPOWrtQpKuvulIrxV7Zz8A61NIjblE3rfea
-            1eC8my\nTkDOlMKV+wlXXgUxirride+6ubOWRGf92fgzeDGJWkmm/a9
-            tj0L/3e0xIXeujxC7\nMIt3p99teHjvnZQ7FiIBlvGc1o8FD1FKmFYd
-            74s7RxrAusBEAAmBo3xyB89cFU0d\nKB2fkH2lkqiqkyOtjrlHPoy6w
-            s6g1S6U/Jx9n0NEeEqCfzXnh9jEpxisSO+fBZER\npCwj2LMNPQxZBq
-            BFoxbFPw==\n-----END CERTIFICATE-----"
-        }
-      ],
-      "servers": [
-        {
-          "description": "SCIM Server 1",
-          "base_uri": "https://scim.example.com/",
-          "pins": [
-            {
-              "alg": "sha256",
-              "digest": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
-            }
-          ],
-          "tags": [
-            "scim"
-          ]
-        }
-      ],
-      "clients": [
-        {
-          "description": "SCIM Client 1",
-          "pins": [
-            {
-              "alg": "sha256",
-              "digest": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
-            }
-          ]
-        }
+  "entities": [{
+    "entity_id": "https://example.com",
+    "organization": "Example Org",
+    "issuers": [{
+      "x509certificate": "-----BEGIN CERTIFICATE-----\nMIIDDDCCAf
+      SgAwIBAgIJAIOsfJBStJQhMA0GCSqGSIb3DQEBCwUAMBsxGTAXBgNV\nBAM
+      MEHNjaW0uZXhhbXBsZS5jb20wHhcNMTcwNDA2MDc1MzE3WhcNMTcwNTA2MD
+      c1\nMzE3WjAbMRkwFwYDVQQDDBBzY2ltLmV4YW1wbGUuY29tMIIBIjANBgk
+      qhkiG9w0B\nAQEFAAOCAQ8AMIIBCgKCAQEAyr+3dXTC8YXoi0LDJTH0lTfv
+      8omQivWFOr3+/PBE\n6hmpLSNXK/EZJBD6ZT4Q+tY8dPhyhzT5RFZCVlrDs
+      e/kY00F4yoflKiqx9WSuCrq\nZFr1AUtIfGR/LvRUvDFtuHo1MzFttiK8Wr
+      wskMYZrw1zLHTIVwBkfMw1qr2XzxFK\njt0CcDmFxNdY5Q8kuBojH9+xt5s
+      ZbrJ9AVH/OI8JamSqDjk9ODyGg+GrEZFClP/B\nxa4Fsl04En/9GfaJnCU1
+      NpU0cqvWbVUlLOy8DaQMN14HIdkTdmegEsg2LR/XrJkt\nho16diAXrgS25
+      3xbkdD3T5d6lHiZCL6UxkBh4ZHRcoftSwIDAQABo1MwUTAdBgNV\nHQ4EFg
+      QUs1dXuhGhGc2UNb7ikn3t6cBuU34wHwYDVR0jBBgwFoAUs1dXuhGhGc2U\
+      nNb7ikn3t6cBuU34wDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAA
+      OCAQEA\nrR9wxPhUa2XfQ0agAC0oC8TFf8wbTYb0ElP5Ej834xMMW/wWTSA
+      N8/3WqOWNQJ23\nf0vEeYQwfvbD2fjLvYTyM2tSPOWrtQpKuvulIrxV7Zz8
+      A61NIjblE3rfea1eC8my\nTkDOlMKV+wlXXgUxirride+6ubOWRGf92fgze
+      DGJWkmm/a9tj0L/3e0xIXeujxC7\nMIt3p99teHjvnZQ7FiIBlvGc1o8FD1
+      FKmFYd74s7RxrAusBEAAmBo3xyB89cFU0d\nKB2fkH2lkqiqkyOtjrlHPoy
+      6ws6g1S6U/Jx9n0NEeEqCfzXnh9jEpxisSO+fBZER\npCwj2LMNPQxZBqBF
+      oxbFPw==\n-----END CERTIFICATE-----"
+    }],
+    "servers": [{
+      "description": "SCIM Server 1",
+      "base_uri": "https://scim.example.com/",
+      "pins": [{
+        "alg": "sha256",
+        "digest": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
+      }],
+      "tags": [
+        "scim"
       ]
-    }
-  ]
+    }],
+    "clients": [{
+      "description": "SCIM Client 1",
+      "pins": [{
+        "alg": "sha256",
+        "digest": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
+      }]
+    }]
+  }]
 }
 ~~~
 
