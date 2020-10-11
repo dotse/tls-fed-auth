@@ -5,7 +5,7 @@
     category = "std"
     ipr = "trust200902"
     area = "Internet"
-    date = 2020-08-24T00:00:00Z
+    date = 2020-10-11T00:00:00Z
 
     [seriesInfo]
     status = "informational"
