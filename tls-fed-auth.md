@@ -163,7 +163,7 @@ A list of the entity's servers and clients.
 
 ## Metadata Schema
 
-The federation metadata JSON schema (in YAML format) can be found at [https://github.com/kirei/tls-fed-auth](https://github.com/kirei/tls-fed-auth/blob/master/tls-fed-metadata.yaml).
+The federation metadata JSON schema (in YAML format) can be found at [https://github.com/dotse/tls-fed-auth](https://github.com/dotse/tls-fed-auth/blob/master/tls-fed-metadata.yaml).
 
 
 ## Metadata Signing
