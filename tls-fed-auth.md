@@ -10,7 +10,7 @@
     [seriesInfo]
     status = "informational"
     name = "Internet-Draft"
-    value = "draft-fed-tls-auth-00"
+    value = "draft-halen-fed-tls-auth-00"
     stream = "IETF"
 
     [[author]]
