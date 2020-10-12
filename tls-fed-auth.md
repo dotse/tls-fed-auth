@@ -54,7 +54,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Federation Chain of Trust
 
-The members of a federation submit their issuer certificates and other requested data  (in this document called “member metadata”) to the federation. Both the authenticity of the submitted member metadata and the submitting member MUST be assured by the federation. How this is achieved is out of scope for this document. The federation operator aggregates, signs and publishes the federation metadata, i.e. an aggregation of all members’ member metadata and some additional information added by the federation. By trusting the federation and its certificate, federation members trust the federation metadata content.
+The members of a federation submit their issuer certificates and other requested data  (in this document called “member metadata”) to the federation. Both the authenticity of the submitted member metadata and the submitting member MUST be assured by the federation. How this is achieved is out of scope for this document. The federation operator aggregates, signs and publishes the federation metadata, i.e., an aggregation of all members’ member metadata and some additional information added by the federation. By trusting the federation and its certificate, federation members trust the federation metadata content.
 
 The root of the chain of trust is the federation metadata signature and the trust anchor is the federation's signing certificate. That certificate needs to be securely distributed, there MUST be an out-of-band function to verify the certificate. The distribution of the federation's certificate is out-of-scope of this document.
 
