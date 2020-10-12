@@ -4,6 +4,7 @@
     abbrev = "Federated TLS AuthN"
     category = "std"
     ipr = "trust200902"
+    submissiontype = "independent"
     area = "Internet"
     date = 2020-10-12T00:00:00Z
 
@@ -11,7 +12,7 @@
     status = "informational"
     name = "Internet-Draft"
     value = "draft-halen-fed-tls-auth-00"
-    stream = "IETF"
+    stream = "independent"
 
     [[author]]
     initials="J."
