@@ -33,7 +33,8 @@
 
 .# Abstract
 
-This document describes a mechanism how to federate TLS authentication.
+This document describes how to establish a secure end-to-end channel between two parties within a federation, where both client and server are mutually authenticated. The trust relationship is based upon a trust anchor held and published by the federation. A federation is a trusted third party that inter-connect different trust domains with a common set of policies and standards.
+
 
 {mainmatter}
 
