@@ -352,6 +352,12 @@ Frequent check of the federation metadata aggregate to use the most recent versi
 
 To ensure the validity of the federation metadata the refresh process must verify the signature on each and every federation metadata fetch. The federation's public key authenticity must be assured and verified in a secure way.
 
+
+# IANA Considerations
+
+This document has no IANA actions.
+
+
 # Acknowledgements
 
 The authors would like to thank the following people for the detailed review and suggestions:
