@@ -6,12 +6,12 @@
     ipr = "trust200902"
     submissiontype = "independent"
     area = "Internet"
-    date = 2020-10-12T00:00:00Z
+    date = 2021-04-12T00:00:00Z
 
     [seriesInfo]
     status = "informational"
     name = "Internet-Draft"
-    value = "draft-halen-fed-tls-auth-00"
+    value = "draft-halen-fed-tls-auth-01"
     stream = "independent"
 
     [[author]]
@@ -361,6 +361,8 @@ This document has no IANA actions.
 
 # Acknowledgements
 
+This project was funded through the NGI0 PET Fund, a fund established by NLnet with financial support from the European Commission’s Next Generation Internet programme, under the aegis of DG Communications Networks, Content and Technology under grant agreement No 825310.
+
 The authors would like to thank the following people for the detailed review and suggestions:
 
 *   Rasmus Larsson
@@ -370,6 +372,7 @@ The authors would like to thank the following people for the detailed review and
 *   Petter Blomberg
 
 The authors would also like to thank participants in the EGIL working group for their comments on this specification.
+
 
 
 {backmatter}
