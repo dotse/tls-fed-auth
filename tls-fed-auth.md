@@ -62,7 +62,8 @@ The root of the chain of trust is the federation metadata signature and the trus
 
 # Authentication
 
-All TLS sessions between clients and servers are authenticated via mutual TLS authentication. Trust is limited to the set of public key pins published for each endpoint in the federation metadata. Public key pinning associates a public key with an endpoint to reduce the risk of attacks with rogue certificates.
+All TLS sessions between clients and servers are authenticated via mutual TLS authentication. Trust is limited to the set of public key pins published for each endpoint in the federation metadata. Public key pinning associates a public key with an endpoint to reduce the risk of attacks with rogue certificates. Public key pinning is defined in [@!RFC7469]. Clients and
+servers preloads pins as defined in section 2.7.
 
 Upon connection, the endpoints (client and server) MUST validate the other endpoint's certificate against the published matching public key pin. Issuers in metadata are only used to help validate the server and client certificate. It is up to each implementation to decide if these are needed. Failure to validate triggers termination of the connection.
 
