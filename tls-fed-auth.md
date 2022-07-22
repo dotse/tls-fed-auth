@@ -71,10 +71,12 @@ If a TLS session is terminated separately from the application (e.g., when using
 
 # Federation Metadata
 
-Federation metadata is published as an JWS [@!RFC7519]. Entities have an organization claim that is used for identification. Server endpoints include a base URI to connect to the endpoint. Servers and clients also have a list of public key pins used to limit valid endpoint certificates.
+Federation metadata is published as an JWS [@!RFC7519]. The payload contains statements
+about federation members entities.
 
-Public key pinning is defined in [@!RFC7469]. Clients and servers preloads pins as defined in [@!RFC7469], section 2.7
+Metadata is used for authentication and service discovery. A client select a server based on metadata claims (e.g., organization, tags). The client then use the selected server claims base_uri, pins and if needed issuers to establish a connection.
 
+Upon receiving a connection, a server validates the received client certificate using the client's published pins. Server MAY also check other claims such as organization and tags to determine if the connections is accepted or terminated.
 
 ## Federation Metadata claims
 
