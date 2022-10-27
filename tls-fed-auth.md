@@ -63,7 +63,7 @@ The root of the chain of trust is the federation metadata signature and the trus
 # Authentication
 
 All TLS sessions between clients and servers are authenticated via mutual TLS authentication. Trust is limited to the set of public key pins published for each endpoint in the federation metadata. Public key pinning associates a public key with an endpoint to reduce the risk of attacks with rogue certificates. Public key pinning is defined in [@!RFC7469]. Clients and
-servers preloads pins as defined in section 2.7.
+servers preloads pins as defined in section 2.7 in [@!RFC7469]. [Clarification on the use of pins needed. How does the section in the RFC relate to this text.]
 
 Upon connection, the endpoints (client and server) MUST validate the other endpoint's certificate against the published matching public key pin. Issuers in metadata are only used to help validate the server and client certificate. It is up to each implementation to decide if these are needed. Failure to validate triggers termination of the connection.
 
@@ -72,7 +72,7 @@ If a TLS session is terminated separately from the application (e.g., when using
 
 # Federation Metadata
 
-Federation metadata is published as an JWS [@!RFC7519]. The payload contains statements
+Federation metadata is published as an JSON Web Signature (JWS) [@!RFC7519]. The payload contains statements
 about federation members entities.
 
 Metadata is used for authentication and service discovery. A client select a server based on metadata claims (e.g., organization, tags). The client then use the selected server claims base_uri, pins and if needed issuers to establish a connection.
@@ -183,7 +183,7 @@ The following federation metadata signature protected headers are REQUIRED:
 
 *   `iat` (Issued At)
 
-    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value.
+    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value. [Where is NumericDate defined? -- Does `iat` have to be before in time compared to `exp`?]
 
 *   `exp` (Expiration Time)
 
@@ -258,7 +258,7 @@ The following is a non-normative example of a federation metadata statement. Lin
 
 The examples in this section are non-normative.
 
-The example below is from the federation called "Skolfederation" where federated TLS authentication is already in use. Clients and servers are registered in the federation. The clients intend to manage cross-domain user accounts within the service. The standard used for account management is SS 12000:2018 (i.e., a SCIM extension).
+The example below is from the federation called "Skolfederation" where federated TLS authentication is already in use. Clients and servers are registered in the federation. The clients intend to manage cross-domain user accounts within the service. The standard used for account management is SS 12000:2018 (i.e., a SCIM extension). [Reference?]
 
 ~~~ ascii-art
 +---------------------------------------------+
@@ -288,12 +288,11 @@ The example below is from the federation called "Skolfederation" where federated
 
 {type="A"}
 1. Entities collect member metadata from the federation metadata.
-2. The client pins the server's public key pins.
+2. The client pins the server's public key pins. [Correct?]
 3. The reverse proxy trust anchor is setup with the clients’ certificate issuers.
 4. The client establishes a connection with the server using the base_uri from the federation metadata.
 5. The reverse proxy forwards the client certificate to the application.
 6. The application converts the certificate to a public key pin and checks the federation metadata for a matching pin. The entity's entity_id should be used as an identifier.
-
 
 ## Client
 
