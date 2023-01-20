@@ -62,12 +62,13 @@ The root of the chain of trust is the federation metadata signature and the trus
 
 # Authentication
 
-All TLS sessions between clients and servers are authenticated via mutual TLS authentication. Trust is limited to the set of public key pins published for each endpoint in the federation metadata. Public key pinning associates a public key with an endpoint to reduce the risk of attacks with rogue certificates. Public key pinning is defined in [@!RFC7469]. Clients and
-servers preloads pins as defined in section 2.7.
+All TLS sessions between clients and servers are authenticated via mutual TLS authentication. Trust is limited to the set of public key pins published for each endpoint in the federation metadata. Public key pinning associates a public key with an endpoint to reduce the risk of attacks with rogue certificates. Public key pinning is defined in [@!RFC7469]. Pins are collected from federation metadata. It is up to the federation to establish a discovery process for finding relevant pins. There are metadata claims to aid the discovery process (e.g., organization, tags, description). Clients and servers preload the selected pins as defined in [@!RFC7469], section 2.7, before establishing a connection.
 
-Upon connection, the endpoints (client and server) MUST validate the other endpoint's certificate against the published matching public key pin. Issuers in metadata are only used to help validate the server and client certificate. It is up to each implementation to decide if these are needed. Failure to validate triggers termination of the connection.
+Upon connection, the endpoints (client and server) MUST either use pinning or validate the received certificate using the entity's published pins. Issuers in metadata MAY be used to verify certificate issuers. It is up to each implementation to decide if these are needed.
 
-If a TLS session is terminated separately from the application (e.g., when using a reverse proxy), the TLS session termination point can validate the certificate issuer and defer public key pin matching to the application given that the peer certificate is transferred to the application (e.g., via a HTTP header).
+If a TLS session is terminated separately from the application (e.g., when using a reverse proxy). The termination point can either use optional untrusted TLS client certificate authentication or validate the certificate issuer. Pin validation MAY then be deferred to the application, given that the peer certificate is transferred to the application (e.g., via an HTTP header).
+
+Failure to validate a received certificate triggers termination of the connection.
 
 
 # Federation Metadata
