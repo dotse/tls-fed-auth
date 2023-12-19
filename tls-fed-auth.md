@@ -73,7 +73,7 @@ Failure to validate a received certificate triggers termination of the connectio
 
 # Federation Metadata
 
-Federation metadata is published as a JWS [@!RFC7519]. The payload contains statements
+Federation metadata is published as a JWS [@!RFC7515]. The payload contains statements
 about federation members entities.
 
 Metadata is used for authentication and service discovery. A client select a server based on metadata claims (e.g., organization, tags). The client then use the selected server claims base_uri, pins and if needed issuers to establish a connection.
