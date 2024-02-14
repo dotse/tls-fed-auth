@@ -70,7 +70,7 @@ To further fortify this trust and mitigate risks associated with fraudulent cert
 
 ## Pin Discovery and Preloading
 
-Peers in the federation retrieve these unique public key pins, serving as pre-configured trust parameters, from the federation metadata. The federation MUST facilitates discovery process, enabling peers to identify the relevant pins for each endpoint. Information like organization, tags, and descriptions within the federation metadata aids in this discovery.
+Peers in the federation retrieve these unique public key pins, serving as pre-configured trust parameters, from the federation metadata. The federation MUST facilitate the discovery process, enabling peers to identify the relevant pins for each endpoint. Information such as organization, tags, and descriptions within the federation metadata aids in this discovery.
 
 Before initiating any connection, both clients and servers preload the chosen pins in strict adherence to the guidelines outlined in section 2.7 of [@!RFC7469]. This preloading ensures connections only occur with endpoints possessing matching public keys, effectively blocking attempts to use fraudulent certificates.
 
