@@ -212,7 +212,8 @@ The following federation metadata signature protected headers are REQUIRED:
 
 *   `iss` (Issuer)
 
-    URI that identifies the publisher of federation metadata. The issuer claim MUST be used to prevent conflicts of entities of the same name from different federations.
+    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim, along with the corresponding issuer's certificate, enables relying parties to confidently determine information origin and establish trust with entities within the identified federation. This ensures secure communication and mitigates potential security risks.
+
 
 *   `kid` (Key Identifier)
 
