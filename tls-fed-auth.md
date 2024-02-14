@@ -382,7 +382,7 @@ Security considerations for TLS 1.3 [@!RFC8446] are described in Section 10 and 
 
 ## Federation Metadata Updates
 
-Frequent check of the federation metadata aggregate to use the most recent version is required. It is required to check the federation metadata periodically to find out if entities, pins and issuers are still active.
+It's essential to regularly update the local copy of the federation metadata to ensure you have the latest information about active entities, current public key pins and valid certificates. Using outdated metadata can expose you to security risks like interacting with revoked entities or accepting manipulated data. If present, respect cache_ttl values specified in the federation metadata. 
 
 
 ## Federation Metadata Signing Key
