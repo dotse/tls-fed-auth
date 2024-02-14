@@ -34,8 +34,7 @@
 
 .# Abstract
 
-This document describes how to establish a secure end-to-end channel between two parties within a federation, where both the client and server mutually authenticate each other. The trust relationship is based upon a trust anchor held and published by the federation. A federation is a trusted third party that inter-connect different trust domains with a common set of policies and standards.
-
+This document describes the Federated TLS Authentication (FedTLS) protocol, enabling secure end-to-end communication within a federated environment. Both clients and servers perform mutual TLS authentication, establishing trust based on a centrally managed trust anchor published by the federation. Additionally, FedTLS ensures unambiguous identification of entities, as only authorized members within the federation can publish metadata, further mitigating risks associated with unauthorized entities impersonating legitimate participants. This framework promotes seamless and secure interoperability across different trust domains adhering to common policies and standards within the federation.
 
 {mainmatter}
 
