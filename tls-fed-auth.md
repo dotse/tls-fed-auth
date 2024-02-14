@@ -194,7 +194,7 @@ The federation metadata JSON schema can be found at [https://www.fedtls.se/schem
 
 ## Metadata Signing
 
-The federation metadata is signed with JWS and published using JWS JSON Serialization. It is RECOMMENDED that federation metadata signatures are created with algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
+The federation metadata is signed with JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. It is RECOMMENDED that federation metadata signatures are created with algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
 
 The following federation metadata signature protected headers are REQUIRED:
 
