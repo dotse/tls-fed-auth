@@ -38,6 +38,7 @@ This document describes the Federated TLS Authentication (FedTLS) protocol, enab
 
 {mainmatter}
 
+
 # Introduction
 
 This document outlines the Federated TLS Authentication (FedTLS) protocol, which facilitates secure end-to-end communication between two parties within a federation. Both the client and server undergo mutual TLS authentication (as defined in [@!RFC8446]), establishing a robust foundation of trust. This trust relies on a central trust anchor held and published by the federation, acting as a trusted third party connecting distinct trust domains under a common set of policies and standards.
@@ -48,9 +49,11 @@ Without a FedTLS federation, implementing mutual TLS authentication often requir
 
 The Swedish education sector illustrates the value of FedTLS by securing user lifecycle management endpoints through this framework. This successful collaboration between school authorities and service providers highlights FedTLS's ability to enable trust, simplify operations, and strengthen security within federated environments.
 
+
 ##  Reserved Words
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [@!RFC2119].
+
 
 ## Terminology
 
@@ -60,6 +63,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 *   **Member Metadata**: Information about entities associated with a specific member within the federation.
 *   **Member Vetting**: he process of verifying and approving applicants to join the federation, ensuring they meet security and trustworthiness requirements.
 
+
 # Federation Chain of Trust
 
 Federation members submit member metadata to the federation. Both the authenticity of the submitted member metadata and the submitting member need to be ensured by the federation. The specific methods for achieving this are beyond the scope of this document.
@@ -68,13 +72,16 @@ The federation operator aggregates, signs, and publishes the federation metadata
 
 The trust anchor for the federation is established through the federation's signing certificate, which in turn needs to be securely distributed and verified. The distribution and verification methods for the federation's certificate are outside the scope of this document.
 
+
 # Authentication
 
 All communication established within the federation leverages mutual Transport Layer Security (TLS) authentication, as defined in [@!RFC8446]. This mechanism ensures the authenticity of both communicating parties, establishing a robust foundation for secure data exchange.
 
+
 ## Public Key Pinning
 
 To further fortify this trust and mitigate risks associated with fraudulent certificates issued by unauthorized entities, the federation implements public key pinning as specified in [@!RFC7469]. Public key pinning associates a unique public key with each endpoint within the federation, stored in the federation metadata. During connection establishment, clients and servers validate the received certificate against the pre-configured public key pins retrieved from the federation metadata. This effectively thwarts attempts to utilize fraudulent certificates impersonating legitimate endpoints.
+
 
 ## Pin Discovery and Preloading
 
@@ -82,15 +89,18 @@ Peers in the federation retrieve these unique public key pins, serving as pre-co
 
 Before initiating any connection, both clients and servers preload the chosen pins in strict adherence to the guidelines outlined in section 2.7 of [@!RFC7469]. This preloading ensures connections only occur with endpoints possessing matching public keys, effectively blocking attempts to use fraudulent certificates.
 
+
 ## Verification of Received Certificates
 
 Upon connection establishment, both endpoints (client and server) must either leverage public key pinning or validate the received certificate against the published pins. Additionally, the federation metadata contains issuer information, which implementations MAY optionally use to verify certificate issuers. This step remains at the discretion of each individual implementation.
 
 In scenarios where a TLS session terminates independent of the application (e.g., via a reverse proxy), the termination point can utilize optional untrusted TLS client certificate authentication or validate the certificate issuer itself. Depending on the specific implementation, pin validation can then be deferred to the application itself, assuming the peer certificate is appropriately transferred (e.g., via an HTTP header).
 
+
 ## Failure to Validate
 
 It is crucial to note that failure to validate a received certificate against the established parameters, whether through pinning or issuer verification, results in immediate termination of the connection. This strict approach ensures only authorized and secure communication channels are established within the federation.
+
 
 # Federation Metadata
 
@@ -100,6 +110,7 @@ about federation members entities.
 Metadata is used for authentication and service discovery. A client select a server based on metadata claims (e.g., organization, tags). The client then use the selected server claims base_uri, pins and if needed issuers to establish a connection.
 
 Upon receiving a connection, a server validates the received client certificate using the client's published pins. Server MAY also check other claims such as organization and tags to determine if the connections is accepted or terminated.
+
 
 ## Federation Metadata claims
 
@@ -192,6 +203,7 @@ A list of the entity's servers and clients.
 
 The federation metadata JSON schema can be found at [https://www.fedtls.se/schema](https://www.fedtls.se/schema).
 
+
 ## Metadata Signing
 
 The federation metadata is signed with JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. It is RECOMMENDED that federation metadata signatures are created with algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
@@ -213,7 +225,6 @@ The following federation metadata signature protected headers are REQUIRED:
 *   `iss` (Issuer)
 
     A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim, along with the corresponding issuer's certificate, enables relying parties to confidently determine information origin and establish trust with entities within the identified federation. This ensures secure communication and mitigates potential security risks.
-
 
 *   `kid` (Key Identifier)
 
