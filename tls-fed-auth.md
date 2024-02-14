@@ -62,14 +62,27 @@ The root of the chain of trust is the federation metadata signature and the trus
 
 # Authentication
 
-All TLS sessions between clients and servers are authenticated via mutual TLS authentication. Trust is limited to the set of public key pins published for each endpoint in the federation metadata. Public key pinning associates a public key with an endpoint to reduce the risk of attacks with rogue certificates. Public key pinning is defined in [@!RFC7469]. Pins are collected from federation metadata. It is up to the federation to establish a discovery process for finding relevant pins. There are metadata claims to aid the discovery process (e.g., organization, tags, description). Clients and servers preload the selected pins as defined in [@!RFC7469], section 2.7, before establishing a connection.
+All communication established within the federation leverages mutual Transport Layer Security (TLS) authentication, as defined in [@!RFC8446]. This mechanism ensures the authenticity of both communicating parties, establishing a robust foundation for secure data exchange.
 
-Upon connection, the endpoints (client and server) MUST either use pinning or validate the received certificate using the entity's published pins. Issuers in metadata MAY be used to verify certificate issuers. It is up to each implementation to decide if these are needed.
+## Public Key Pinning
 
-If a TLS session is terminated separately from the application (e.g., when using a reverse proxy). The termination point can either use optional untrusted TLS client certificate authentication or validate the certificate issuer. Pin validation MAY then be deferred to the application, given that the peer certificate is transferred to the application (e.g., via an HTTP header).
+To further fortify this trust and mitigate risks associated with fraudulent certificates issued by unauthorized entities, the federation implements public key pinning as specified in [@!RFC7469]. Public key pinning associates a unique public key with each endpoint within the federation, stored in the federation metadata. During connection establishment, clients and servers validate the received certificate against the pre-configured public key pins retrieved from the federation metadata. This effectively thwarts attempts to utilize fraudulent certificates impersonating legitimate endpoints.
 
-Failure to validate a received certificate triggers termination of the connection.
+## Pin Discovery and Preloading
 
+Peers in the federation retrieve these unique public key pins, serving as pre-configured trust parameters, from the federation metadata. The federation MUST facilitates discovery process, enabling peers to identify the relevant pins for each endpoint. Information like organization, tags, and descriptions within the federation metadata aids in this discovery.
+
+Before initiating any connection, both clients and servers preload the chosen pins in strict adherence to the guidelines outlined in section 2.7 of [@!RFC7469]. This preloading ensures connections only occur with endpoints possessing matching public keys, effectively blocking attempts to use fraudulent certificates.
+
+## Verification of Received Certificates
+
+Upon connection establishment, both endpoints (client and server) must either leverage public key pinning or validate the received certificate against the published pins. Additionally, the federation metadata contains issuer information, which implementations MAY optionally use to verify certificate issuers. This step remains at the discretion of each individual implementation.
+
+In scenarios where a TLS session terminates independent of the application (e.g., via a reverse proxy), the termination point can utilize optional untrusted TLS client certificate authentication or validate the certificate issuer itself. Depending on the specific implementation, pin validation can then be deferred to the application itself, assuming the peer certificate is appropriately transferred (e.g., via an HTTP header).
+
+## Failure to Validate
+
+It is crucial to note that failure to validate a received certificate against the established parameters, whether through pinning or issuer verification, results in immediate termination of the connection. This strict approach ensures only authorized and secure communication channels are established within the federation.
 
 # Federation Metadata
 
