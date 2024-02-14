@@ -175,7 +175,7 @@ A list of the entity's servers and clients.
 
     -   digest (REQUIRED)
 
-        End-entity certificate base64 encoded Subject Public Key Information (SPKI) fingerprint [@!RFC7469], for client the digest MUST be globally unique. MAY, locally in the same entity_id object, be assigned to multiple clients.
+        The public key of the end-entity certificate converted to a Subject Public Key Information (SPKI) fingerprint, as specified in section 2.4 of [@!RFC7469]. For clients, the digest MUST be globally unique for unambiguous identification. However, within the same entity_id object, the same digest MAY be assigned to multiple clients.
 
         Example: "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
 
