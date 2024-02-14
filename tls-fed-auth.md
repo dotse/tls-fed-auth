@@ -122,7 +122,7 @@ This section defines the set of claims that can be included in metadata.
 
 -   cache_ttl (OPTIONAL)
 
-    How long (in seconds) to cache metadata. Effective maximum TTL is the minimum of HTTP Expire and TTL
+    The duration (in seconds) to cache the downloaded federation metadata.
 
 -   Entities (REQUIRED)
 
