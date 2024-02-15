@@ -31,9 +31,9 @@ properties:
   entities:
     type: array
     items:
-      $ref: '#/definitions/entity'
+      $ref: '#/components/entity'
 
-definitions:
+components:
   entity:
     type: object
     additionalProperties: true
@@ -64,15 +64,15 @@ definitions:
           certificate is included in the x509certificate property (PEM-encoded).
         type: array
         items:
-          $ref: '#/definitions/cert_issuers'
+          $ref: '#/components/cert_issuers'
       servers:
         type: array
         items:
-          $ref: '#/definitions/endpoint'
+          $ref: '#/components/endpoint'
       clients:
         type: array
         items:
-          $ref: '#/definitions/endpoint'
+          $ref: '#/components/endpoint'
   endpoint:
     type: object
     additionalProperties: true
@@ -104,7 +104,7 @@ definitions:
         title: Certificate pin set
         type: array
         items:
-          $ref: '#/definitions/pin_directive'
+          $ref: '#/components/pin_directive'
   cert_issuers:
     title: Certificate issuers
     type: object
