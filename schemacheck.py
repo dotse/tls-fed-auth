@@ -28,7 +28,7 @@ def main():
             else:
                 raise Exception("Unknown schema format")
 
-        jsonschema.Draft4Validator.check_schema(schema)
+        jsonschema.Draft202012Validator.check_schema(schema)
 
         if args.input:
             with open(args.input) as file:
