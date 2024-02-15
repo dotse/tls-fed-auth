@@ -57,11 +57,11 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ## Terminology
 
-*   **Centralized Trust Anchor**: A single, trusted entity responsible for issuing and validating root certificates within the federation.
 *   **Federation**: A trusted network of entities that adhere to common security policies and standards, using FedTLS for secure communication.
 *   **Federation Metadata**: A centralized repository storing critical information about all entities within the federation.
 *   **Member Metadata**: Information about entities associated with a specific member within the federation.
-*   **Member Vetting**: he process of verifying and approving applicants to join the federation, ensuring they meet security and trustworthiness requirements.
+*   **Member Vetting**: The process of verifying and approving applicants to join the federation, ensuring they meet security and trustworthiness requirements.
+*   **Trust Anchor**: The federation's root of trust is established by the metadata signing certificate, which verifies the metadata and allows participants to confidently rely on the information it contains.
 
 
 # Federation Chain of Trust
