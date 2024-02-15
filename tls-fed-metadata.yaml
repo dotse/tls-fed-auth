@@ -14,7 +14,7 @@ required:
 properties:
   version:
     title: Metadata schema version
-    descripton: Schema version follows semantic versioning (https://semver.org)
+    description: Schema version follows semantic versioning (https://semver.org)
     type: string
     pattern: "^\\d+\\.\\d+\\.\\d+$"
     examples:
