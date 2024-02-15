@@ -57,11 +57,13 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ## Terminology
 
-*   **Federation**: A trusted network of entities that adhere to common security policies and standards, using FedTLS for secure communication.
-*   **Federation Metadata**: A centralized repository storing critical information about all entities within the federation.
-*   **Member Metadata**: Information about entities associated with a specific member within the federation.
-*   **Member Vetting**: The process of verifying and approving applicants to join the federation, ensuring they meet security and trustworthiness requirements.
-*   **Trust Anchor**: The federation's root of trust is established by the metadata signing certificate, which verifies the metadata and allows participants to confidently rely on the information it contains.
+-   **Federation**: A trusted network of entities that adhere to common security policies and standards,using FedTLS for secure communication.
+-   **Federation Metadata**: A centralized repository storing critical information about all entities within the federation.
+-   **Member Metadata**: Information about entities associated with a specific member within the federation.
+-   **Federation Member**: An entity that has been approved to join the federation and can leverage FedTLS for secure communication with other members.
+-   **Federation Operator**: The entity responsible for the overall operation and management of the federation, including managing the ederation metadata, enforcing security policies, and onboarding new members.
+-   **Member Vetting**: The process of verifying and approving applicants to join the federation, ensuring they meet security and trustworthiness requirements.
+-   **Trust Anchor**: The federation's root of trust is established by the federation metadata signing certificate, which verifies the federation metadata and allows participants to confidently rely on the information it contains.
 
 
 # Federation Chain of Trust
@@ -201,7 +203,7 @@ A list of the entity's servers and clients.
 
 ## Metadata Schema
 
-The federation metadata JSON schema can be found at [https://www.fedtls.se/schema](https://www.fedtls.se/schema).
+The metadata JSON schema can be found at [https://www.fedtls.se/schema](https://www.fedtls.se/schema).
 
 
 ## Metadata Signing
@@ -233,7 +235,7 @@ The following federation metadata signature protected headers are REQUIRED:
 
 ## Metadata Example
 
-The following is a non-normative example of a federation metadata statement. Line breaks within the issuers' claim is for readability only.
+The following is a non-normative example of a metadata statement. Line breaks within the issuers' claim is for readability only.
 
 ~~~ json
 {
