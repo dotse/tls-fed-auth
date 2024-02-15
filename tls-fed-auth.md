@@ -384,12 +384,12 @@ Security considerations for TLS 1.3 [@!RFC8446] are described in Section 10 and 
 
 ## Federation Metadata Updates
 
-It's essential to regularly update the local copy of the federation metadata to ensure you have the latest information about active entities, current public key pins and valid certificates. Using outdated metadata can expose you to security risks like interacting with revoked entities or accepting manipulated data. If present, respect cache_ttl values specified in the federation metadata. 
+Regularly updating the local copy of federation metadata is essential for accessing the latest information about active entities, current public key pins, and valid certificates. The use of outdated metadata may expose systems to security risks, such as interaction with revoked entities or acceptance of manipulated data. If specified in the federation metadata, cache_ttl values SHOULD be respected.
 
 
-## Federation Metadata Signing Key
+## Verifying the Federation Metadata Signature
 
-To ensure the validity of the federation metadata the refresh process must verify the signature on each and every federation metadata fetch. The federation's public key authenticity must be assured and verified in a secure way.
+Ensuring data integrity and security within the FedTLS framework relies on verifying the signature of downloaded federation metadata. This process confirms the data's origin, validating that it comes from the intended source and has not been altered by unauthorized parties. Through the process of verifying the metadata's authenticity, trust is established in the information it contains, including valid member certificates and public key pins.
 
 
 # IANA Considerations
