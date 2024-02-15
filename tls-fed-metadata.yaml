@@ -21,7 +21,7 @@ properties:
       - "1.0.0"
   cache_ttl:
     title: Metadata cache TTL
-    description: |
+    description: >-
       How long (in seconds) to cache metadata.
       Effective maximum TTL is the minimum of HTTP Expire and TTL
     type: integer
@@ -50,7 +50,7 @@ definitions:
           - "https://example.com"
       organization:
         title: Name of entity organization
-        description: |
+        description: >-
           Name identifying the organization that the entity’s
           metadata represents.
         type: string
@@ -58,7 +58,7 @@ definitions:
           - "Example Org"
       issuers:
         title: Entity certificate issuers
-        description: |
+        description: >-
           A list of certificate issuers that are allowed to issue certificates
           for the entity's endpoints. For each issuer, the issuer's root CA
           certificate is included in the x509certificate property (PEM-encoded).
@@ -86,7 +86,7 @@ definitions:
           - "SCIM Server 1"
       tags:
         title: Endpoint tags
-        description: |
+        description: >-
           A list of strings that describe the endpoint's capabilities.
         type: array
         items:
