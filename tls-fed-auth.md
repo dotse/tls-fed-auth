@@ -1,7 +1,7 @@
 %%%
 
     title = "Federated TLS Authentication"
-    abbrev = "Federated TLS AuthN"
+    abbrev = "FedTLS"
     category = "std"
     ipr = "trust200902"
     submissiontype = "independent"
