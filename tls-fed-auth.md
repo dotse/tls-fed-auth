@@ -379,7 +379,7 @@ Example of public key pinning with curl. Line breaks are for readability only.
 
 ## TLS
 
-The security considerations for TLS 1.3 [RFC8446] are detailed in Section 10, along with Appendices C, D, and E of RFC 8446.
+The security considerations for TLS 1.3 [@!RFC8446] are detailed in Section 10, along with Appendices C, D, and E of RFC 8446.
 
 
 ## Federation Metadata Updates
