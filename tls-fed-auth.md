@@ -61,7 +61,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 -   **Federation Metadata**: A centralized repository storing critical information about all entities within the federation.
 -   **Member Metadata**: Information about entities associated with a specific member within the federation.
 -   **Federation Member**: An entity that has been approved to join the federation and can leverage FedTLS for secure communication with other members.
--   **Federation Operator**: The entity responsible for the overall operation and management of the federation, including managing the ederation metadata, enforcing security policies, and onboarding new members.
+-   **Federation Operator**: The entity responsible for the overall operation and management of the federation, including managing the federation metadata, enforcing security policies, and onboarding new members.
 -   **Member Vetting**: The process of verifying and approving applicants to join the federation, ensuring they meet security and trustworthiness requirements.
 -   **Trust Anchor**: The federation's root of trust is established by the federation metadata signing certificate, which verifies the federation metadata and allows participants to confidently rely on the information it contains.
 
@@ -166,7 +166,7 @@ A list of the entity's servers and clients.
 
 -   description (OPTIONAL)
 
-    A human readable text describing the server.
+    A human readable text describing the server or client.
 
     Example: "SCIM Server 1"
 
@@ -339,7 +339,7 @@ When the client wants to connect to a remote server (identified by an entity ide
 1. Find possible server candidates by filtering the remote entity's list of servers based on tags.
 2. Connect to the server URI. Include the entity's list of certificate issuers in the TLS clients list of trusted CAs, or trust the listed pins explicitly.
 3. If pinning was not used, validate the received server certificate using the entity's published pins.
-4. Commence transactions
+4. Commence transactions.
 
 
 ## Server
@@ -379,7 +379,7 @@ Example of public key pinning with curl. Line breaks are for readability only.
 
 ## TLS
 
-Security considerations for TLS 1.3 [@!RFC8446] are described in Section 10 and Appendices C, D and E of RFC 8446.
+The security considerations for TLS 1.3 [RFC8446] are detailed in Section 10, along with Appendices C, D, and E of RFC 8446.
 
 
 ## Federation Metadata Updates
