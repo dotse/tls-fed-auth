@@ -124,7 +124,7 @@ This section defines the set of claims that can be included in metadata.
 
 -   cache_ttl (OPTIONAL)
 
-    The duration (in seconds) to cache the downloaded federation metadata.
+    Specifies the duration (in seconds) for caching the downloaded federation metadata. This enables caching independent of specific HTTP implementations or configurations, beneficial for scenarios where the underlying communication mechanism is not solely HTTP-based.
 
 -   Entities (REQUIRED)
 
