@@ -49,7 +49,7 @@ components:
       organization:
         title: Name of entity organization
         description: >-
-          Name identifying the organization that the entity’s
+          Name identifying the organization that the entity's
           metadata represents.
         type: string
         examples:
