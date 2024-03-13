@@ -145,7 +145,7 @@ Metadata contains a list of entities that may be used for communication within t
 
     A name identifying the organization that the entity's metadata represents.
 
-    Example: “Example Org”.
+    Example: "Example Org".
 
 -   issuers (REQUIRED)
 
@@ -326,7 +326,7 @@ The example below is from the federation called "Skolfederation" where federated
 {type="A"}
 1. Entities collect member metadata from the federation metadata.
 2. The client pins the server's public key pins.
-3. The reverse proxy trust anchor is setup with the clients’ certificate issuers.
+3. The reverse proxy trust anchor is setup with the clients' certificate issuers.
 4. The client establishes a connection with the server using the base_uri from the federation metadata.
 5. The reverse proxy forwards the client certificate to the application.
 6. The application converts the certificate to a public key pin and checks the federation metadata for a matching pin. The entity's entity_id should be used as an identifier.
@@ -396,7 +396,7 @@ Ensuring data integrity and security within the FedTLS framework relies on verif
 
 # Acknowledgements
 
-This project was funded through the NGI0 PET Fund, a fund established by NLnet with financial support from the European Commission’s Next Generation Internet programme, under the aegis of DG Communications Networks, Content and Technology under grant agreement No 825310.
+This project was funded through the NGI0 PET Fund, a fund established by NLnet with financial support from the European Commission's Next Generation Internet programme, under the aegis of DG Communications Networks, Content and Technology under grant agreement No 825310.
 
 The authors would like to thank the following people for the detailed review and suggestions:
 
