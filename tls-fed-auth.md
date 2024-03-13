@@ -400,7 +400,7 @@ Example of how to use OpenSSL to generate a SPKI fingerprint from a PEM-encoded 
 Example of public key pinning with curl. Line breaks are for readability only.
 
 ~~~ bash
-  curl --cert client.pem --client.key --pinnedpubkey 'sha256//0Ok2aNf
+  curl --cert client.pem --key client.key --pinnedpubkey 'sha256//0Ok2aNf
   crCNDMhC2uXIdxBFOvMfEVtzlNVUT5pur0Dk=' https://host.example.com
 ~~~
 
