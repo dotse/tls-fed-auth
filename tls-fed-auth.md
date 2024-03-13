@@ -203,7 +203,9 @@ A list of the entity's servers and clients.
 
 ## Metadata Schema
 
-The metadata JSON schema can be found at [https://www.fedtls.se/schema](https://www.fedtls.se/schema).
+The FedTLS metadata schema is defined in (#json-schema-for-fedtls-metadata). This schema specifies the format for describing entities involved in FedTLS and their associated information.
+
+**Note:** The schema in Appendix A is folded due to line length limitations as specified in  [@RFC8792].
 
 
 ## Metadata Signing
@@ -392,11 +394,6 @@ Regularly updating the local copy of federation metadata is essential for access
 Ensuring data integrity and security within the FedTLS framework relies on verifying the signature of downloaded federation metadata. This process confirms the data's origin, validating that it comes from the intended source and has not been altered by unauthorized parties. Through the process of verifying the metadata's authenticity, trust is established in the information it contains, including valid member certificates and public key pins.
 
 
-# IANA Considerations
-
-This document has no IANA actions.
-
-
 # Acknowledgements
 
 This project was funded through the NGI0 PET Fund, a fund established by NLnet with financial support from the European Commission’s Next Generation Internet programme, under the aegis of DG Communications Networks, Content and Technology under grant agreement No 825310.
@@ -412,4 +409,201 @@ The authors would like to thank the following people for the detailed review and
 The authors would also like to thank participants in the EGIL working group for their comments on this specification.
 
 
+# IANA Considerations
+
+This document has no IANA actions.
+
+
 {backmatter}
+
+
+# JSON Schema for FedTLS Metadata
+
+This JSON schema defines the format of FedTLS metadata.
+
+Version: 1.0.0
+```
+=============== NOTE: '\\' line wrapping per RFC 8792 ===============
+
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://www.fedtls.se/schema/fedtls-metadata-schema.json\
+\",
+    "title": "JSON Schema for Federated TLS Authentication",
+    "description": "Version: 1.0.0",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+        "version",
+        "entities"
+    ],
+    "properties": {
+        "version": {
+            "title": "Metadata schema version",
+            "description": "Schema version follows semantic versioni\
+\ng (https://semver.org)",
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "examples": [
+                "1.0.0"
+            ]
+        },
+        "cache_ttl": {
+            "title": "Metadata cache TTL",
+            "description": "How long (in seconds) to cache metadata.\
+\ Effective maximum TTL is the minimum of HTTP Expire and TTL",
+            "type": "integer",
+            "minimum": 0,
+            "examples": [
+                3600
+            ]
+        },
+        "entities": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/entity"
+            }
+        }
+    },
+    "components": {
+        "entity": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "entity_id",
+                "issuers"
+            ],
+            "properties": {
+                "entity_id": {
+                    "title": "Entity identifier",
+                    "description": "Globally unique identifier for t\
+\he entity.",
+                    "type": "string",
+                    "format": "uri",
+                    "examples": [
+                        "https://example.com"
+                    ]
+                },
+                "organization": {
+                    "title": "Name of entity organization",
+                    "description": "Name identifying the organizatio\
+\n that the entity's metadata represents.",
+                    "type": "string",
+                    "examples": [
+                        "Example Org"
+                    ]
+                },
+                "issuers": {
+                    "title": "Entity certificate issuers",
+                    "description": "A list of certificate issuers th\
+\at are allowed to issue certificates for the entity's endpoints. Fo\
+\r each issuer, the issuer's root CA certificate is included in the \
+\x509certificate property (PEM-encoded).",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/cert_issuers"
+                    }
+                },
+                "servers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/endpoint"
+                    }
+                },
+                "clients": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/endpoint"
+                    }
+                }
+            }
+        },
+        "endpoint": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": [
+                "pins"
+            ],
+            "properties": {
+                "description": {
+                    "title": "Endpoint description",
+                    "type": "string",
+                    "examples": [
+                        "SCIM Server 1"
+                    ]
+                },
+                "tags": {
+                    "title": "Endpoint tags",
+                    "description": "A list of strings that describe \
+\the endpoint's capabilities.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]{1,64}$",
+                        "examples": [
+                            "xyzzy"
+                        ]
+                    }
+                },
+                "base_uri": {
+                    "title": "Endpoint base URI",
+                    "type": "string",
+                    "format": "uri",
+                    "examples": [
+                        "https://scim.example.com"
+                    ]
+                },
+                "pins": {
+                    "title": "Certificate pin set",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/pin_directive"
+                    }
+                }
+            }
+        },
+        "cert_issuers": {
+            "title": "Certificate issuers",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "x509certificate": {
+                    "title": "X.509 Certificate (PEM)",
+                    "type": "string"
+                }
+            }
+        },
+        "pin_directive": {
+            "title": "RFC 7469 pin directive",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "alg",
+                "digest"
+            ],
+            "properties": {
+                "alg": {
+                    "title": "Directive name",
+                    "type": "string",
+                    "enum": [
+                        "sha256"
+                    ],
+                    "examples": [
+                        "sha256"
+                    ]
+                },
+                "digest": {
+                    "title": "Directive value (Base64)",
+                    "type": "string",
+                    "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+\
+\/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+                    "examples": [
+                        "HiMkrb4phPSP+OvGqmZd6sGvy7AUn4k3XEe8OMBrzt8\
+\="
+                    ]
+                }
+            }
+        }
+    }
+}
+```
