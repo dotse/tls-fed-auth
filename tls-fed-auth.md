@@ -137,7 +137,7 @@ Metadata contains a list of entities that may be used for communication within t
 
 -   entity_id (REQUIRED)
 
-    URI that identifies the entity. It MUST be globally unique.
+    A URI that uniquely identifies the entity. This identifier MUST NOT collide with any other entity_id within the system or any external systems that the entity might interact with.
 
     Example: "https://example.com"
 
