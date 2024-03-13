@@ -222,34 +222,7 @@ The FedTLS metadata schema is defined in (#json-schema-for-fedtls-metadata). Thi
 **Note:** The schema in Appendix A is folded due to line length limitations as specified in  [@RFC8792].
 
 
-## Metadata Signing
-
-The federation metadata is signed with JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. It is RECOMMENDED that federation metadata signatures are created with algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
-
-The following federation metadata signature protected headers are REQUIRED:
-
-*   `alg` (Algorithm)
-
-    Identifies the algorithm used to generate the JWS signature [@!RFC7515], section 4.1.1.
-
-*   `iat` (Issued At)
-
-    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value.
-
-*   `exp` (Expiration Time)
-
-    Identifies the expiration time on and after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST be set to the value of exp. Its value MUST be a number containing a NumericDate value.
-
-*   `iss` (Issuer)
-
-    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim, along with the corresponding issuer's certificate, enables relying parties to confidently determine information origin and establish trust with entities within the identified federation. This ensures secure communication and mitigates potential security risks.
-
-*   `kid` (Key Identifier)
-
-    The key ID is used to identify the signing key in the key set used to sign the JWS.
-
-
-## Metadata Example
+## Example Metadata 
 
 The following is a non-normative example of a metadata statement. Line breaks within the issuers' claim is for readability only.
 
@@ -304,12 +277,53 @@ The following is a non-normative example of a metadata statement. Line breaks wi
 }
 ~~~
 
+## Metadata Signing
 
-# Usage Examples
+The federation metadata is signed with JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. It is RECOMMENDED that federation metadata signatures are created with algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
+
+The following federation metadata signature protected headers are REQUIRED:
+
+*   `alg` (Algorithm)
+
+    Identifies the algorithm used to generate the JWS signature [@!RFC7515], section 4.1.1.
+
+*   `iat` (Issued At)
+
+    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value.
+
+*   `exp` (Expiration Time)
+
+    Identifies the expiration time on and after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST be set to the value of exp. Its value MUST be a number containing a NumericDate value.
+
+*   `iss` (Issuer)
+
+    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim, along with the corresponding issuer's certificate, enables relying parties to confidently determine information origin and establish trust with entities within the identified federation. This ensures secure communication and mitigates potential security risks.
+
+*   `kid` (Key Identifier)
+
+    The key ID is used to identify the signing key in the key set used to sign the JWS.
+
+
+## Example Signature Protected Header
+
+The following is a non-normative example of a signature protected header.
+
+~~~ json
+{
+    "alg": "ES256",
+    "exp": 1707739718,
+    "iat": 1706875718,
+    "iss": "https://prod.kontosynk.se",
+    "kid": "c2fb760e-f4b6-4f7e-b17a-7115d2826d51"
+}
+~~~
+
+
+# Example Usage Scenarios
 
 The examples in this section are non-normative.
 
-The example below is from the federation called "Skolfederation" where federated TLS authentication is already in use. Clients and servers are registered in the federation. The clients intend to manage cross-domain user accounts within the service. The standard used for account management is SS 12000:2018 (i.e., a SCIM extension).
+The following example describes a scenario within the federation "Skolfederation" where FedTLS is already established. Both clients and servers are registered members of the federation. In this scenario, clients aim to manage cross-domain user accounts within the service. The standard used for account management is SS 12000:2018 (i.e., a SCIM extension).
 
 ~~~ ascii-art
 +---------------------------------------------+
