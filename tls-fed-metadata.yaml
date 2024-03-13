@@ -1,10 +1,8 @@
 ---
-
-# JSON Schema for Federated TLS Authentication
-# Version: 1.0.0
-
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: https://www.fedtls.se/schema/fedtls-metadata-schema-v1.0.0.json
+$id: https://www.fedtls.se/schema/fedtls-metadata-schema.json
+title: JSON Schema for Federated TLS Authentication
+description: "Version: 1.0.0"
 
 type: object
 additionalProperties: true
