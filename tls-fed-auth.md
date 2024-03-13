@@ -195,6 +195,20 @@ A list of the entity's servers and clients.
 -   tags (OPTIONAL)
 
     A list of strings that describe the endpoint's capabilities.
+    
+    Tags are fundamental for discovery within a federation, aiding both servers and clients in identifying appropriate connections.
+
+    -   Servers:  Tags enable servers to identify clients with specific characteristics or capabilities. For instance, a server might want to serve only clients with particular security clearances or those supporting specific protocol versions. By filtering incoming requests based on relevant tags, servers can efficiently identify suitable clients for serving.
+
+    -   Clients:  Tags also assist clients in discovering servers offering the services they require. Clients can search for servers based on tags indicating supported protocols or the type of data they handle. This enables clients to efficiently locate servers meeting their specific needs.
+
+    Federation-Specific Considerations
+
+    While tags are tied to individual federations and serve distinct purposes within each, several key considerations are crucial to ensure clarity and promote consistent tag usage:
+
+    -   Well-Defined Scope: Each federation MUST establish a clear scope for its tags, detailing their intended use, allowed tag values, associated meanings, and any relevant restrictions. Maintaining a well-defined and readily accessible registry of approved tags is essential for the federation.
+
+    -   Validation Mechanisms: Implementing validation mechanisms for tags is highly recommended. This may involve a dedicated operation or service verifying tag validity and compliance with the federation's regulations. Such validation ensures consistency within the federation by preventing the use of unauthorized or irrelevant tags.
 
     Pattern: `^[a-z0-9]{1,64}$`
 
