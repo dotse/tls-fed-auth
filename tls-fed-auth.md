@@ -143,7 +143,7 @@ Metadata contains a list of entities that may be used for communication within t
 
 -   organization (OPTIONAL)
 
-    A name identifying the organization that the entity's metadata represents.
+    A name identifying the organization that the entity's metadata represents. The FedTLS federation operator MUST ensure a mechanism is in place to verify that the organization claim corresponds to the rightful owner of the information exchanged between nodes. This is crucial for the trust model, ensuring certainty about the identities of the involved parties. The federation operator SHOULD choose an approach that best suits the specific needs and trust model of the federation.
 
     Example: "Example Org".
 
