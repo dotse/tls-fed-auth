@@ -137,13 +137,13 @@ Metadata contains a list of entities that may be used for communication within t
 
 -   entity_id (REQUIRED)
 
-    A URI that uniquely identifies the entity. This identifier MUST NOT collide with any other entity_id within the system or any external systems that the entity might interact with.
+    A URI that uniquely identifies the entity. This identifier MUST NOT collide with any other entity_id within the federation or with any other federation that the entity interacts with.
 
     Example: "https://example.com"
 
 -   organization (OPTIONAL)
 
-    A name identifying the organization that the entity's metadata represents. The FedTLS federation operator MUST ensure a mechanism is in place to verify that the organization claim corresponds to the rightful owner of the information exchanged between nodes. This is crucial for the trust model, ensuring certainty about the identities of the involved parties. The federation operator SHOULD choose an approach that best suits the specific needs and trust model of the federation.
+    A name identifying the organization that the entity's metadata represents. The federation operator MUST ensure a mechanism is in place to verify that the organization claim corresponds to the rightful owner of the information exchanged between nodes. This is crucial for the trust model, ensuring certainty about the identities of the involved parties. The federation operator SHOULD choose an approach that best suits the specific needs and trust model of the federation.
 
     Example: "Example Org".
 
@@ -219,7 +219,7 @@ A list of the entity's servers and clients.
 
 The FedTLS metadata schema is defined in (#json-schema-for-fedtls-metadata). This schema specifies the format for describing entities involved in FedTLS and their associated information.
 
-**Note:** The schema in Appendix A is folded due to line length limitations as specified in  [@RFC8792].
+**Note:** The schema in Appendix A is folded due to line length limitations as specified in [@RFC8792].
 
 
 ## Example Metadata 
@@ -289,19 +289,19 @@ The following federation metadata signature protected headers are REQUIRED:
 
 *   `iat` (Issued At)
 
-    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value.
+    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value [R@!FC7519], section 4.1.6.
 
 *   `exp` (Expiration Time)
 
-    Identifies the expiration time on and after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST be set to the value of exp. Its value MUST be a number containing a NumericDate value.
+    Identifies the expiration time on and after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST be set to the value of exp. Its value MUST be a number containing a NumericDate value [R@!FC7519], section 4.1.4.
 
 *   `iss` (Issuer)
 
-    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim, along with the corresponding issuer's certificate, enables relying parties to confidently determine information origin and establish trust with entities within the identified federation. This ensures secure communication and mitigates potential security risks.
+    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim, along with the corresponding issuer's certificate, enables relying parties to confidently determine information origin and establish trust with entities within the identified federation. This ensures secure communication and mitigates potential security risks [R@!FC7519], section 4.1.1.
 
 *   `kid` (Key Identifier)
 
-    The key ID is used to identify the signing key in the key set used to sign the JWS.
+    The key ID is used to identify the signing key in the key set used to sign the JWS [@!RFC7515], section 4.1.4.
 
 
 ## Example Signature Protected Header
@@ -313,7 +313,7 @@ The following is a non-normative example of a signature protected header.
     "alg": "ES256",
     "exp": 1707739718,
     "iat": 1706875718,
-    "iss": "https://prod.kontosynk.se",
+    "iss": "https://fedtls.example.com",
     "kid": "c2fb760e-f4b6-4f7e-b17a-7115d2826d51"
 }
 ~~~
