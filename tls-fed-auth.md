@@ -11,7 +11,7 @@
     [seriesInfo]
     status = "informational"
     name = "Internet-Draft"
-    value = "draft-halen-fed-tls-auth-09"
+    value = "draft-halen-fed-tls-auth-10"
     stream = "independent"
 
     [[author]]
@@ -289,15 +289,15 @@ The following federation metadata signature protected headers are REQUIRED:
 
 *   `iat` (Issued At)
 
-    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value [R@!FC7519], section 4.1.6.
+    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value [@!RFC7519], section 4.1.6.
 
 *   `exp` (Expiration Time)
 
-    Identifies the expiration time on and after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST be set to the value of exp. Its value MUST be a number containing a NumericDate value [R@!FC7519], section 4.1.4.
+    Identifies the expiration time on and after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST be set to the value of exp. Its value MUST be a number containing a NumericDate value [@!RFC7519], section 4.1.4.
 
 *   `iss` (Issuer)
 
-    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim, along with the corresponding issuer's certificate, enables relying parties to confidently determine information origin and establish trust with entities within the identified federation. This ensures secure communication and mitigates potential security risks [R@!FC7519], section 4.1.1.
+    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim, along with the corresponding issuer's certificate, enables relying parties to confidently determine information origin and establish trust with entities within the identified federation. This ensures secure communication and mitigates potential security risks [@!RFC7519], section 4.1.1.
 
 *   `kid` (Key Identifier)
 
@@ -400,8 +400,8 @@ Example of how to use OpenSSL to generate a SPKI fingerprint from a PEM-encoded 
 Example of public key pinning with curl. Line breaks are for readability only.
 
 ~~~ bash
-  curl --cert client.pem --key client.key --pinnedpubkey 'sha256//0Ok2aNf
-  crCNDMhC2uXIdxBFOvMfEVtzlNVUT5pur0Dk=' https://host.example.com
+  curl --cert client.pem --key client.key --pinnedpubkey 'sha256//0Ok
+  2aNfcrCNDMhC2uXIdxBFOvMfEVtzlNVUT5pur0Dk=' https://host.example.com
 ~~~
 
 
