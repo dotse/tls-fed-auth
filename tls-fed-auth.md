@@ -41,7 +41,7 @@ This document describes the Federated TLS Authentication (FedTLS) protocol, enab
 
 # Introduction
 
-This document outlines the Federated TLS Authentication (FedTLS) protocol, which facilitates secure end-to-end communication between two parties within a federation. Both the client and server undergo mutual TLS authentication (as defined in [@!RFC8446]), establishing a robust foundation of trust. This trust relies on a central trust anchor held and published by the federation, acting as a trusted third party connecting distinct trust domains under a common set of policies and standards.
+This document outlines the Federated TLS Authentication (FedTLS) framework, which facilitates secure end-to-end communication between two parties within a federation. Both the client and server undergo mutual TLS authentication (as defined in [@!RFC8446]), establishing a robust foundation of trust. This trust relies on a central trust anchor held and published by the federation, acting as a trusted third party connecting distinct trust domains under a common set of policies and standards.
 
 The FedTLS framework leverages a centralized repository of federation metadata to ensure secure communication between servers and clients within the federation. This repository includes information about public keys, certificate issuers, and additional entity details, such as organizational information and service descriptions. This centralized approach simplifies certificate management, promotes interoperability, and establishes trust within the federation. By directly accessing the federation metadata, efficient connections are established, eliminating manual configuration even for new interactions.
 
