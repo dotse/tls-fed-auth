@@ -78,6 +78,28 @@ The federation operator aggregates, signs, and publishes the federation metadata
 The trust anchor for the federation is established through the federation's signing certificate, which in turn needs to be securely distributed and verified. The distribution and verification methods for the federation's certificate are outside the scope of this document.
 
 
+# Metadata Repository
+
+The FedTLS metadata repository serves as the cornerstone of trust within a federation. It acts as a central vault, securely storing all information about all participating federation members and their respective entities. This information, known as federation metadata, is presented as a JWS to ensure its authenticity and integrity.
+
+The metadata repository is subject to stringent security measures to safeguard the integrity and confidentiality of the stored information. This MAY involve:
+
+-   Member Management: The federation operator can centrally enforce security policies and vet new members before they are added to the repository.
+-   Access Controls: Only authorized members within the federation should have access to the repository.
+-   Regular Backups: Robust backup procedures ensure data recovery in case of unforeseen circumstances.
+
+Before member metadata is added to the federation's repository, it is recommended that the submitted metadata undergo a validation process. This process aims to verify the accuracy, completeness, and validity of the information provided by a member. The validation process MAY include the following steps:
+
+-   Format Validation: The system checks if the submitted metadata adheres to the defined schema and format specifications.
+-   Unique Entity ID: Checks are performed to ensure that the entity_id in the submitted metadata is not already registered by another member. Each entity within the federation must have a unique identifier.
+-   Unique Public Key Pins: Public key pins are utilized to locate the corresponding entity within the metadata upon establishing a connection. Through the validation process, these pins are ensured to be unique within the repository. This prevents ambiguity during connection establishment.
+-   Certificate Verification: The issuer certificates listed in the metadata are validated to ensure that the algorithms used in the certificates are well-known and secure, and that the certificates are currently valid and have not expired
+-   Organization: Verification is conducted to ensure the correctness of the organization name in the submitted metadata. Additionally, any other provided organizational information is verified to adhere to the federation policy.
+-   Tag Validation: Ensures that tags in the metadata adhere to the defined tag structure, verifying both mandatory and optional tags. This process is crucial for maintaining consistency and preventing unauthorized tags within a federation.
+
+The FedTLS metadata repository serves as the vital foundation for establishing trust and enabling secure communication within a FedTLS environment. By providing a central, secure, and controlled repository for critical information, the metadata repository empowers members to confidently discover other trusted entities, and establish secure connections for seamless interaction.
+
+
 # Authentication
 
 All communication established within the federation leverages mutual Transport Layer Security (TLS) authentication, as defined in [@!RFC8446]. This mechanism ensures the authenticity of both communicating parties, establishing a robust foundation for secure data exchange.
