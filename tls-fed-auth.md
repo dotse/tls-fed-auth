@@ -80,7 +80,7 @@ The trust anchor for the federation is established through the federation's sign
 
 # Metadata Repository
 
-The FedTLS metadata repository serves as the cornerstone of trust within a federation. It acts as a central vault, securely storing all information about all participating federation members and their respective entities. This information, known as federation metadata, is presented as a JWS to ensure its authenticity and integrity.
+The FedTLS metadata repository serves as the cornerstone of trust within a federation. It acts as a central vault, securely storing all information about all participating federation members and their respective entities. This information, known as federation metadata, is presented as a JWS [@!RFC7515]to ensure its authenticity and integrity.
 
 The metadata repository is subject to stringent security measures to safeguard the integrity and confidentiality of the stored information. This MAY involve:
 
@@ -103,6 +103,26 @@ The FedTLS metadata repository serves as the vital foundation for establishing t
 # Metadata Submission
 
 It is up to the federation to determine which channels should be provided to members for submitting their metadata to the metadata repository. Members typically have the option to either upload the metadata directly to the repository, provided such functionality exists, or to send it to the federation operator through a designated secure channel. If an insecure channel is used, additional measures MUST be taken to verify the authenticity and integrity of the metadata. Such measures may include verifying the checksum of the metadata through another channel. The choice of submission channel may depend on factors such as the federation's guidelines and the preferences of the member.
+
+
+# Maintaining Up-to-Date Metadata
+
+In a FedTLS federation, accurate and current metadata is essential for ensuring secure and reliable communication between members. This necessitates maintaining up-to-date metadata accessible by all members.
+
+-   Federation Metadata: The federation operator publishes a JWS containing an aggregate of all entity metadata. This JWS serves as the source of truth for information about all members within the federation. Outdated information in the JWS can lead to issues like failed connections, discovery challenges, and potential security risks.
+-   Local Metadata: Each member maintains a local metadata store containing information about other members within the federation. This information is retrieved from the federation's publicly accessible JWS. Outdated data in the local store can hinder a member's ability to discover and connect with other relevant entities.
+
+Here's how metadata is kept up-to-date:
+
+-   Member Responsibility: The primary responsibility for maintaining accurate metadata lies with each member. Members are obligated to:
+    -   Promptly update their member metadata whenever any relevant information changes and submit it to the metadata repository.
+    -   Periodically refresh their local metadata store, regardless of whether a caching mechanism is used. This ensures they retrieve the latest information from the federation's JWS, even if they have cached data.
+
+-   Federation Operator Role: The Federation Operator plays a crucial role in maintaining data integrity within the federation. Their responsibilities include:
+    -   Defining clear guidelines for metadata updates, member responsibilities, and expiration time management.
+    -   Implementing automated mechanisms to update the published JWS containing the aggregate member metadata, ensuring it adheres to the expiration time (exp, see (#metadata-signing)) and cache TTL (cache_ttl, see (#federation-metadata-claims)) specifications.
+
+By adhering to these responsibilities, the Federation ensures that information remains valid for the defined timeframe and that caching mechanisms utilize up-to-date data effectively.
 
 
 # Authentication
