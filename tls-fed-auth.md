@@ -71,11 +71,13 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Federation Chain of Trust
 
-Federation members submit member metadata to the federation. Both the authenticity of the submitted member metadata and the submitting member need to be ensured by the federation. The specific methods for achieving this are beyond the scope of this document.
+Federation members submit member metadata to the federation. Both the authenticity of the submitted member metadata and the submitting member need to be ensured by the federation.
 
-The federation operator aggregates, signs, and publishes the federation metadata, which combines all members' member metadata with some additional information added by the federation. By trusting the federation and its certificate, federation members trust the information contained within the federation metadata.
+The federation operator aggregates, signs, and publishes the federation metadata, which combines all members' member metadata along with additional federation-specific information. By placing trust in the federation and its associated signing key, federation members trust the information contained within the federation metadata.
 
-The trust anchor for the federation is established through the federation's signing certificate, which in turn needs to be securely distributed and verified. The distribution and verification methods for the federation's certificate are outside the scope of this document.
+The trust anchor for the federation is established through the federation's signing key, a critical component requiring secure distribution and verification. To achieve this, the federation's signing key is distributed using a JWKS (JSON Web Key Set) [@RFC7517], providing a flexible framework for exposing multiple keys including the signing key and keys for rollover. This structured approach ensures members can readily access the necessary keys for verification purposes.
+
+An additional layer of security is introduced through thumbprint verification [@RFC7638], where federation members can independently verify the key's authenticity. This involves comparing the calculated cryptographic thumbprint of the key with a trusted value, ensuring its integrity. Importantly, this verification process can be conducted through channels separate from the JWKS itself, enhancing security by eliminating reliance on a single distribution mechanism. 
 
 
 # Metadata Repository
