@@ -100,6 +100,11 @@ Before member metadata is added to the federation's repository, it is recommende
 The FedTLS metadata repository serves as the vital foundation for establishing trust and enabling secure communication within a FedTLS environment. By providing a central, secure, and controlled repository for critical information, the metadata repository empowers members to confidently discover other trusted entities, and establish secure connections for seamless interaction.
 
 
+# Metadata Submission
+
+It is up to the federation to determine which channels should be provided to members for submitting their metadata to the metadata repository. Members typically have the option to either upload the metadata directly to the repository, provided such functionality exists, or to send it to the federation operator through a designated secure channel. If an insecure channel is used, additional measures MUST be taken to verify the authenticity and integrity of the metadata. Such measures may include verifying the checksum of the metadata through another channel. The choice of submission channel may depend on factors such as the federation's guidelines and the preferences of the member.
+
+
 # Authentication
 
 All communication established within the federation leverages mutual Transport Layer Security (TLS) authentication, as defined in [@!RFC8446]. This mechanism ensures the authenticity of both communicating parties, establishing a robust foundation for secure data exchange.
