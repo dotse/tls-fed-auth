@@ -75,7 +75,7 @@ Federation members submit member metadata to the federation. Both the authentici
 
 The federation operator aggregates, signs, and publishes the federation metadata, which combines all members' member metadata along with additional federation-specific information. By placing trust in the federation and its associated signing key, federation members trust the information contained within the federation metadata.
 
-The trust anchor for the federation is established through the federation's signing key, a critical component requiring secure distribution and verification. To achieve this, the federation's signing key is distributed using a JWKS (JSON Web Key Set) [@RFC7517], providing a flexible framework for exposing multiple keys including the signing key and keys for rollover. This structured approach ensures members can readily access the necessary keys for verification purposes.
+The trust anchor for the federation is established through the federation's signing key, a critical component requiring secure distribution and verification. To achieve this, the federation's signing key is distributed using a JSON Web Key Set (JWKS) [@RFC7517], providing a flexible framework for exposing multiple keys including the signing key and keys for rollover. This structured approach ensures members can readily access the necessary keys for verification purposes.
 
 An additional layer of security is introduced through thumbprint verification [@RFC7638], where federation members can independently verify the key's authenticity. This involves comparing the calculated cryptographic thumbprint of the key with a trusted value, ensuring its integrity. Importantly, this verification process can be conducted through channels separate from the JWKS itself, enhancing security by eliminating reliance on a single distribution mechanism. 
 
@@ -129,7 +129,7 @@ By adhering to these responsibilities, the Federation ensures that information r
 
 # Authentication
 
-All communication established within the federation leverages mutual Transport Layer Security (TLS) authentication, as defined in [@!RFC8446]. This mechanism ensures the authenticity of both communicating parties, establishing a robust foundation for secure data exchange.
+All communication established within the federation leverages mutual TLS authentication, as defined in [@!RFC8446]. This mechanism ensures the authenticity of both communicating parties, establishing a robust foundation for secure data exchange.
 
 
 ## Public Key Pinning
