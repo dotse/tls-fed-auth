@@ -34,14 +34,16 @@
 
 .# Abstract
 
-This document describes the Federated TLS Authentication (FedTLS) protocol, enabling secure end-to-end communication within a federated environment. Both clients and servers perform mutual TLS authentication, establishing trust based on a centrally managed trust anchor published by the federation. Additionally, FedTLS ensures unambiguous identification of entities, as only authorized members within the federation can publish metadata, further mitigating risks associated with unauthorized entities impersonating legitimate participants. This framework promotes seamless and secure interoperability across different trust domains adhering to common policies and standards within the federation.
+This document describes the Federated TLS Authentication (FedTLS) protocol, enabling secure machine-to-machine communication within a federation. Both clients and servers perform mutual TLS authentication, establishing trust based on a centrally managed trust anchor published by the federation. Additionally, FedTLS ensures unambiguous identification of entities, as only authorized members within the federation can publish metadata, further mitigating risks associated with unauthorized entities impersonating legitimate participants. This framework promotes seamless and secure interoperability across different trust domains adhering to common policies and standards within the federation.
 
 {mainmatter}
 
 
 # Introduction
 
-This document outlines the Federated TLS Authentication (FedTLS) framework, which facilitates secure end-to-end communication between two parties within a federation. Both the client and server undergo mutual TLS authentication (as defined in [@!RFC8446]), establishing a robust foundation of trust. This trust relies on a central trust anchor held and published by the federation, acting as a trusted third party connecting distinct trust domains under a common set of policies and standards.
+This document describes the Federated TLS Authentication (FedTLS) protocol, enabling secure machine-to-machine communication within a federation. Both the client and server undergo mutual TLS authentication (as defined in [@!RFC8446]), establishing a robust foundation of trust. This trust relies on a central trust anchor held and published by the federation, acting as a trusted third party connecting distinct trust domains under a common set of policies and standards.
+
+A crucial aspect of FedTLS is the necessity for federation members to fully trust the federation operator. This trust is fundamental to the framework's design, as the federation operator is responsible for managing the central trust anchor, vetting members, and ensuring the integrity of the metadata used within the federation.
 
 The FedTLS framework leverages a centralized repository of federation metadata to ensure secure communication between servers and clients within the federation. This repository includes information about public keys, certificate issuers, and additional entity details, such as organizational information and service descriptions. This centralized approach simplifies certificate management, promotes interoperability, and establishes trust within the federation. By directly accessing the federation metadata, efficient connections are established, eliminating manual configuration even for new interactions.
 
@@ -60,24 +62,56 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ## Terminology
 
 -   **Federation**: A trusted network of entities that adhere to common security policies and standards,using FedTLS for secure communication.
--   **Federation Metadata**: A cryptographically signed document containing critical information about all entities within the federation.
--   **Member Metadata**: Information about entities associated with a specific member within the federation.
--   **Metadata Repository**: A centralized repository storing information about all entities within the federation.
 -   **Federation Member**: An entity that has been approved to join the federation and can leverage FedTLS for secure communication with other members.
 -   **Federation Operator**: The entity responsible for the overall operation and management of the federation, including managing the federation metadata, enforcing security policies, and onboarding new members.
+-   **Federation Metadata**: A cryptographically signed document containing critical information about all entities within the federation.
+-   **Metadata Repository**: A centralized repository storing information about all entities within the federation.
+-   **Member Metadata**: Information about entities associated with a specific member within the federation.
 -   **Member Vetting**: The process of verifying and approving applicants to join the federation, ensuring they meet security and trustworthiness requirements.
 -   **Trust Anchor**: The federation's root of trust is established by the federation metadata signing key, which verifies the federation metadata and allows participants to confidently rely on the information it contains.
 
 
-# Federation Chain of Trust
+# Trust Model
 
-Federation members submit member metadata to the federation. Both the authenticity of the submitted member metadata and the submitting member need to be ensured by the federation.
+The FedTLS framework operates on a trust model that is central to its design and functionality. This section outlines the key components of this trust model and its implications for federation members and the federation operator.
+
+
+## Role of the Federation Operator
+
+The federation operator plays a critical role in the FedTLS framework. This entity is responsible for:
+
+-   Managing the central trust anchor, which is used to establish trust across different domains within the federation.
+-   Vetting federation members to ensure they meet the required standards and policies.
+-   Maintaining and securing the federation metadata, which includes public key pins [@!RFC7469], issuer certificates, and other essential information.
+
+Therefore, federation members must place full trust in the federation operator's integrity. The security and reliability of the entire federation depend on the integrity and competence of this central authority.
+
+
+## Federation Members' Responsibilities
+
+Federation members share the responsibility of maintaining trust and security within the federation. Their responsibilities include:
+
+-   Adhering to the federation's security policies and procedures.
+-   Ensuring the accuracy and timeliness of their metadata submissions.
+-   Cooperating with the federation operator's vetting and security measures.
+
+By fulfilling these responsibilities, federation members help sustain the overall trust framework that enables secure and reliable communication within the federation. Federation members submit member metadata to the federation. Both the authenticity of the submitted member metadata and the submitting member need to be ensured by the federation.
+
+
+## Trust Framework
+
+Each federation operates within a trust framework that encompasses its own security policies and procedures. This framework is designed to ensure the integrity, authenticity, and confidentiality of communications within the federation. Key components of this framework include:
+
+-   Public key pinning [@!RFC7469] and preloading to thwart man-in-the-middle attacks by ensuring validated certificates.
+-   Regular updates and verification of federation metadata to prevent the use of outdated or compromised information.
 
 The federation operator aggregates, signs, and publishes the federation metadata, which combines all members' member metadata along with additional federation-specific information. By placing trust in the federation and its associated signing key, federation members trust the information contained within the federation metadata.
 
-The trust anchor for the federation is established through the federation's signing key, a critical component requiring secure distribution and verification. To achieve this, the federation's signing key is distributed using a JSON Web Key Set (JWKS) [@RFC7517], providing a flexible framework for exposing multiple keys including the signing key and keys for rollover. This structured approach ensures members can readily access the necessary keys for verification purposes.
+The trust anchor for the federation is established through the federation's signing key, a critical component requiring secure distribution and verification. To achieve this, the federation's signing key is distributed using a JSON Web Key Set (JWKS) [@!RFC7517], providing a flexible framework for exposing multiple keys, including the signing key and keys for rollover. This structured approach ensures members can readily access the necessary keys for verification purposes.
 
-An additional layer of security is introduced through thumbprint verification [@RFC7638], where federation members can independently verify the key's authenticity. This involves comparing the calculated cryptographic thumbprint of the key with a trusted value, ensuring its integrity. Importantly, this verification process can be conducted through channels separate from the JWKS itself, enhancing security by eliminating reliance on a single distribution mechanism. 
+An additional layer of security is introduced through thumbprint verification [@!RFC7638], where federation members can independently verify the key's authenticity. This involves comparing the calculated cryptographic thumbprint of the key with a trusted value, ensuring its integrity. Importantly, this verification process can be conducted through channels separate from the JWKS itself, enhancing security by eliminating reliance on a single distribution mechanism.
+
+This trust framework is essential for enabling seamless and secure interoperability across different trust domains within the federation.
 
 
 # Metadata Repository
@@ -94,7 +128,7 @@ Before member metadata is added to the federation's repository, it is recommende
 
 -   Format Validation: The system checks if the submitted metadata adheres to the defined schema and format specifications.
 -   Unique Entity ID: Checks are performed to ensure that the entity_id in the submitted metadata is not already registered by another member. Each entity within the federation must have a unique identifier.
--   Unique Public Key Pins: Public key pins are utilized to locate the corresponding entity within the metadata upon establishing a connection. Through the validation process, these pins are ensured to be unique within the repository. This prevents ambiguity during connection establishment.
+-   Unique Public Key Pins: Public key pins [@!RFC7469] are utilized to locate the corresponding entity within the metadata upon establishing a connection. Through the validation process, these pins are ensured to be unique within the repository. This prevents ambiguity during connection establishment.
 -   Certificate Verification: The issuer certificates listed in the metadata are validated to ensure that the algorithms used in the certificates are well-known and secure, and that the certificates are currently valid and have not expired
 -   Organization: Verification is conducted to ensure the correctness of the organization name in the submitted metadata. Additionally, any other provided organizational information is verified to adhere to the federation policy.
 -   Tag Validation: Ensures that tags in the metadata adhere to the defined tag structure, verifying both mandatory and optional tags. This process is crucial for maintaining consistency and preventing unauthorized tags within a federation.
@@ -161,7 +195,7 @@ It is crucial to note that failure to validate a received certificate against th
 Federation metadata is published as a JWS [@!RFC7515]. The payload contains statements
 about federation members entities.
 
-Metadata is used for authentication and service discovery. A client select a server based on metadata claims (e.g., organization, tags). The client then use the selected server claims base_uri, pins and if needed issuers to establish a connection.
+Metadata is used for authentication and service discovery. A client selects a server based on metadata claims (e.g., organization, tags). The client then use the selected server claims base_uri, pins and if needed issuers to establish a connection.
 
 Upon receiving a connection, a server validates the received client certificate using the client's published pins. Server MAY also check other claims such as organization and tags to determine if the connections is accepted or terminated.
 
@@ -176,7 +210,7 @@ This section defines the set of claims that can be included in metadata.
 
 -   cache_ttl (OPTIONAL)
 
-    Specifies the duration (in seconds) for caching the downloaded federation metadata. This enables caching independent of specific HTTP implementations or configurations, beneficial for scenarios where the underlying communication mechanism is not solely HTTP-based.
+    Specifies the duration in seconds for caching the downloaded federation metadata. This allows for caching independent of specific HTTP implementations or configurations, which is particularly beneficial in scenarios where the communication mechanism is not solely HTTP-based. In the event of an outage of the published metadata, members can rely on the cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). This approach ensures continuity of operations and avoids disruptions during temporary issues. However, once the metadata expires, it MUST no longer be trusted to maintain the security and integrity of the federation.
 
 -   Entities (REQUIRED)
 
@@ -459,6 +493,11 @@ Example of public key pinning with curl. Line breaks are for readability only.
 
 # Security Considerations
 
+## Security Risks and Trust Management
+
+The security risks associated with the FedTLS framework are confined to each individual federation. Both the federation operator and federation members share the responsibility of maintaining trust and security within the federation. Proper handling and management of metadata, as well as thorough vetting of federation members, are crucial to sustaining this trust and security. Each federation operates within a trust framework, which includes its own security policies and procedures to ensure the integrity and reliability of the federation.
+
+
 ## TLS
 
 The security considerations for TLS 1.3 [@!RFC8446] are detailed in Section 10, along with Appendices C, D, and E of RFC 8446.
@@ -466,12 +505,17 @@ The security considerations for TLS 1.3 [@!RFC8446] are detailed in Section 10, 
 
 ## Federation Metadata Updates
 
-Regularly updating the local copy of federation metadata is essential for accessing the latest information about active entities, current public key pins, and valid certificates. The use of outdated metadata may expose systems to security risks, such as interaction with revoked entities or acceptance of manipulated data. If specified in the federation metadata, cache_ttl values SHOULD be respected.
+Regularly updating the local copy of federation metadata is essential for accessing the latest information about active entities, current public key pins [@!RFC7469], and valid issuer certificates. The use of outdated metadata may expose systems to security risks, such as interaction with revoked entities or acceptance of manipulated data.
 
 
 ## Verifying the Federation Metadata Signature
 
-Ensuring data integrity and security within the FedTLS framework relies on verifying the signature of downloaded federation metadata. This process confirms the data's origin, validating that it comes from the intended source and has not been altered by unauthorized parties. Through the process of verifying the metadata's authenticity, trust is established in the information it contains, including valid member certificates and public key pins.
+Ensuring data integrity and security within the FedTLS framework relies on verifying the signature of downloaded federation metadata. This verification process confirms the data's origin, ensuring it comes from the intended source and has not been altered by unauthorized parties. By establishing the authenticity of the metadata, trust is maintained in the information it contains, including valid member public key pins and issuer certificates. To achieve a robust implementation, it is crucial to consider the security aspects outlined in [@!RFC7515]. Key points include handling algorithm selection, protecting against key compromise, and ensuring the integrity of the signature process.
+
+
+## Time Synchronization
+
+Maintaining synchronized clocks across all federation members is critical for the security of the FedTLS framework. Inaccurate timestamps can compromise the validity of digital signatures and certificates, hinder reliable log analysis, and potentially expose the system to time-based attacks. Therefore, all federation members MUST employ methods to ensure their system clocks are synchronized with a reliable time source.
 
 
 # Acknowledgements
