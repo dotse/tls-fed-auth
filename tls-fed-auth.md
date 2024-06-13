@@ -168,7 +168,7 @@ All communication established within the federation leverages mutual TLS authent
 
 ## Public Key Pinning
 
-To further fortify this trust and mitigate risks associated with fraudulent certificates issued by unauthorized entities, the federation implements public key pinning as specified in [@!RFC7469]. Public key pinning associates a unique public key with each endpoint within the federation, stored in the federation metadata. During connection establishment, clients and servers validate the received certificate against the pre-configured public key pins retrieved from the federation metadata. This effectively thwarts attempts to utilize fraudulent certificates impersonating legitimate endpoints.
+To further fortify this trust and mitigate risks associated with fraudulent certificates issued by unauthorized entities, the federation implements public key pinning as specified in [@!RFC7469]. Public key pinning associates one or many unique public keys with each endpoint within the federation, stored in the federation metadata. During connection establishment, clients and servers validate the received certificate against the pre-configured public key pins retrieved from the federation metadata. This effectively thwarts attempts to utilize fraudulent certificates impersonating legitimate endpoints.
 
 
 ## Pin Discovery and Preloading
@@ -206,7 +206,7 @@ This section defines the set of claims that can be included in metadata.
 
 -   version (REQUIRED)
 
-    Schema version follows semantic versioning (https://semver.org)
+    Schema version follows semantic versioning (https://semver.org).
 
 -   cache_ttl (OPTIONAL)
 
@@ -214,7 +214,7 @@ This section defines the set of claims that can be included in metadata.
 
 -   Entities (REQUIRED)
 
-    List of entities (see (#entities))
+    List of entities (see (#entities)).
 
 
 ### Entities
@@ -383,7 +383,7 @@ The following federation metadata signature protected headers are REQUIRED:
 
 *   `iss` (Issuer)
 
-    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim, along with the corresponding issuer's certificate, enables relying parties to confidently determine information origin and establish trust with entities within the identified federation. This ensures secure communication and mitigates potential security risks [@!RFC7519], section 4.1.1.
+    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedTLS framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim enables determining the origin of information and establishing trust with entities within the identified federation [@!RFC7519], section 4.1.1.
 
 *   `kid` (Key Identifier)
 
