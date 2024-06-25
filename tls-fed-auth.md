@@ -138,6 +138,11 @@ The following are non-normative references to established frameworks:
 -   eduGAIN: eduGAIN is an interfederation service connecting identity federations worldwide, primarily within the research and education sectors. It ensures high standards of security and interoperability, allowing institutions to collaborate seamlessly. eduGAIN's processes for vetting and federating identity providers can serve as a useful reference. See [@eduGAIN].
 
 
+## Metadata Authenticity
+
+Ensuring the authenticity of metadata is crucial for maintaining the security and trustworthiness of the FedTLS framework. The specific mechanisms for ensuring metadata authenticity are beyond the scope of this document and must be defined by the federation or regulatory bodies.
+
+
 # Metadata Repository
 
 The FedTLS metadata repository serves as the cornerstone of trust within a federation. It acts as a central vault, securely storing all information about all participating federation members and their respective entities. This information, known as federation metadata, is presented as a JWS [@!RFC7515]to ensure its authenticity and integrity.
