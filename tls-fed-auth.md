@@ -111,7 +111,7 @@ Federation members share the responsibility of maintaining trust and security wi
 By fulfilling these responsibilities, federation members help sustain the overall trust framework that enables secure and reliable communication within the federation. Federation members submit member metadata to the federation. Both the authenticity of the submitted member metadata and the submitting member need to be ensured by the federation.
 
 
-## Trust Framework
+## Chain of Trust
 
 Each federation operates within a trust framework that encompasses its own security policies and procedures. This framework is designed to ensure the integrity, authenticity, and confidentiality of communications within the federation. Key components of this framework include:
 
@@ -125,6 +125,17 @@ The trust anchor for the federation is established through the federation's sign
 An additional layer of security is introduced through thumbprint verification [@!RFC7638], where federation members can independently verify the key's authenticity. This involves comparing the calculated cryptographic thumbprint of the key with a trusted value, ensuring its integrity. Importantly, this verification process can be conducted through channels separate from the JWKS itself, enhancing security by eliminating reliance on a single distribution mechanism.
 
 This trust framework is essential for enabling seamless and secure interoperability across different trust domains within the federation.
+
+
+## Member Vetting
+
+To ensure the security and integrity of the FedTLS framework, a member vetting process is essential. Detailed vetting processes are beyond the scope of this document but can be guided by established frameworks such as eIDAS and eduGAIN. 
+
+The following are non-normative references to established frameworks:
+
+-   eIDAS: The eIDAS regulation establishes a framework for electronic identification and trust services within the European Union. It ensures secure and standardized electronic interactions across member states, facilitating mutual recognition of electronic IDs. Operators can refer to the eIDAS framework for guidance on robust authentication and identity verification processes. See [@eIDAS].
+
+-   eduGAIN: eduGAIN is an interfederation service connecting identity federations worldwide, primarily within the research and education sectors. It ensures high standards of security and interoperability, allowing institutions to collaborate seamlessly. eduGAIN's processes for vetting and federating identity providers can serve as a useful reference. See [@eduGAIN].
 
 
 # Metadata Repository
@@ -772,3 +783,23 @@ Version: 1.0.0
     }
 }
 ```
+
+<reference anchor='eIDAS' target='https://eidas.ec.europa.eu/'>
+    <front>
+        <title>eIDAS: electronic Identification, Authentication and trust Services</title>
+        <author initials='' surname='' fullname='European Union'>
+            <organization>European Commission</organization>
+        </author>
+        <date year='2014'/>
+    </front>
+</reference>
+
+<reference anchor='eduGAIN' target='https://edugain.org'>
+    <front>
+        <title>eduGAIN: Interfederation service connecting research and education identity federations worldwide</title>
+        <author initials='' surname='' fullname='eduGAIN'>
+            <organization>GÉANT Association</organization>
+        </author>
+        <date year='2023'/>
+    </front>
+</reference>
