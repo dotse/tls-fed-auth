@@ -338,7 +338,7 @@ A list of the entity's servers and clients.
     
     Tags are fundamental for discovery within a federation, aiding both servers and clients in identifying appropriate connections.
 
-    -   Servers:  Tags enable servers to identify clients with specific characteristics or capabilities. For instance, a server might want to serve only clients with particular security clearances or those supporting specific protocol versions. By filtering incoming requests based on relevant tags, servers can efficiently identify suitable clients for serving.
+    -   Servers:  Tags enable servers to identify clients with specific characteristics or capabilities. For instance, a server might only serve clients that support specific protocols. By filtering incoming requests based on relevant tags, servers can efficiently identify suitable clients.
 
     -   Clients:  Tags also assist clients in discovering servers offering the services they require. Clients can search for servers based on tags indicating supported protocols or the type of data they handle. This enables clients to efficiently locate servers meeting their specific needs.
 
