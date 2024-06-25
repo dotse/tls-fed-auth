@@ -71,6 +71,19 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 -   **Trust Anchor**: The federation's root of trust is established by the federation metadata signing key, which verifies the federation metadata and allows participants to confidently rely on the information it contains.
 
 
+# Diverse Design Patterns
+
+FedTLS is designed to be flexible and adaptable to the varying needs of different federations. Federations can differ significantly in terms of size, scope, and security requirements, which makes it challenging to prescribe a one-size-fits-all trust framework and security measures.
+
+For instance, in the European Union, the eIDAS (electronic Identification, Authentication, and trust Services) regulation establishes a framework for electronic identification and trust services for electronic transactions within the EU. This regulation provides a comprehensive set of standards for secure electronic interactions across borders. National federations within EU member states adhere to these standards, ensuring interoperability and mutual recognition of electronic IDs across different countries.
+
+Similarly, national federations, such as those found in education or healthcare sectors, often have their own specific trust frameworks and security measures tailored to their unique needs. These federations may leverage existing national identification systems or other trusted credentials to establish member identities and ensure secure interactions.
+
+Organizations may also set up their own federations, tailored to the specific security requirements and trust models relevant to their context. For example, a private business federation might establish its own vetting processes and trust framework based on the nature of its business and the sensitivity of the data being exchanged.
+
+By allowing federations the flexibility to tailor their trust frameworks and security measures, FedTLS can support a wide range of use cases. This flexibility is crucial for accommodating the diverse requirements and challenges faced by different federations, ensuring a secure and adaptable system for establishing trust and facilitating secure communication.
+
+
 # Trust Model
 
 The FedTLS framework operates on a trust model that is central to its design and functionality. This section outlines the key components of this trust model and its implications for federation members and the federation operator.
