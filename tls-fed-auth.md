@@ -75,7 +75,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 FedTLS is designed to be flexible and adaptable to the varying needs of different federations. Federations can differ significantly in terms of size, scope, and security requirements, which makes it challenging to prescribe a one-size-fits-all trust framework and security measures.
 
-For instance, in the European Union, the eIDAS (electronic Identification, Authentication, and trust Services) regulation establishes a framework for electronic identification and trust services for electronic transactions within the EU. This regulation provides a comprehensive set of standards for secure electronic interactions across borders. National federations within EU member states adhere to these standards, ensuring interoperability and mutual recognition of electronic IDs across different countries.
+For instance, in the European Union, the eIDAS (electronic Identification, Authentication, and trust Services) regulation establishes a framework for electronic identification and trust services for electronic transactions within the EU. This regulation provides a comprehensive set of standards for secure electronic interactions across member states. National federations within EU member states adhere to these standards, ensuring interoperability and mutual recognition of electronic IDs across different countries.
 
 Similarly, national federations, such as those found in education or healthcare sectors, often have their own specific trust frameworks and security measures tailored to their unique needs. These federations may leverage existing national identification systems or other trusted credentials to establish member identities and ensure secure interactions.
 
