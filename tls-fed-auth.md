@@ -6,7 +6,7 @@
     ipr = "trust200902"
     submissiontype = "independent"
     area = "Internet"
-    date = 2024-06-25T00:00:00Z
+    date = 2024-07-12T00:00:00Z
 
     [seriesInfo]
     status = "informational"
