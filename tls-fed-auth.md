@@ -220,7 +220,7 @@ If a leaf certificate is compromised, the revocation process involves removing t
 To replace a certificate, whether due to expiration or other reasons, the following procedure must be followed:
 
 1. Publishing New Metadata: When a certificate needs to be changed, federation members publish new metadata containing the pin (SHA256 thumbprint) of the new public key. This ensures that the new pin is available to all federation members.
-1. Propagation Period: Allow time for the updated metadata to ropagate throughout the federation before switching to the new certificate. his overlap period ensures that all nodes recognize the new pin and avoid connection issues.
+1. Propagation Period: Allow time for the updated metadata to ropagate throughout the federation before switching to the new certificate. This overlap period ensures that all nodes recognize the new pin and avoid connection issues.
 1. Switching to the New Certificate: After ensuring the new metadata has propagated, members switch to the new certificate in their TLS stack.
 1. Removing Old Pin: After successfully switching to the new certificate, members must publish updated metadata that excludes the old pin. This final step ensures that only the current public keys are trusted.
 
@@ -289,7 +289,7 @@ Metadata contains a list of entities that may be used for communication within t
 
 -   issuers (REQUIRED)
 
-    A list of certificate issuers allowed to issue certificates for the entity's endpoints must be maintained. For each issuer, the issuer's root CA certificate should be included in the x509certificate property (PEM-encoded). Certificate verification relies on public key pinning, with the list of allowed issuers used only when a certificate chain validation mechanism is unavoidable. For self-signed certificates, the certificate itself acts as its own issuer and must be listed as such in the metadata.
+    A list of certificate issuers allowed to issue certificates for the entity's endpoints MUST be maintained. For each issuer, the issuer's root CA certificate MUST be included in the x509certificate property (PEM-encoded). Certificate verification relies on public key pinning, with the list of allowed issuers used only when a certificate chain validation mechanism is unavoidable. For self-signed certificates, the certificate itself acts as its own issuer and MUST be listed as such in the metadata.
 
 -   servers (OPTIONAL)
 
