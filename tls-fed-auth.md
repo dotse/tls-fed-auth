@@ -197,14 +197,14 @@ All communication established within the federation leverages mutual TLS authent
 To mitigate risks associated with fraudulent certificates issued by unauthorized entities, the federation implements public key pinning as specified in [@!RFC7469]. Public key pinning associates one or many unique public keys with each endpoint within the federation, stored in the federation metadata. During connection establishment, clients and servers validate the received certificate against the pre-configured public key pins retrieved from the federation metadata. This effectively thwarts attempts to utilize fraudulent certificates impersonating legitimate endpoints.
 
 
+### Interfederation Trust
+
+In interfederation environments, where multiple federations need to trust each other, public key pinning remains effective. Each federation can pin the public keys of entities in other federations, ensuring trust across boundaries. Unlike private certificate chains, which can become complex and difficult to manage across multiple federations, public key pinning provides a straightforward mechanism for establishing trust. FedTLS interfederation addresses this challenge by aggregating metadata from all participating federations into a unified metadata repository. This shared metadata enables secure communication between entities in different federations, ensuring consistent key validation and robust cross-federation trust and security.
+
+
 ### Use of Self-Signed Certificates
 
 The use of self-signed certificates within the federation leverages public key pinning to establish trust. By bypassing external CAs, servers and clients rely on the federation's mechanisms to validate trust. Public key pinning ensures that only the specific, self-signed public key pins listed in the metadata are trusted.
-
-
-### Interfederation Trust
-
-In interfederation environments, where multiple federations need to trust each other, public key pinning continues to work effectively. Each federation can pin the public keys of entities in other federations, ensuring trust across boundaries. Unlike private certificate chains, which can become complex and difficult to manage across multiple federations, public key pinning provides a straightforward mechanism for establishing trust in an interfederation.
 
 
 ### Revocation
