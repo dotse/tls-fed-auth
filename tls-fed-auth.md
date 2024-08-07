@@ -6,12 +6,12 @@
     ipr = "trust200902"
     submissiontype = "independent"
     area = "Internet"
-    date = 2024-07-21T00:00:00Z
+    date = 2024-08-07T00:00:00Z
 
     [seriesInfo]
     status = "informational"
     name = "Internet-Draft"
-    value = "draft-halen-fed-tls-auth-13"
+    value = "draft-halen-fed-tls-auth-14"
     stream = "independent"
 
     [[author]]
