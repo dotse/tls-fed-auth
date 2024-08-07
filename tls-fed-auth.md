@@ -194,35 +194,35 @@ All communication established within the federation leverages mutual TLS authent
 
 ## Public Key Pinning
 
-To mitigate risks associated with fraudulent certificates issued by unauthorized entities, the federation implements public key pinning as specified in [@!RFC7469]. Public key pinning associates one or many unique public keys with each endpoint within the federation, stored in the federation metadata. During connection establishment, clients and servers validate the received certificate against the pre-configured public key pins retrieved from the federation metadata. This effectively thwarts attempts to utilize fraudulent certificates impersonating legitimate endpoints.
+FedTLS implements public key pinning as specified in [@!RFC7469]. Public key pinning associates one or many unique public keys with each endpoint within the federation, stored in the federation metadata. During connection establishment, clients and servers validate the received certificate against the pre-configured public key pins retrieved from the federation metadata. 
 
 
-### Interfederation Trust
+### Benefits of Public Key Pinning
+
+The decision to utilize public key pinning in the FedTLS framework was driven by several critical factors aimed at enhancing security and ensuring trust:
+
+
+#### Interfederation Trust
 
 In interfederation environments, where multiple federations need to trust each other, public key pinning remains effective. Each federation can pin the public keys of entities in other federations, ensuring trust across boundaries. Unlike private certificate chains, which can become complex and difficult to manage across multiple federations, public key pinning provides a straightforward mechanism for establishing trust. FedTLS interfederation addresses this challenge by aggregating metadata from all participating federations into a unified metadata repository. This shared metadata enables secure communication between entities in different federations, ensuring consistent key validation and robust cross-federation trust and security.
 
 
-### Use of Self-Signed Certificates
+#### Fortifying Security Against Threats
+
+Public key pinning is a critical defense against potential CA compromises. By directly linking a peer to a specific public key, it prevents attackers from issuing fraudulent certificates. This proactive approach dramatically improves system resilience against attacks.
+
+
+#### Use of Self-Signed Certificates
 
 The use of self-signed certificates within the federation leverages public key pinning to establish trust. By bypassing external CAs, servers and clients rely on the federation's mechanisms to validate trust. Public key pinning ensures that only the specific, self-signed public key pins listed in the metadata are trusted.
 
 
-### Revocation
+#### Revocation
 
 If any certificate in a certificate chain is compromised, the revocation process can be complex and slow. This complexity arises because not only the compromised certificate but potentially multiple certificates within
 the chain might need to be revoked and reissued. Public key pinning mitigates this complexity by allowing clients to explicitly trust a specific public key, thereby reducing dependency on the entire certificate chain's integrity.
 
 If a leaf certificate is compromised, the revocation process involves removing the pin associated with the compromised certificate and updating the metadata with a pin from a new certificate. This eliminates the need for traditional revocation mechanisms and focuses the trust relationship on the specific, updated public key.
-
-
-### Certificate Rotation:
-
-To replace a certificate, whether due to expiration or other reasons, the following procedure must be followed:
-
-1. Publishing New Metadata: When a certificate needs to be changed, federation members publish new metadata containing the pin (SHA256 thumbprint) of the new public key. This ensures that the new pin is available to all federation members.
-1. Propagation Period: Allow time for the updated metadata to ropagate throughout the federation before switching to the new certificate. This overlap period ensures that all nodes recognize the new pin and avoid connection issues.
-1. Switching to the New Certificate: After ensuring the new metadata has propagated, members switch to the new certificate in their TLS stack.
-1. Removing Old Pin: After successfully switching to the new certificate, members must publish updated metadata that excludes the old pin. This final step ensures that only the current public keys are trusted.
 
 
 ## Pin Discovery and Preloading
@@ -242,6 +242,16 @@ In scenarios where a TLS session terminates independent of the application (e.g.
 ## Failure to Validate
 
 It is crucial to note that failure to validate a received certificate against the established parameters, whether through pinning or issuer verification, results in immediate termination of the connection. This strict approach ensures only authorized and secure communication channels are established within the federation.
+
+
+## Certificate Rotation:
+
+To replace a certificate, whether due to expiration or other reasons, the following procedure must be followed:
+
+1. Publishing New Metadata: When a certificate needs to be changed, federation members publish new metadata containing the pin (SHA256 thumbprint) of the new public key. This ensures that the new pin is available to all federation members.
+1. Propagation Period: Allow time for the updated metadata to ropagate throughout the federation before switching to the new certificate. This overlap period ensures that all nodes recognize the new pin and avoid connection issues.
+1. Switching to the New Certificate: After ensuring the new metadata has propagated, members switch to the new certificate in their TLS stack.
+1. Removing Old Pin: After successfully switching to the new certificate, members must publish updated metadata that excludes the old pin. This final step ensures that only the current public keys are trusted.
 
 
 # Federation Metadata
