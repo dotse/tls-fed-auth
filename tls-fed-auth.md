@@ -545,6 +545,27 @@ Example of public key pinning with curl. Line breaks are for readability only.
 ~~~
 
 
+# Deployments of the FedTLS Framework
+
+The FedTLS framework has proven its practical value and robustness through successful deployments in several environments.
+
+
+## Skolfederation Moa
+
+Skolfederation Moa, a federation dedicated to securing digital educational resources, has adopted FedTLS to enable secure and seamless access for schools and municipalities across Sweden. By standardizing secure communication channels, Moa facilitates efficient and protected data exchange between diverse educational platforms and services.
+
+
+## Swedish National Agency for Education
+
+The Swedish National Agency for Education leverages FedTLS within its digital national test platform to establish a robust authentication mechanism. The platform utilizes an API for client verification prior to secure data transfer to the agency's test service, ensuring the integrity and confidentiality of educational data.
+
+## Sambruk's EGIL
+
+Sambruk’s EGIL, a platform providing digital services to municipalities, has successfully integrated the FedTLS framework. This deployment demonstrates the framework’s adaptability to support a wide range of digital service infrastructures.
+
+These deployments highlight the effectiveness of the FedTLS framework in enhancing security and interoperability within the educational sector.
+
+
 # Security Considerations
 
 ## Security Risks and Trust Management
