@@ -571,7 +571,7 @@ The Swedish National Agency for Education leverages FedTLS within its digital na
 
 ## Sambruk's EGIL
 
-Sambruk’s EGIL, a platform providing digital services to municipalities, has successfully integrated the FedTLS framework. This deployment demonstrates the framework’s adaptability to support a wide range of digital service infrastructures.
+Sambruk's EGIL, a platform providing digital services to municipalities, has successfully integrated the FedTLS framework. This deployment demonstrates the framework's adaptability to support a wide range of digital service infrastructures.
 
 These deployments highlight the effectiveness of the FedTLS framework in enhancing security and interoperability within the educational sector.
 
