@@ -249,7 +249,7 @@ It is crucial to note that failure to validate a received certificate against th
 To replace a certificate, whether due to expiration or other reasons, the following procedure must be followed:
 
 1. Publishing New Metadata: When a certificate needs to be changed, federation members publish new metadata containing the pin (SHA256 thumbprint) of the new public key. This ensures that the new pin is available to all federation members.
-1. Propagation Period: Allow time for the updated metadata to ropagate throughout the federation before switching to the new certificate. This overlap period ensures that all nodes recognize the new pin and avoid connection issues.
+1. Propagation Period: Allow time for the updated metadata to propagate throughout the federation before switching to the new certificate. This overlap period ensures that all nodes recognize the new pin and avoid connection issues.
 1. Switching to the New Certificate: After ensuring the new metadata has propagated, members switch to the new certificate in their TLS stack.
 1. Removing Old Pin: After successfully switching to the new certificate, members must publish updated metadata that excludes the old pin. This final step ensures that only the current public keys are trusted.
 
