@@ -429,7 +429,7 @@ The following is a non-normative example of a metadata statement. Line breaks wi
 
 ## Metadata Signing
 
-The federation metadata is signed with JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. It is RECOMMENDED that federation metadata signatures are created with algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518].
+The federation metadata is signed with JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. The Federation metadata signatures are RECOMMENDED to be created using the algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518]. However, to accommodate evolving cryptographic standards, alternative algorithms MAY be used, provided they meet the security requirements of the federation.
 
 The following federation metadata signature protected headers are REQUIRED:
 
