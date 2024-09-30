@@ -331,8 +331,8 @@ A list of the entity's servers and clients.
     A list of Public Key Pins [@!RFC7469]. Each pin has the following properties:
 
     -   alg (REQUIRED)
-
-        The name of the cryptographic hash algorithm. The only allowed value is "sha256".
+        
+        The name of the cryptographic hash algorithm. Currently, the RECOMMENDED value is 'sha256'. As more secure algorithms are developed over time, federations should be ready to adopt these newer options for enhanced security.
 
         Example: "sha256"
 
