@@ -274,7 +274,7 @@ This section defines the set of claims that can be included in metadata.
 
 -   cache_ttl (OPTIONAL)
 
-    Specifies the duration in seconds for caching the downloaded federation metadata. This allows for caching independent of specific HTTP implementations or configurations, which is particularly beneficial in scenarios where the communication mechanism is not solely HTTP-based. In the event of an outage of the published metadata, members can rely on the cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). This approach ensures continuity of operations and avoids disruptions during temporary issues. However, once the metadata expires, it MUST no longer be trusted to maintain the security and integrity of the federation.
+    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). Once expired, metadata MUST no longer be trusted to maintain federation security. If cache_ttl is not specified, metadata MUST be refreshed before the expiration time.
 
 -   Entities (REQUIRED)
 
