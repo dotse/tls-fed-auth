@@ -97,7 +97,9 @@ The federation operator plays a critical role in the FedTLS framework. This enti
 -   Vetting federation members to ensure they meet the required standards and policies.
 -   Maintaining and securing the federation metadata, which includes public key pins [@!RFC7469], issuer certificates, and other essential information.
 
-Therefore, federation members must place full trust in the federation operator's integrity. The security and reliability of the entire federation depend on the integrity and competence of this central authority.
+Additionally, the federation operator SHOULD develop their own threat models to proactively identify potential risks and threats. This process involves examining the operating environment, evaluating both internal and external threats, and understanding how vulnerabilities can be exploited. The goal of the threat model is to enable the federation operator to establish mitigation strategies that address the identified risks.
+
+The security and stability of the federation rely on the integrity and competence of the federation operator. Members must have complete trust in this central authority to ensure the federation’s reliability and security.
 
 
 ## Federation Members' Responsibilities
