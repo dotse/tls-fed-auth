@@ -41,7 +41,7 @@ This document describes the Federated TLS Authentication (FedTLS) protocol, enab
 
 # Introduction
 
-This document describes the Federated TLS Authentication (FedTLS) protocol, enabling secure machine-to-machine communication within a federation. Both the client and server undergo mutual TLS authentication (as defined in [@!RFC8446]), establishing a robust foundation of trust. This trust relies on a central trust anchor held and published by the federation, acting as a trusted third party connecting distinct trust domains under a common set of policies and standards.
+This document describes the Federated TLS Authentication (FedTLS) framework, enabling secure machine-to-machine communication within a federation. Both the client and server undergo mutual TLS authentication (as defined in [@!RFC8446]), establishing a robust foundation of trust. This trust relies on a central trust anchor held and published by the federation, acting as a trusted third party connecting distinct trust domains under a common set of policies and standards.
 
 A crucial aspect of FedTLS is the necessity for federation members to fully trust the federation operator. This trust is fundamental to the framework's design, as the federation operator is responsible for managing the central trust anchor, vetting members, and ensuring the integrity of the metadata used within the federation.
 
@@ -99,7 +99,7 @@ The federation operator plays a critical role in the FedTLS framework. This enti
 
 Additionally, the federation operator SHOULD develop their own threat models to proactively identify potential risks and threats. This process involves examining the operating environment, evaluating both internal and external threats, and understanding how vulnerabilities can be exploited. The goal of the threat model is to enable the federation operator to establish mitigation strategies that address the identified risks.
 
-The security and stability of the federation rely on the integrity and competence of the federation operator. Members must have complete trust in this central authority to ensure the federation’s reliability and security.
+The security and stability of the federation rely on the integrity and competence of the federation operator. Members must have complete trust in this central authority to ensure the federation's reliability and security.
 
 
 ## Federation Members' Responsibilities
