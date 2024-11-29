@@ -155,7 +155,7 @@ Ensuring the authenticity of metadata is crucial for maintaining the security an
 
 The FedTLS metadata repository serves as the cornerstone of trust within a federation. It acts as a central vault, securely storing all information about all participating federation members and their respective entities. This information, known as federation metadata, is presented as a JWS [@!RFC7515]to ensure its authenticity and integrity.
 
-The metadata repository is subject to stringent security measures to safeguard the integrity and confidentiality of the stored information. This MAY involve:
+The metadata repository is subject to stringent security measures to safeguard the integrity of the stored information. This MAY involve:
 
 -   Member Management: The federation operator can centrally enforce security policies and vet new members before they are added to the repository.
 -   Access Controls: Only authorized members within the federation should have access to the repository.
@@ -165,7 +165,7 @@ Before member metadata is added to the federation's repository, the submitted me
 
 -   Format Validation: The system checks if the submitted metadata adheres to the defined schema and format specifications.
 -   Unique Entity ID: Checks are performed to ensure that the entity_id in the submitted metadata is not already registered by another member. Each entity within the federation must have a unique identifier.
--   Unique Public Key Pins: Public key pins [@!RFC7469] are utilized to locate the corresponding entity within the metadata upon establishing a connection. Through the validation process, these pins are ensured to be unique within the repository. This prevents ambiguity during connection establishment.
+-   Unique Public Key Pins: Public key pins [@!RFC7469] are used to identify client entities within the federation metadata during the connection validation process. When a server validates a client's TLS connection, it extracts the pin from the client's TLS certificate and matches it against entries in the federation metadata. The requirements for pin uniqueness and usage are detailed in Section (#servers-clients). 
 -   Certificate Verification: The issuer certificates listed in the metadata are validated to ensure that the algorithms used in the certificates are well-known and secure, and that the certificates are currently valid and have not expired
 -   Tag Validation: Ensures that tags (see (#servers-clients)) in the metadata adhere to the defined tag structure, verifying both mandatory and optional tags. This process is crucial for maintaining consistency and preventing unauthorized tags within a federation.
 
