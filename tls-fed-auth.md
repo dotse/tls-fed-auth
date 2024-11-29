@@ -167,7 +167,7 @@ Before member metadata is added to the federation's repository, the submitted me
 -   Unique Entity ID: Checks are performed to ensure that the entity_id in the submitted metadata is not already registered by another member. Each entity within the federation must have a unique identifier.
 -   Unique Public Key Pins: Public key pins [@!RFC7469] are utilized to locate the corresponding entity within the metadata upon establishing a connection. Through the validation process, these pins are ensured to be unique within the repository. This prevents ambiguity during connection establishment.
 -   Certificate Verification: The issuer certificates listed in the metadata are validated to ensure that the algorithms used in the certificates are well-known and secure, and that the certificates are currently valid and have not expired
--   Tag Validation: Ensures that tags in the metadata adhere to the defined tag structure, verifying both mandatory and optional tags. This process is crucial for maintaining consistency and preventing unauthorized tags within a federation.
+-   Tag Validation: Ensures that tags (see (#servers-clients)) in the metadata adhere to the defined tag structure, verifying both mandatory and optional tags. This process is crucial for maintaining consistency and preventing unauthorized tags within a federation.
 
 The FedTLS metadata repository serves as the vital foundation for establishing trust and enabling secure communication within a FedTLS environment. By providing a central, secure, and controlled repository for critical information, the metadata repository empowers members to confidently discover other trusted entities, and establish secure connections for seamless interaction.
 
