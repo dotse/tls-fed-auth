@@ -53,7 +53,9 @@ A federation operator is responsible for managing the central trust anchor. This
 
 FedTLS enables secure machine-to-machine communication within a federation through mutual TLS authentication, (as defined in [@!RFC8446]). This establishes mutual trust, where both parties are authenticated and verified.
 
-FedTLS enables the use of self-signed certificates, potentially reducing costs and administrative overhead. While self-signed certificates typically lack the trust of CA-issued certificates, FedTLS establishes strong reliance on them through mechanisms like public key pinning [@!RFC7469], member vetting and the signed metadata. These measures ensure the validity and authenticity of self-signed certificates within the federation.
+FedTLS enables the use of self-signed certificates, potentially reducing costs and administrative overhead. Unlike Web PKI certificates, which depend on trust in external certificate authorities (CAs), FedTLS relies on a cryptographic trust mechanism rooted within the federation itself. This approach avoids challenges associated with varying levels of trust in CAs and the risk of compromised certificates within the Web PKI ecosystem.  
+
+Through mechanisms like public key pinning [@!RFC7469], member vetting, and signed metadata, FedTLS establishes strong reliance on self-signed certificates. These measures ensure the validity and authenticity of self-signed certificates within the federation, providing a secure and cohesive trust framework.  
 
 The Swedish education sector demonstrates the benefits of FedTLS by securing endpoints for user lifecycle management with FedTLS. This successful collaboration between school authorities and service providers demonstrates FedTLS's ability to enable trust, streamline operations and improve security within federated environments.
 
