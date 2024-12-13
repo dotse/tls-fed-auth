@@ -53,11 +53,11 @@ A federation operator is responsible for managing the central trust anchor. This
 
 FedTLS enables secure machine-to-machine communication within a federation through mutual TLS authentication, (as defined in [@!RFC8446]). This establishes mutual trust, where both parties are authenticated and verified.
 
-FedTLS enables the use of self-signed certificates, potentially reducing costs and administrative overhead. Unlike Web PKI certificates, which depend on trust in external certificate authorities (CAs), FedTLS relies on a cryptographic trust mechanism rooted within the federation itself. This approach avoids challenges associated with varying levels of trust in CAs and the risk of compromised certificates within the Web PKI ecosystem.  
+FedTLS enables the use of self-signed certificates. Signing by a CA of the certificate has no meaning in FedTLS and does not increase the security level in this context. Unlike Web PKI certificates, which depend on trust in external certificate authorities (CAs), FedTLS relies on a cryptographic trust mechanism rooted within the federation itself. This approach avoids challenges associated with varying levels of trust in CAs and the risk of compromised certificates within the Web PKI ecosystem.  
 
 Through mechanisms like public key pinning [@!RFC7469], member vetting, and signed metadata, FedTLS establishes strong reliance on self-signed certificates. These measures ensure the validity and authenticity of self-signed certificates within the federation, providing a secure and cohesive trust framework.  
 
-The Swedish education sector demonstrates the benefits of FedTLS by securing endpoints for user lifecycle management with FedTLS. This successful collaboration between school authorities and service providers demonstrates FedTLS's ability to enable trust, streamline operations and improve security within federated environments.
+The Swedish education sector [reference??] demonstrates the benefits of FedTLS by securing endpoints for user lifecycle management with FedTLS. This successful collaboration between school authorities and service providers demonstrates FedTLS's ability to enable trust, streamline operations and improve security within federated environments.
 
 
 ##  Reserved Words
@@ -219,27 +219,27 @@ In interfederation environments, where multiple federations need to trust each o
 
 #### Fortifying Security Against Threats
 
-Public key pinning is a critical defense against potential CA compromises. By directly linking a peer to a specific public key, it prevents attackers from issuing fraudulent certificates. This proactive approach dramatically improves system resilience against attacks.
+Public key pinning is a critical defense against potential CA compromises [What does CA mean here? Certificates are self-signed.]. By directly linking a peer to a specific public key, it prevents attackers from issuing fraudulent certificates. This proactive approach dramatically improves system resilience against attacks.
 
 
 #### Use of Self-Signed Certificates
 
-The use of self-signed certificates within the federation leverages public key pinning to establish trust. By bypassing external CAs, servers and clients rely on the federation's mechanisms to validate trust. Public key pinning ensures that only the specific, self-signed public key pins listed in the metadata are trusted.
+The use of self-signed certificates within the federation leverages public key pinning to establish trust. By bypassing external s [CAs??], servers and clients rely on the federation's mechanisms to validate trust. Public key pinning ensures that only the specific, self-signed public key pins listed in the metadata are trusted.
 
 
 #### Revocation
 
-If any certificate in a certificate chain is compromised, the revocation process can be complex and slow. This complexity arises because not only the compromised certificate but potentially multiple certificates within
+If any certificate in a certificate chain is compromised, the revocation process can be complex and slow within the Web PKI ecosystem. This complexity arises because not only the compromised certificate but potentially multiple certificates within
 the chain might need to be revoked and reissued. Public key pinning mitigates this complexity by allowing clients to explicitly trust a specific public key, thereby reducing dependency on the entire certificate chain's integrity.
 
-If a leaf certificate is compromised, the revocation process involves removing the pin associated with the compromised certificate and updating the metadata with a pin from a new certificate. This eliminates the need for traditional revocation mechanisms and focuses the trust relationship on the specific, updated public key.
+If a leaf certificate is compromised within a federation, the revocation process involves removing the pin associated with the compromised certificate and updating the metadata with a pin from a new certificate. This eliminates the need for traditional revocation mechanisms and focuses the trust relationship on the specific, updated public key.
 
 
 ## Pin Discovery and Preloading
 
 Peers in the federation retrieve these unique public key pins, serving as pre-configured trust parameters, from the federation metadata. The federation MUST facilitate the discovery process, enabling peers to identify the relevant pins for each endpoint. Information such as organization, tags, and descriptions within the federation metadata aids in this discovery.
 
-Before initiating any connection, both clients and servers preload the chosen pins in strict adherence to the guidelines outlined in section 2.7 of [@!RFC7469]. This preloading ensures connections only occur with endpoints possessing matching public keys, effectively blocking attempts to use fraudulent certificates.
+Before initiating any connection, both clients and servers preload the chosen pins in strict adherence to the guidelines outlined in section 2.7 of [@!RFC7469] [correct section?? I do not see the guidelines]. This preloading ensures connections only occur with endpoints possessing matching public keys, effectively blocking attempts to use fraudulent certificates.
 
 
 ## Verification of Received Certificates
@@ -251,12 +251,12 @@ In scenarios where a TLS session terminates independent of the application (e.g.
 
 ## Failure to Validate
 
-It is crucial to note that failure to validate a received certificate against the established parameters, whether through pinning or issuer verification, results in immediate termination of the connection. This strict approach ensures only authorized and secure communication channels are established within the federation.
+It is crucial to note that failure to validate a received certificate against the established parameters, whether through pinning or issuer verification, results [MUST result?] in immediate termination of the connection [connection MUST be rejected?]. This strict approach ensures only authorized and secure communication channels are established within the federation.
 
 
 ## Certificate Rotation:
 
-To replace a certificate, whether due to expiration or other reasons, the following procedure must be followed:
+To replace a certificate, whether due to expiration [does FedTLS use the expiration time of the certificate?] or other reasons, the following procedure must be followed: [in the steps below it is not fully clear if only the member that changes certificate that must do something or also other members]
 
 1. Publishing New Metadata: When a certificate needs to be changed, federation members publish new metadata containing the pin (SHA256 thumbprint) of the new public key. This ensures that the new pin is available to all federation members.
 1. Propagation Period: Allow time for the updated metadata to propagate throughout the federation before switching to the new certificate. This overlap period ensures that all nodes recognize the new pin and avoid connection issues.
@@ -284,7 +284,7 @@ This section defines the set of claims that can be included in metadata.
 
 -   cache_ttl (OPTIONAL)
 
-    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). Once expired, metadata MUST no longer be trusted to maintain federation security. If cache_ttl is not specified, metadata MUST be refreshed before the expiration time.
+    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). Once expired, metadata MUST no longer be trusted to maintain federation security. If cache_ttl is not specified, metadata MUST be refreshed before the expiration time. [does that mean that the metadata can be used "cache_ttl" seconds after expiration time?]
 
 -   Entities (REQUIRED)
 
@@ -309,7 +309,7 @@ Metadata contains a list of entities that may be used for communication within t
 
 -   issuers (REQUIRED)
 
-    A list of certificate issuers allowed to issue certificates for the entity's endpoints MUST be maintained. For each issuer, the issuer's root CA certificate MUST be included in the x509certificate property (PEM-encoded). Certificate verification relies on public key pinning, with the list of allowed issuers used only when a certificate chain validation mechanism is unavoidable. For self-signed certificates, the certificate itself acts as its own issuer and MUST be listed as such in the metadata.
+    A list of certificate issuers allowed to issue certificates for the entity's endpoints MUST be maintained. For each issuer, the issuer's root CA certificate MUST be included in the x509certificate property (PEM-encoded). Certificate verification relies on public key pinning, with the list of allowed issuers used only when a certificate chain validation mechanism is unavoidable. For self-signed certificates, the certificate itself acts as its own issuer and MUST be listed as such in the metadata. [Are really CA relevant when self-signed certificates are used]
 
 -   servers (OPTIONAL)
 
@@ -572,16 +572,16 @@ The FedTLS framework has proven its practical value and robustness through succe
 
 ## Skolfederation Moa
 
-Skolfederation Moa, a federation dedicated to securing digital educational resources, has adopted FedTLS to enable secure and seamless access for schools and municipalities across Sweden. By standardizing secure communication channels, Moa facilitates efficient and protected data exchange between diverse educational platforms and services.
+Skolfederation Moa [reference??], a federation dedicated to securing digital educational resources, has adopted FedTLS to enable secure and seamless access for schools and municipalities across Sweden. By standardizing secure communication channels, Moa facilitates efficient and protected data exchange between diverse educational platforms and services.
 
 
 ## Swedish National Agency for Education
 
-The Swedish National Agency for Education leverages FedTLS within its digital national test platform to establish a robust authentication mechanism. The platform utilizes an API for client verification prior to secure data transfer to the agency's test service, ensuring the integrity and confidentiality of educational data.
+The Swedish National Agency for Education [reference??] leverages FedTLS within its digital national test platform to establish a robust authentication mechanism. The platform utilizes an API for client verification prior to secure data transfer to the agency's test service, ensuring the integrity and confidentiality of educational data.
 
 ## Sambruk's EGIL
 
-Sambruk's EGIL, a platform providing digital services to municipalities, has successfully integrated the FedTLS framework. This deployment demonstrates the framework's adaptability to support a wide range of digital service infrastructures.
+Sambruk's EGIL [reference??], a platform providing digital services to municipalities, has successfully integrated the FedTLS framework. This deployment demonstrates the framework's adaptability to support a wide range of digital service infrastructures.
 
 These deployments highlight the effectiveness of the FedTLS framework in enhancing security and interoperability within the educational sector.
 
