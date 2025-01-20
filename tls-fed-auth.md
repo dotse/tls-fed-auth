@@ -53,11 +53,11 @@ A federation operator is responsible for managing the central trust anchor. This
 
 FedTLS enables secure machine-to-machine communication within a federation through mutual TLS authentication, (as defined in [@!RFC8446]). This establishes mutual trust, where both parties are authenticated and verified.
 
-FedTLS enables the use of self-signed certificates, potentially reducing costs and administrative overhead. Unlike Web PKI certificates, which depend on trust in external certificate authorities (CAs), FedTLS relies on a cryptographic trust mechanism rooted within the federation itself. This approach avoids challenges associated with varying levels of trust in CAs and the risk of compromised certificates within the Web PKI ecosystem.  
+FedTLS enables the use of self-signed certificates. Signing by a CA of the certificate has no meaning in FedTLS and does not increase the security level in this context. Unlike Web PKI certificates, which depend on trust in external certificate authorities (CAs), FedTLS relies on a cryptographic trust mechanism rooted within the federation itself. This approach avoids challenges associated with varying levels of trust in CAs and the risk of compromised certificates within the Web PKI ecosystem.  
 
 Through mechanisms like public key pinning [@!RFC7469], member vetting, and signed metadata, FedTLS establishes strong reliance on self-signed certificates. These measures ensure the validity and authenticity of self-signed certificates within the federation, providing a secure and cohesive trust framework.  
 
-The Swedish education sector demonstrates the benefits of FedTLS by securing endpoints for user lifecycle management with FedTLS. This successful collaboration between school authorities and service providers demonstrates FedTLS's ability to enable trust, streamline operations and improve security within federated environments.
+The Swedish education sector demonstrates the benefits of FedTLS by securing endpoints for user lifecycle management. The Swedish National Agency for Education references FedTLS in their documentation [@SkolverketFedTLS]. While the original documentation is in Swedish, it highlights how FedTLS enables secure and trusted communication between school authorities and service providers. This successful collaboration demonstrates FedTLS's ability to build trust, streamline operations, and enhance security within federated environments.
 
 
 ##  Reserved Words
@@ -219,12 +219,12 @@ In interfederation environments, where multiple federations need to trust each o
 
 #### Fortifying Security Against Threats
 
-Public key pinning is a critical defense against potential CA compromises. By directly linking a peer to a specific public key, it prevents attackers from issuing fraudulent certificates. This proactive approach dramatically improves system resilience against attacks.
+Public key pinning provides a robust defense mechanism by directly binding a peer to a specific public key. This ensures that only the designated key is trusted, preventing attackers from exploiting fraudulent certificates. By eliminating reliance on external trust intermediaries, this approach significantly enhances resilience against potential threats.
 
 
 #### Use of Self-Signed Certificates
 
-The use of self-signed certificates within the federation leverages public key pinning to establish trust. By bypassing external CAs, servers and clients rely on the federation's mechanisms to validate trust. Public key pinning ensures that only the specific, self-signed public key pins listed in the metadata are trusted.
+The use of self-signed certificates within the federation leverages public key pinning to establish trust. By bypassing external CAs, servers and clients rely on the federation's mechanisms to validate trust. Public key pinning ensures that only the specific self-signed public keys, identified by key pins in the metadata, are trusted.
 
 
 #### Revocation
@@ -232,26 +232,26 @@ The use of self-signed certificates within the federation leverages public key p
 If any certificate in a certificate chain is compromised, the revocation process can be complex and slow. This complexity arises because not only the compromised certificate but potentially multiple certificates within
 the chain might need to be revoked and reissued. Public key pinning mitigates this complexity by allowing clients to explicitly trust a specific public key, thereby reducing dependency on the entire certificate chain's integrity.
 
-If a leaf certificate is compromised, the revocation process involves removing the pin associated with the compromised certificate and updating the metadata with a pin from a new certificate. This eliminates the need for traditional revocation mechanisms and focuses the trust relationship on the specific, updated public key.
+If a leaf certificate is compromised within a FedTLS federation, the revocation process involves removing the pin associated with the compromised certificate and updating the metadata with a pin from a new certificate. This eliminates the need for traditional revocation mechanisms and focuses the trust relationship on the specific, updated public key.
 
 
 ## Pin Discovery and Preloading
 
 Peers in the federation retrieve these unique public key pins, serving as pre-configured trust parameters, from the federation metadata. The federation MUST facilitate the discovery process, enabling peers to identify the relevant pins for each endpoint. Information such as organization, tags, and descriptions within the federation metadata aids in this discovery.
 
-Before initiating any connection, both clients and servers preload the chosen pins in strict adherence to the guidelines outlined in section 2.7 of [@!RFC7469]. This preloading ensures connections only occur with endpoints possessing matching public keys, effectively blocking attempts to use fraudulent certificates.
+Before initiating any connection, clients and servers MUST preload the designated pins from the federation metadata. This aligns with the principle described in Section 2.7 of [@!RFC7469], which introduces optional sources for pinning information, with the federation metadata serving as one such source. Preloading pins restricts connections to endpoints with matching public keys, mitigating the risks posed by fraudulent certificates.
 
 
 ## Verification of Received Certificates
 
-Upon connection establishment, both endpoints (client and server) must either leverage public key pinning or validate the received certificate against the published pins. Additionally, the federation metadata contains issuer information, which implementations MAY optionally use to verify certificate issuers. This step remains at the discretion of each individual implementation.
+Upon connection establishment, both endpoints, client and server, must either leverage public key pinning or validate the received certificate against the published pins. Additionally, the federation metadata contains issuer information, which implementations MAY optionally use to verify certificate issuers. This step remains at the discretion of each individual implementation.
 
 In scenarios where a TLS session terminates independent of the application (e.g., via a reverse proxy), the termination point can utilize optional untrusted TLS client certificate authentication or validate the certificate issuer itself. Depending on the specific implementation, pin validation can then be deferred to the application itself, assuming the peer certificate is appropriately transferred (e.g., via an HTTP header).
 
 
 ## Failure to Validate
 
-It is crucial to note that failure to validate a received certificate against the established parameters, whether through pinning or issuer verification, results in immediate termination of the connection. This strict approach ensures only authorized and secure communication channels are established within the federation.
+A received certificate that fails validation MUST result in the immediate termination of the connection. This strict enforcement ensures that only authorized and secure communication channels are established within the federation.
 
 
 ## Certificate Rotation:
@@ -284,7 +284,7 @@ This section defines the set of claims that can be included in metadata.
 
 -   cache_ttl (OPTIONAL)
 
-    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). Once expired, metadata MUST no longer be trusted to maintain federation security. If cache_ttl is not specified, metadata MUST be refreshed before the expiration time.
+    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). Once expired, metadata MUST no longer be trusted to maintain federation security. If cache_ttl is omitted, there MUST still be a mechanism to refresh the metadata before its expiration to maintain validity and ensure uninterrupted federation operations.
 
 -   Entities (REQUIRED)
 
@@ -572,16 +572,16 @@ The FedTLS framework has proven its practical value and robustness through succe
 
 ## Skolfederation Moa
 
-Skolfederation Moa, a federation dedicated to securing digital educational resources, has adopted FedTLS to enable secure and seamless access for schools and municipalities across Sweden. By standardizing secure communication channels, Moa facilitates efficient and protected data exchange between diverse educational platforms and services.
+Skolfederation Moa [@Moa], a federation dedicated to securing digital educational resources, has adopted FedTLS to enable secure and seamless access for schools and municipalities across Sweden. By standardizing secure communication channels, Moa facilitates efficient and protected data exchange between diverse educational platforms and services.
 
 
 ## Swedish National Agency for Education
 
-The Swedish National Agency for Education leverages FedTLS within its digital national test platform to establish a robust authentication mechanism. The platform utilizes an API for client verification prior to secure data transfer to the agency's test service, ensuring the integrity and confidentiality of educational data.
+The Swedish National Agency for Education [@SkolverketFedTLS] leverages FedTLS within its digital national test platform to establish a robust authentication mechanism. The platform utilizes an API for client verification prior to secure data transfer to the agency's test service, ensuring the integrity and confidentiality of educational data.
 
 ## Sambruk's EGIL
 
-Sambruk's EGIL, a platform providing digital services to municipalities, has successfully integrated the FedTLS framework. This deployment demonstrates the framework's adaptability to support a wide range of digital service infrastructures.
+Sambruk's EGIL [@EGIL], a platform providing digital services to municipalities, has successfully integrated the FedTLS framework. This deployment demonstrates the framework's adaptability to support a wide range of digital service infrastructures.
 
 These deployments highlight the effectiveness of the FedTLS framework in enhancing security and interoperability within the educational sector.
 
@@ -830,7 +830,7 @@ Version: 1.0.0
 <reference anchor='eIDAS' target='https://eidas.ec.europa.eu/'>
     <front>
         <title>eIDAS: electronic Identification, Authentication and trust Services</title>
-        <author initials='' surname='' fullname='European Union'>
+        <author>
             <organization>European Commission</organization>
         </author>
         <date year='2014'/>
@@ -840,9 +840,39 @@ Version: 1.0.0
 <reference anchor='eduGAIN' target='https://edugain.org'>
     <front>
         <title>eduGAIN: Interfederation service connecting research and education identity federations worldwide</title>
-        <author initials='' surname='' fullname='eduGAIN'>
+        <author>
             <organization>GÉANT Association</organization>
         </author>
         <date year='2023'/>
+    </front>
+</reference>
+
+<reference anchor='Moa' target='https://wiki.federationer.internetstiftelsen.se/x/LYA5AQ'>
+    <front>
+        <title>Machine and Organization Authentication</title>
+        <author>
+            <organization>The Swedish Internet Foundation</organization>
+        </author>
+        <date year='2022'/>
+    </front>
+</reference>
+
+<reference anchor='SkolverketFedTLS' target='https://github.com/skolverket/dnp-usermanagement/blob/main/authentication-api/README.md'>
+    <front>
+        <title>Authentication API for User Management</title>
+        <author>
+            <organization>Swedish National Agency for Education</organization>
+        </author>
+        <date year='2023'/>
+    </front>
+</reference>
+
+<reference anchor='EGIL' target='https://sambruk.se/egil-dnp/'>
+    <front>
+        <title>EGIL – manage your school's digital user accounts efficiently</title>
+        <author>
+            <organization>Sambruk</organization>
+        </author>
+        <date year='2022'/>
     </front>
 </reference>
