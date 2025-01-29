@@ -41,23 +41,9 @@ This document describes the Federated TLS Authentication (FedTLS) protocol, enab
 
 # Introduction
 
-This document describes the Federated TLS Authentication (FedTLS) framework. The initial use case for FedTLS was to complement SAML federations. In a SAML federation, the service is often populated with user data when the user logs into a service for the first time, so-called just-in-time provisioning. There are scenarios where user data must be present in the service before the user logs in for the first time. FedTLS was developed to bridge this gap by allowing machine-to-machine communications to pre-provision user information.
+This document describes the Federated TLS Authentication (FedTLS) framework, developed to complement multilateral SAML federations, within the education sector. These federations often rely on just-in-time provisioning, where user accounts are created at first login based on information from the SAML assertion. However, educators need to be able to manage resources and classes before students access the service. FedTLS bridges this gap by using secure machine-to-machine communication, enabling pre-provisioning of user information using a trust model and metadata structure inspired by SAML federations.
 
-The FedTLS concept mirrors the trust model in SAML, where federation member entities are managed in metadata, and trust is established through a central trust anchor, held by a third party. This approach maintains the well-known trust model and use of metadata while extending its use to handle secure communication.
-
-FedTLS broadens a federation ecosystem by enabling secure machine-to-machine communication. It can be used for any communication that needs an authenticated secure channel. Although FedTLS original use case was to complement SAML federations, it is an independent solution that provides a framework for secure communication.
-
-The FedTLS framework uses a centralized registry that contains information about public keys, endpoints, and other entity details. The information in the registry is signed and published, this signed information constitutes the federation's metadata. Federation members use federation metadata to establish connections between clients and servers, eliminating the need for manual configuration. This approach simplifies administration and promotes interoperability between systems.
-
-A federation operator is responsible for managing the central trust anchor. This trust anchor connects different trust domains under a common set of policies and standards. The federation operator is also responsible for auditing the members and ensuring the integrity of the federation metadata. It is essential that the federation members have undivided trust in the federation operator.
-
-FedTLS enables secure machine-to-machine communication within a federation through mutual TLS authentication, (as defined in [@!RFC8446]). This establishes mutual trust, where both parties are authenticated and verified.
-
-FedTLS enables the use of self-signed certificates. Signing by a CA of the certificate has no meaning in FedTLS and does not increase the security level in this context. Unlike Web PKI certificates, which depend on trust in external certificate authorities (CAs), FedTLS relies on a cryptographic trust mechanism rooted within the federation itself. This approach avoids challenges associated with varying levels of trust in CAs and the risk of compromised certificates within the Web PKI ecosystem.  
-
-Through mechanisms like public key pinning [@!RFC7469], member vetting, and signed metadata, FedTLS establishes strong reliance on self-signed certificates. These measures ensure the validity and authenticity of self-signed certificates within the federation, providing a secure and cohesive trust framework.  
-
-The Swedish education sector demonstrates the benefits of FedTLS by securing endpoints for user lifecycle management. The Swedish National Agency for Education references FedTLS in their documentation [@SkolverketFedTLS]. While the original documentation is in Swedish, it highlights how FedTLS enables secure and trusted communication between school authorities and service providers. This successful collaboration demonstrates FedTLS's ability to build trust, streamline operations, and enhance security within federated environments.
+This work is not a product of the IETF, does not represent a standard, and has not achieved community consensus. It aims to address specific federation challenges and provide a framework for secure communication. 
 
 
 ##  Reserved Words
