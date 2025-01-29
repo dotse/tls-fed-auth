@@ -376,7 +376,7 @@ A list of the entity's servers and clients.
 
 The FedTLS metadata schema is defined in (#json-schema-for-fedtls-metadata). This schema specifies the format for describing entities involved in FedTLS and their associated information.
 
-**Note:** The schema in Appendix A is folded due to line length limitations as specified in [@RFC8792].
+Note: The schema in Appendix A is folded due to line length limitations as specified in [@RFC8792].
 
 
 ## Example Metadata 
