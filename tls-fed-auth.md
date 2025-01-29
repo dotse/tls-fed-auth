@@ -276,16 +276,27 @@ Upon receiving a connection, a server validates the received client certificate 
 This section defines the set of claims that can be included in metadata.
 
 -   version (REQUIRED)
+    
+    Indicates the schema version of the federation metadata. This ensures compatibility between members of the federation by defining a clear versioning mechanism for interpreting metadata.
 
-    Schema version follows semantic versioning (https://semver.org).
+    -   Data Type: String
+    -   Syntax: Must adhere to Semantic Versioning (https://semver.org).
+    -   Example: `1.0.0`
 
 -   cache_ttl (OPTIONAL)
 
-    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). Once expired, metadata MUST no longer be trusted to maintain federation security. If cache_ttl is omitted, there MUST still be a mechanism to refresh the metadata before its expiration to maintain validity and ensure uninterrupted federation operations.
+    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). Once expired, metadata MUST no longer be trusted. If omitted, a mechanism to refresh metadata MUST still exist to ensure the metadata remains valid.
+
+    -   Data Type: Integer
+    -   Syntax: Integer representing the duration in seconds.
+    -   Example: `3600`
 
 -   Entities (REQUIRED)
 
-    List of entities (see (#entities)).
+    Contains the list of entities within the federation.
+
+    -   Data Type: Array of Objects
+    -   Syntax: Each object MUST conform the entity definition (see Section (#entities)).
 
 
 ### Entities
@@ -296,25 +307,45 @@ Metadata contains a list of entities that may be used for communication within t
 
     A URI that uniquely identifies the entity. This identifier MUST NOT collide with any other entity_id within the federation or with any other federation that the entity interacts with.
 
-    Example: "https://example.com"
+    -   Data Type: URI
+    -   Syntax: A valid URI.
+    -   Example: `"https://example.com"`
 
 -   organization (OPTIONAL)
 
     A name identifying the organization that the entity's metadata represents. The federation operator MUST ensure a mechanism is in place to verify that the organization claim corresponds to the rightful owner of the information exchanged between nodes. This is crucial for the trust model, ensuring certainty about the identities of the involved parties. The federation operator SHOULD choose an approach that best suits the specific needs and trust model of the federation.
 
-    Example: "Example Org".
+    -   Data Type: String
+    -   Syntax: A name identifying the organization represented by the entity.
+    -   Example: `"Example Org"`
 
 -   issuers (REQUIRED)
 
-    A list of certificate issuers allowed to issue certificates for the entity's endpoints MUST be maintained. For each issuer, the issuer's root CA certificate MUST be included in the x509certificate property (PEM-encoded). Certificate verification relies on public key pinning, with the list of allowed issuers used only when a certificate chain validation mechanism is unavoidable. For self-signed certificates, the certificate itself acts as its own issuer and MUST be listed as such in the metadata.
+    A list of certificate issuers allowed to issue certificates for the entity's endpoints MUST be maintained. For each issuer, the issuer's root CA certificate MUST be included in the x509certificate property, PEM-encoded. Certificate verification relies on public key pinning, with the list of allowed issuers used only when a certificate chain validation mechanism is unavoidable. For self-signed certificates, the certificate itself acts as its own issuer and MUST be listed as such in the metadata.
+
+    -   Data Type: List of Objects
+    -   Syntax: Each object contains a issuer certificate, PEM-encoded.
+    -   Example: Issuer truncated for readability.  
+
+        ```
+        "issuers": [{
+          "x509certificate": "-----BEGIN CERTIFICATE-----\nMIIDDD"
+        }]
+        ```
 
 -   servers (OPTIONAL)
 
-    List of the entity's servers (see (#servers-clients)).
+    Contains the list of servers within the entity.
+
+    -    Data Type: Array of Objects
+    -    Syntax: Each object MUST conform to the server definition (see (#servers-clients)).
 
 -   clients (OPTIONAL)
 
-    List of the entity's clients (see (#servers-clients)).
+    Contains the list of clients within the entity.
+    
+    -    Data Type: Array of Objects
+    -    Syntax: Each object MUST conform to the client definition (see (#servers-clients)).
 
 
 #### Servers / Clients
@@ -325,33 +356,56 @@ A list of the entity's servers and clients.
 
     A human readable text describing the server or client.
 
-    Example: "SCIM Server 1"
+    -   Data Type: String
+    -   Syntax: Free-form text describing the server or client.
+    -   Example: `"SCIM Server 1"`
 
 -   base_uri (OPTIONAL)
 
-    The base URL of the server (hence required for endpoints describing servers).
+    The base URL of the server, which is required for endpoints that describe server.
 
-    Example: "https://scim.example.com/"
+    -   Data Type: URI
+    -   Syntax: A valid URL.
+    -   Example: `"https://scim.example.com/"`
 
 -   pins (REQUIRED)
 
-    A list of Public Key Pins [@!RFC7469]. Each pin has the following properties:
+    A list of objects representing Public Key Pins [@!RFC7469].
 
-    -   alg (REQUIRED)
+    -   Data Type: Array of Objects
+    -   Syntax: A list of objects, where each object represents a single public key pin with the following properties:
+
+        -   alg (REQUIRED)
         
-        The name of the cryptographic hash algorithm. Currently, the RECOMMENDED value is 'sha256'. As more secure algorithms are developed over time, federations should be ready to adopt these newer options for enhanced security.
+            The name of the cryptographic hash algorithm. Currently, the RECOMMENDED value is 'sha256'. As more secure algorithms are developed over time, federations should be ready to adopt these newer options for enhanced security.
 
-        Example: "sha256"
+            -   Data Type: String
+            -   Syntax: The name of the algorithm.
+            -   Example: `"sha256"`
 
-    -   digest (REQUIRED)
+        -   digest (REQUIRED)
 
-        The public key of the end-entity certificate converted to a Subject Public Key Information (SPKI) fingerprint, as specified in section 2.4 of [@!RFC7469]. For clients, the digest MUST be globally unique for unambiguous identification. However, within the same entity_id object, the same digest MAY be assigned to multiple clients.
+            The public key of the end-entity certificate converted to a Subject Public Key Information (SPKI) fingerprint, as specified in section 2.4 of [@!RFC7469]. For clients, the digest MUST be globally unique for unambiguous identification. However, within the same entity_id object, the same digest MAY be assigned to multiple clients.
 
-        Example: "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
+            -   Data Type: String
+            -   Syntax: SPKI fingerprint.
+            -   Example: `"+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="`
+    -   Example:
+        ```
+        "pins": [{
+          "alg": "sha256",
+          "digest": "+hcmCjJEtLq4BRPhrILyhgn98Lhy6DaWdpmsBAgOLCQ="
+        }]
+        ```
 
 -   tags (OPTIONAL)
 
     A list of strings that describe the endpoint's capabilities.
+
+    -   Data Type: Array of Strings
+    -   Syntax: Strings describing endpoint capabilities.
+    -   Pattern: `^[a-z0-9]{1,64}$`
+    -   Example: `["scim", "xyzzy"]`
     
     Tags are fundamental for discovery within a federation, aiding both servers and clients in identifying appropriate connections.
 
@@ -366,10 +420,6 @@ A list of the entity's servers and clients.
     -   Well-Defined Scope: Each federation MUST establish a clear scope for its tags, detailing their intended use, allowed tag values, associated meanings, and any relevant restrictions. Maintaining a well-defined and readily accessible registry of approved tags is essential for the federation.
 
     -   Validation Mechanisms: Implementing validation mechanisms for tags is highly recommended. This may involve a dedicated operation or service verifying tag validity and compliance with the federation's regulations. Such validation ensures consistency within the federation by preventing the use of unauthorized or irrelevant tags.
-
-    Pattern: `^[a-z0-9]{1,64}$`
-
-    Example: `["scim", "xyzzy"]`
 
 
 ## Metadata Schema
