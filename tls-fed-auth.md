@@ -569,7 +569,15 @@ The FedTLS framework has proven its practical value and robustness through succe
 
 ## Skolfederation Moa
 
-Skolfederation Moa [@Moa], a federation dedicated to securing digital educational resources, has adopted FedTLS to enable secure and seamless access for schools and municipalities across Sweden. By standardizing secure communication channels, Moa facilitates efficient and protected data exchange between diverse educational platforms and services.
+Skolfederation Moa [@Moa], is a federation designed to secure communication between digital educational resources and schools. FedTLS is developed to meet Moa's needs and enables secure data exchange for schools, municipalities, educational platforms, and services across Sweden.
+
+The community plays a crucial role in this type of federation. Members are active participants, and the FO ensures the federation runs smoothly and serves their needs. Moa's success highlights the importance of collaboration, with members and the FO working together to maintain trust, security, and interoperability in the education sector.
+
+The deployment of FedTLS in the Swedish education sector has provided several key insights. Maintaining an accurate registry of metadata ownership with reliable contact information is essential for troubleshooting and ensuring accountability. The deployment also demonstrated the importance of setting reasonable expiration times for metadata. Too short an expiration can hinder the ability to implement contingency plans for publishing new metadata during outages.
+
+Metadata validation is necessary to maintain a stable federation. While manual validation may be sufficient in the early stages of a federation, it becomes unmanageable as the federation scales. Without an automated validation process, incorrect metadata uploaded by members is likely to go undetected, leading to publication of incorrect metadata.
+
+The signing key is needed to sign metadata. Under fallback scenarios, even if metadata can be retrieved from elsewhere, without access to the signing key, it is impossible to publish metadata. Therefore, secure and redundant management of the signing key is crucial to enable fallback mechanisms and ensure reliable signing and distribution of metadata. If metadata is retrieved from a location other than the official repository, it is mandatory to validate its signature to maintain trust and ensure the authenticity of the metadata.
 
 
 ## Swedish National Agency for Education
