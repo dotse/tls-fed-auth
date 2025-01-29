@@ -250,6 +250,17 @@ To replace a certificate, whether due to expiration or other reasons, the follow
 1. Removing Old Pin: After successfully switching to the new certificate, members must publish updated metadata that excludes the old pin. This final step ensures that only the current public keys are trusted.
 
 
+## Implementation Guidelines
+
+To enforce public key pinning, implementations SHOULD use widely adopted cryptographic libraries to ensure compatibility while allowing strict key verification.
+
+Implementations SHOULD rely on TLS libraries that support custom certificate validation. Python provides cryptography to extract public keys, while requests with urllib3 can intercept the certificate for verification. Go developers can use crypto/tls and crypto/x509 to inspect and validate the presented certificate. In Java, java.security.cert.X509Certificate provides public key extraction, while java.net.http.HttpClient allows clients to configure a custom SSLContext and TrustManager to enforce pinning. Libcurl, which is available for many languages, supports pinning via the PINNEDPUBLICKEY option.
+
+For servers, key pinning MUST always be enforced, either by performing direct pinning at the TLS termination point or by forwarding the certificate to the application. If the certificate is forwarded, it MUST be transferred using an HTTP header or another secure mechanism. The application then extracts the public key from the certificate and validates it against the pins published in the metadata."
+
+Direct pinning or validation against pins in metadata is mandatory under all circumstances. If bypassing standard CA validation is not possible, the issuers listed in the federation metadata MUST be used as the trust store to validate certificate issuers while still enforcing key pinning. Otherwise, self-signed certificates would not be accepted. These mechanisms ensure that implementations remain compatible with existing TLS infrastructure while maintaining strict security guarantees.
+
+
 # Federation Metadata
 
 Federation metadata is published as a JWS [@!RFC7515]. The payload contains statements
