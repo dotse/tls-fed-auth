@@ -306,7 +306,7 @@ Metadata contains a list of entities that may be used for communication within t
 
 -   entity_id (REQUIRED)
 
-    A URI that uniquely identifies the entity. This identifier MUST NOT collide with any other entity_id within the federation or with any other federation that the entity interacts with.
+    A URI that uniquely identifies the entity. This identifier MUST NOT collide with any other entity_id within the federation or within any other federation that the entity interacts with.
 
     -   Data Type: URI
     -   Syntax: A valid URI.
