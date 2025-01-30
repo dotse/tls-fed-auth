@@ -251,13 +251,15 @@ To replace a certificate, whether due to expiration or other reasons, the follow
 
 ## Implementation Guidelines
 
-To enforce public key pinning, implementations SHOULD use widely adopted cryptographic libraries to ensure compatibility while allowing strict key verification.
+Public key validation MUST always be enforced, either through direct pinning or by deferring validation to the application.
 
-Implementations SHOULD rely on TLS libraries that support custom certificate validation. Python provides cryptography to extract public keys, while requests with urllib3 can intercept the certificate for verification. Go developers can use crypto/tls and crypto/x509 to inspect and validate the presented certificate. In Java, java.security.cert.X509Certificate provides public key extraction, while java.net.http.HttpClient allows clients to configure a custom SSLContext and TrustManager to enforce pinning. Libcurl, which is available for many languages, supports pinning via the PINNEDPUBLICKEY option.
+For clients, public key validation typically occurs within the application handling the TLS session, either by enforcing direct pinning or by extracting and validating the public key against the published pins.
 
-For servers, key pinning MUST always be enforced, either by performing direct pinning at the TLS termination point or by forwarding the certificate to the application. If the certificate is forwarded, it MUST be transferred using an HTTP header or another secure mechanism. The application then extracts the public key from the certificate and validates it against the pins published in the metadata."
+For servers, validation depends on deployment. If the application terminates the TLS session, it performs direct pinning or extracts and validates the public key. If a reverse proxy terminates the TLS session, it can enforce direct pinning or forward the certificate to the application (e.g., via an HTTP header) for validation.
 
-Direct pinning or validation against pins in metadata is mandatory under all circumstances. If bypassing standard CA validation is not possible, the issuers listed in the federation metadata MUST be used as the trust store to validate certificate issuers while still enforcing key pinning. Otherwise, self-signed certificates would not be accepted. These mechanisms ensure that implementations remain compatible with existing TLS infrastructure while maintaining strict security guarantees.
+Implementations SHOULD, when possible, rely on libraries with native support for pinning. Libcurl, for example, supports pinning via the PINNEDPUBLICKEY option. In Python, the cryptography library can extract public keys, while the requests package together with urllib3 can intercept certificates. Go provides crypto/tls and crypto/x509 for certificate inspection and public key extraction. In Java, java.security.cert.X509Certificate enables public key extraction, while java.net.http.HttpClient allows pinning enforcement using a custom SSLContext and TrustManager. The choice of library is left to the discretion of each implementation.
+
+If bypassing standard CA validation is possible, it SHOULD be done. If not, the issuers listed in the federation metadata MUST be used as the trust store to validate certificate issuers while still enforcing key pinning. Without issuer validation against issuers in metadata, self-signed certificates would not be accepted. These mechanisms ensure compatibility with existing TLS infrastructure while maintaining strict security guarantees.
 
 
 # Federation Metadata
