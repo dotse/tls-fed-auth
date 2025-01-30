@@ -322,7 +322,7 @@ Metadata contains a list of entities that may be used for communication within t
 
 -   issuers (REQUIRED)
 
-    A list of certificate issuers allowed to issue certificates for the entity's endpoints MUST be maintained. For each issuer, the issuer's root CA certificate MUST be included in the x509certificate property, PEM-encoded. Certificate verification relies on public key pinning, with the list of allowed issuers used only when a certificate chain validation mechanism is unavoidable. For self-signed certificates, the certificate itself acts as its own issuer and MUST be listed as such in the metadata.
+    A list of certificate issuers allowed to issue certificates for the entity's endpoints. For each issuer, the issuer's root CA certificate MUST be included in the x509certificate property, PEM-encoded. Certificate verification relies on public key pinning, with the list of allowed issuers used only when a certificate chain validation mechanism is unavoidable. For self-signed certificates, the certificate itself acts as its own issuer and MUST be listed as such in the metadata.
 
     -   Data Type: List of Objects
     -   Syntax: Each object contains a issuer certificate, PEM-encoded.
