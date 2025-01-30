@@ -222,7 +222,7 @@ If a leaf certificate is compromised within a FedTLS federation, the revocation 
 
 ## Pin Discovery and Preloading
 
-Peers in the federation retrieve these unique public key pins, serving as pre-configured trust parameters, from the federation metadata. The federation MUST facilitate the discovery process, enabling peers to identify the relevant pins for each endpoint. Information such as organization, tags, and descriptions within the federation metadata aids in this discovery.
+Peers in the federation retrieve these unique public key pins, serving as pre-configured trust parameters, from the federation metadata. The federation MUST facilitate the discovery process, allowing peers to identify the relevant pins for each endpoint. Information such as organization, tags, and descriptions within the federation metadata supports this discovery.
 
 Before initiating any connection, clients and servers MUST preload the designated pins from the federation metadata. This aligns with the principle described in Section 2.7 of [@!RFC7469], which introduces optional sources for pinning information, with the federation metadata serving as one such source. Preloading pins restricts connections to endpoints with matching public keys, mitigating the risks posed by fraudulent certificates.
 
