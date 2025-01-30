@@ -93,8 +93,7 @@ The federation operator plays a critical role in the FedTLS framework. This enti
 
 Additionally, the federation operator SHOULD develop their own threat models to proactively identify potential risks and threats. This process involves examining the operating environment, evaluating both internal and external threats, and understanding how vulnerabilities can be exploited. The goal of the threat model is to enable the federation operator to establish mitigation strategies that address the identified risks.
 
-The security and stability of the federation rely on the integrity and competence of the federation operator. Members must have complete trust in this central authority to ensure the federation's reliability and security.
-
+The security and stability of the federation rely on the integrity and competence of the federation operator. Members must be able to fully trust this central authority, as its role is essential to maintaining the federation’s reliability and security.
 
 ## Federation Members' Responsibilities
 
