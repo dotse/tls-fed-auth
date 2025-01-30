@@ -189,7 +189,7 @@ All communication established within the federation leverages mutual TLS authent
 
 ## Public Key Pinning
 
-FedTLS implements public key pinning as specified in [@!RFC7469]. Public key pinning associates one or many unique public keys with each endpoint within the federation, stored in the federation metadata. During connection establishment, clients and servers validate the received certificate against the pre-configured public key pins retrieved from the federation metadata. 
+FedTLS implements public key pinning as specified in [@!RFC7469]. Public key pinning associates one or more unique public keys with each endpoint within the federation, stored in the federation metadata. During a connection, clients and servers extract the public key from the received certificate and validate it against the pre-configured public key pins retrieved from the federation metadata.
 
 
 ### Benefits of Public Key Pinning
