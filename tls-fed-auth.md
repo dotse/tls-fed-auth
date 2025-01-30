@@ -140,7 +140,7 @@ Ensuring the authenticity of metadata is crucial for maintaining the security an
 
 # Metadata Repository
 
-The FedTLS metadata repository serves as the cornerstone of trust within a federation. It acts as a central vault, securely storing all information about all participating federation members and their respective entities. This information, known as federation metadata, is presented as a JWS [@!RFC7515]to ensure its authenticity and integrity.
+The FedTLS metadata repository acts as a central vault, securely storing all information about all participating federation members and their respective entities. This information, known as federation metadata, is presented as a JWS [@!RFC7515]to ensure its authenticity and integrity.
 
 The metadata repository is subject to stringent security measures to safeguard the integrity of the stored information. This MAY involve:
 
