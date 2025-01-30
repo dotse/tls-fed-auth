@@ -130,7 +130,7 @@ The following are non-normative references to established frameworks:
 
 -   eIDAS: The eIDAS regulation establishes a framework for electronic identification and trust services within the European Union. It ensures secure and standardized electronic interactions across member states, facilitating mutual recognition of electronic IDs. Operators can refer to the eIDAS framework for guidance on robust authentication and identity verification processes. See [@eIDAS].
 
--   eduGAIN: eduGAIN is an interfederation service connecting identity federations worldwide, primarily within the research and education sectors. It ensures high standards of security and interoperability, allowing institutions to collaborate seamlessly. eduGAIN's processes for vetting and federating identity providers can serve as a useful reference. See [@eduGAIN].
+-   eduGAIN: eduGAIN is an interfederation service connecting identity federations worldwide, primarily within the research and education sectors. It ensures high standards of security and interoperability, allowing institutions to collaborate seamlessly. eduGAIN's processes for vetting can serve as a useful reference. See [@eduGAIN].
 
 
 ## Metadata Authenticity
