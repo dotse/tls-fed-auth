@@ -55,10 +55,10 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ## Terminology
 
--   Federation: A trusted network of entities that adhere to common security policies and standards,using FedTLS for secure communication.
+-   Federation: A trusted network of entities that adhere to common security policies and standards, using FedTLS for secure communication.
 -   Federation Member: An entity that has been approved to join the federation and can leverage FedTLS for secure communication with other members.
 -   Federation Operator: The entity responsible for the overall operation and management of the federation, including managing the federation metadata, enforcing security policies, and onboarding new members.
--   Federation Metadata: A cryptographically signed document containing critical information about all entities within the federation.
+-   Federation Metadata: A cryptographically signed document containing information about all entities within the federation.
 -   Metadata Repository: A centralized repository storing information about all entities within the federation.
 -   Member Metadata: Information about entities associated with a specific member within the federation.
 -   Member Vetting: The process of verifying and approving applicants to join the federation, ensuring they meet security and trustworthiness requirements.
