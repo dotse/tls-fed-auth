@@ -487,31 +487,34 @@ The following is a non-normative example of a metadata statement. Line breaks wi
 }
 ~~~
 
+
 ## Metadata Signing
 
-The federation metadata is signed with JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. The Federation metadata signatures are RECOMMENDED to be created using the algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518]. However, to accommodate evolving cryptographic standards, alternative algorithms MAY be used, provided they meet the security requirements of the federation.
+Federation metadata is signed using JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. Federation metadata signatures are RECOMMENDED to be created using the algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518]. However, to accommodate evolving cryptographic standards, alternative algorithms MAY be used, provided they meet the security requirements of the federation.
 
-The following federation metadata signature protected headers are REQUIRED:
+The following protected JWS header parameters are REQUIRED:
 
-*   `alg` (Algorithm)
+*    `alg` (Algorithm)
+    
+     Identifies the algorithm used to generate the JWS signature [@!RFC7515], section 4.1.1.
 
-    Identifies the algorithm used to generate the JWS signature [@!RFC7515], section 4.1.1.
+*    `iat` (Issued At)
+    
+     Identifies the time at which the signature was issued. Its value MUST be a number containing a NumericDate [@!RFC7519], section 4.1.6, although `iat` is typically used as a JWT claim, it is placed here in the JWS header.
 
-*   `iat` (Issued At)
+*    `exp` (Expiration Time)
+    
+     Identifies the expiration time on or after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST match the value of `exp`. Its value MUST be a number containing a NumericDate [@!RFC7519], section 4.1.4, and the claim is also placed in the JWS header, consistent with this framework.
 
-    Identifies the time on which the signature was issued. Its value MUST be a number containing a NumericDate value [@!RFC7519], section 4.1.6.
+*    `iss` (Issuer)
+    
+     A URI uniquely identifying the issuing federation. This plays a critical role in trust establishment within the FedAE framework. The `iss` claim differentiates federations, preventing ambiguity and ensuring that entities are recognized within their intended context. Verification of the `iss` claim enables recipients to determine the origin of the information and establish trust with entities within the identified federation [@!RFC7519], section 4.1.1. The `iss` claim is registered for use as a JOSE header parameter as per [@!RFC7519], section 5.3.
 
-*   `exp` (Expiration Time)
+*    `kid` (Key Identifier)
+    
+     Identifies the signing key in the key set used to sign the JWS [@!RFC7515], section 4.1.4.
 
-    Identifies the expiration time on and after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST be set to the value of exp. Its value MUST be a number containing a NumericDate value [@!RFC7519], section 4.1.4.
-
-*   `iss` (Issuer)
-
-    A URI uniquely identifying the issuing federation, playing a critical role in establishing trust and securing interactions within the FedAE framework. The iss claim differentiates federations, preventing ambiguity and ensuring entities are recognized within their intended context. Verification of the iss claim enables determining the origin of information and establishing trust with entities within the identified federation [@!RFC7519], section 4.1.1.
-
-*   `kid` (Key Identifier)
-
-    The key ID is used to identify the signing key in the key set used to sign the JWS [@!RFC7515], section 4.1.4.
+Note: Although `iss` is registered for use in JOSE headers, `iat` and `exp` are not. However, this specification explicitly places these values in the protected JWS header to bind metadata validity information directly to the signature. Implementers should be aware of this usage and process these parameters accordingly.
 
 
 ## Example Signature Protected Header
