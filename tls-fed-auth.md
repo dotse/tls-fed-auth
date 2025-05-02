@@ -34,14 +34,14 @@
 
 .# Abstract
 
-This document describes the Federated Authentication of Entities (FAE) framework, enabling secure machine-to-machine communication within a federation. Both clients and servers perform mutual TLS authentication, establishing trust based on a centrally managed trust anchor published by the federation. Additionally, FedAE ensures unambiguous identification of entities, as only authorized members within the federation can publish metadata, further mitigating risks associated with unauthorized entities impersonating legitimate participants. This framework promotes seamless and secure interoperability across different trust domains adhering to common policies and standards within the federation.
+This document describes the Federated Authentication of Entities (FedAE) framework, enabling secure machine-to-machine communication within a federation. Both clients and servers perform mutual TLS authentication, establishing trust based on a centrally managed trust anchor published by the federation. Additionally, FedAE ensures unambiguous identification of entities, as only authorized members within the federation can publish metadata, further mitigating risks associated with unauthorized entities impersonating legitimate participants. This framework promotes seamless and secure interoperability across different trust domains adhering to common policies and standards within the federation.
 
 {mainmatter}
 
 
 # Introduction
 
-This document describes the Federated Authentication of Entities (FAE) framework, developed to complement multilateral SAML federations, within the education sector. These federations often rely on just-in-time provisioning, where user accounts are created at first login based on information from the SAML assertion. However, educators need to be able to manage resources and classes before students access the service. FedAE bridges this gap by using secure machine-to-machine communication, enabling pre-provisioning of user information using a trust model and metadata structure inspired by SAML federations.
+This document describes the Federated Authentication of Entities (FedAE) framework, developed to complement multilateral SAML federations, within the education sector. These federations often rely on just-in-time provisioning, where user accounts are created at first login based on information from the SAML assertion. However, educators need to be able to manage resources and classes before students access the service. FedAE bridges this gap by using secure machine-to-machine communication, enabling pre-provisioning of user information using a trust model and metadata structure inspired by SAML federations.
 
 FedAE is designed specifically for secure authentication in machine-to-machine contexts, such as RESTful APIs and service-to-service interactions, and is not intended for browser-based authentication. Because its applicability in a browser environment has not been studied, using FedAE within browsers is not recommended. Doing so may introduce risks that differ from those typically addressed by standard browser security models.
 
