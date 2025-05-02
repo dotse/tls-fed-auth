@@ -702,13 +702,12 @@ This document has no IANA actions.
 This JSON schema defines the format of FedAE metadata.
 
 Version: 1.0.0
-```
+```json
 =============== NOTE: '\\' line wrapping per RFC 8792 ===============
 
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://www.fedae.se/schema/fedae-metadata-schema.json\
-\",
+    "$id": "https://www.fedae.se/schema/fedae-metadata-schema.json",
     "title": "JSON Schema for Federated Authentication of Entities",
     "description": "Version: 1.0.0",
     "type": "object",
@@ -741,11 +740,11 @@ Version: 1.0.0
         "entities": {
             "type": "array",
             "items": {
-                "$ref": "#/components/entity"
+                "$ref": "#/$defs/entity"
             }
         }
     },
-    "components": {
+    "$defs": {
         "entity": {
             "type": "object",
             "additionalProperties": true,
@@ -781,19 +780,19 @@ Version: 1.0.0
 \x509certificate property (PEM-encoded).",
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/cert_issuers"
+                        "$ref": "#/$defs/cert_issuers"
                     }
                 },
                 "servers": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/endpoint"
+                        "$ref": "#/$defs/endpoint"
                     }
                 },
                 "clients": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/endpoint"
+                        "$ref": "#/$defs/endpoint"
                     }
                 }
             }
@@ -837,7 +836,7 @@ Version: 1.0.0
                     "title": "Certificate pin set",
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/pin_directive"
+                        "$ref": "#/$defs/pin_directive"
                     }
                 }
             }
@@ -887,6 +886,7 @@ Version: 1.0.0
     }
 }
 ```
+
 
 <reference anchor='eIDAS' target='https://eidas.ec.europa.eu/'>
     <front>
