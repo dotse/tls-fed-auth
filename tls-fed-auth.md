@@ -34,7 +34,7 @@
 
 .# Abstract
 
-This document describes the Federated TLS Authentication (FedTLS) protocol, enabling secure machine-to-machine communication within a federation. Both clients and servers perform mutual TLS authentication, establishing trust based on a centrally managed trust anchor published by the federation. Additionally, FedTLS ensures unambiguous identification of entities, as only authorized members within the federation can publish metadata, further mitigating risks associated with unauthorized entities impersonating legitimate participants. This framework promotes seamless and secure interoperability across different trust domains adhering to common policies and standards within the federation.
+This document describes the Federated TLS Authentication (FedTLS) framework, enabling secure machine-to-machine communication within a federation. Both clients and servers perform mutual TLS authentication, establishing trust based on a centrally managed trust anchor published by the federation. Additionally, FedTLS ensures unambiguous identification of entities, as only authorized members within the federation can publish metadata, further mitigating risks associated with unauthorized entities impersonating legitimate participants. This framework promotes seamless and secure interoperability across different trust domains adhering to common policies and standards within the federation.
 
 {mainmatter}
 
