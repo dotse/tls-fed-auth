@@ -1,6 +1,6 @@
 ---
 $schema: https://json-schema.org/draft/2020-12/schema
-$id: https://www.fedae.se/schema/fedae-metadata-schema.json
+$id: https://fedae.se/schema/fedae-metadata-schema.json
 title: JSON Schema for Federated Authentication of Entities
 description: "Version: 1.0.0"
 
