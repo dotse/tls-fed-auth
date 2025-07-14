@@ -43,11 +43,14 @@ This document defines a framework that enables interoperable trust management fo
 
 # Introduction
 
-This document describes the Federated Authentication of Entities (FedAE) framework, developed to complement multilateral SAML federations, within the education sector. These federations often rely on just-in-time provisioning, where user accounts are created at first login based on information from the SAML assertion. However, educators need to be able to manage resources and classes before students access the service. FedAE bridges this gap by using secure machine-to-machine communication, enabling pre-provisioning of user information using a trust model and metadata structure inspired by SAML federations.
+This document describes the Federated Authentication of Entities (FedAE) framework, developed to complement multilateral SAML federations within the education sector. These federations often rely on just-in-time provisioning, where user accounts are created at first login based on information from the SAML assertion. However, educators need to be able to manage resources and classes before students access the service. FedAE bridges this gap by using secure machine-to-machine communication, enabling pre-provisioning of user information using a trust model and metadata structure inspired by SAML federations.
 
 FedAE is designed specifically for secure authentication in machine-to-machine contexts, such as RESTful APIs and service-to-service interactions, and is not intended for browser-based authentication. Because its applicability in a browser environment has not been studied, using FedAE within browsers is not recommended. Doing so may introduce risks that differ from those typically addressed by standard browser security models.
 
-This work is not a product of the IETF, does not represent a standard, and has not achieved community consensus. It aims to address specific federation challenges and provide a framework for secure communication. 
+This work is not a product of the IETF, does not represent a standard, and has not achieved community consensus. It aims to address specific federation challenges and provide a framework for secure communication.
+
+TLS is specified and standardized by the IETF's TLS working group. For more information, see the TLS Working Group page at:
+[https://datatracker.ietf.org/wg/tls/about/](https://datatracker.ietf.org/wg/tls/about/). TLS 1.3 is defined in [@!RFC8446].
 
 
 ##  Reserved Words
