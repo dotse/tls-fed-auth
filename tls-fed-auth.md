@@ -1,7 +1,7 @@
 %%%
 
-    title = "Federated Authentication of Entities"
-    abbrev = "FedAE"
+    title = "Mutually Authenticating TLS in the context of Federations"
+    abbrev = "MATF"
     category = "std"
     ipr = "trust200902"
     submissiontype = "independent"
@@ -43,9 +43,9 @@ This document defines a framework that enables interoperable trust management fo
 
 # Introduction
 
-This document describes the Federated Authentication of Entities (FedAE) framework, developed to complement multilateral SAML federations within the education sector. These federations often rely on just-in-time provisioning, where user accounts are created at first login based on information from the SAML assertion. However, educators need to be able to manage resources and classes before students access the service. FedAE bridges this gap by using secure machine-to-machine communication, enabling pre-provisioning of user information using a trust model and metadata structure inspired by SAML federations.
+This document describes the Mutually Authenticating TLS in the context of Federations (MATF) framework, developed to complement multilateral SAML federations within the education sector. These federations often rely on just-in-time provisioning, where user accounts are created at first login based on information from the SAML assertion. However, educators need to be able to manage resources and classes before students access the service. MATF bridges this gap by using secure machine-to-machine communication, enabling pre-provisioning of user information using a trust model and metadata structure inspired by SAML federations.
 
-FedAE is designed specifically for secure authentication in machine-to-machine contexts, such as RESTful APIs and service-to-service interactions, and is not intended for browser-based authentication. Because its applicability in a browser environment has not been studied, using FedAE within browsers is not recommended. Doing so may introduce risks that differ from those typically addressed by standard browser security models.
+MATF is designed specifically for secure authentication in machine-to-machine contexts, such as RESTful APIs and service-to-service interactions, and is not intended for browser-based authentication. Because its applicability in a browser environment has not been studied, using MATF within browsers is not recommended. Doing so may introduce risks that differ from those typically addressed by standard browser security models.
 
 This work is not a product of the IETF, does not represent a standard, and has not achieved community consensus. It aims to address specific federation challenges and provide a framework for secure communication.
 
@@ -62,8 +62,8 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 ## Terminology
 
--   Federation: A trusted network of entities that adhere to common security policies and standards, using FedAE for secure communication.
--   Federation Member: An entity that has been approved to join the federation and can leverage FedAE for secure communication with other members.
+-   Federation: A trusted network of entities that adhere to common security policies and standards, using MATF for secure communication.
+-   Federation Member: An entity that has been approved to join the federation and can leverage MATF for secure communication with other members.
 -   Federation Operator: The entity responsible for the overall operation and management of the federation, including managing the federation metadata, enforcing security policies, and onboarding new members.
 -   Federation Metadata: A cryptographically signed document containing information about all entities within the federation.
 -   Metadata Repository: A centralized repository storing information about all entities within the federation.
@@ -74,7 +74,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 # Diverse Design Patterns
 
-FedAE is designed to be flexible and adaptable to the varying needs of different federations. Federations can differ significantly in terms of size, scope, and security requirements, which makes it challenging to prescribe a one-size-fits-all trust framework and security measures.
+MATF is designed to be flexible and adaptable to the varying needs of different federations. Federations can differ significantly in terms of size, scope, and security requirements, which makes it challenging to prescribe a one-size-fits-all trust framework and security measures.
 
 For instance, in the European Union, the eIDAS (electronic Identification, Authentication, and trust Services) regulation establishes a framework for electronic identification and trust services for electronic transactions within the EU. This regulation provides a comprehensive set of standards for secure electronic interactions across member states. National federations within EU member states adhere to these standards, ensuring interoperability and mutual recognition of electronic IDs across different countries.
 
@@ -82,17 +82,17 @@ Similarly, national federations, such as those found in education or healthcare 
 
 Organizations may also set up their own federations, tailored to the specific security requirements and trust models relevant to their context. For example, a private business federation might establish its own vetting processes and trust framework based on the nature of its business and the sensitivity of the data being exchanged.
 
-By allowing federations the flexibility to tailor their trust frameworks and security measures, FedAE can support a wide range of use cases. This flexibility is crucial for accommodating the diverse requirements and challenges faced by different federations, ensuring a secure and adaptable system for establishing trust and facilitating secure communication.
+By allowing federations the flexibility to tailor their trust frameworks and security measures, MATF can support a wide range of use cases. This flexibility is crucial for accommodating the diverse requirements and challenges faced by different federations, ensuring a secure and adaptable system for establishing trust and facilitating secure communication.
 
 
 # Trust Model
 
-The FedAE framework operates on a trust model that is central to its design and functionality. This section outlines the key components of this trust model and its implications for federation members and the federation operator.
+The MATF framework operates on a trust model that is central to its design and functionality. This section outlines the key components of this trust model and its implications for federation members and the federation operator.
 
 
 ## Role of the Federation Operator
 
-The federation operator plays a critical role in the FedAE framework. This entity is responsible for:
+The federation operator plays a critical role in the MATF framework. This entity is responsible for:
 
 -   Managing the central trust anchor, which is used to establish trust across different domains within the federation.
 -   Vetting federation members to ensure they meet the required standards and policies.
@@ -131,7 +131,7 @@ This trust framework is essential for enabling seamless and secure interoperabil
 
 ## Member Vetting
 
-To ensure the security and integrity of the FedAE framework, a member vetting process is essential. Detailed vetting processes are beyond the scope of this document but can be guided by established frameworks such as eIDAS and eduGAIN. 
+To ensure the security and integrity of the MATF framework, a member vetting process is essential. Detailed vetting processes are beyond the scope of this document but can be guided by established frameworks such as eIDAS and eduGAIN. 
 
 The following are non-normative references to established frameworks:
 
@@ -142,12 +142,12 @@ The following are non-normative references to established frameworks:
 
 ## Metadata Authenticity
 
-Ensuring the authenticity of metadata is crucial for maintaining the security and trustworthiness of the FedAE framework. The specific mechanisms for ensuring metadata authenticity are beyond the scope of this document and must be defined by the federation or regulatory bodies.
+Ensuring the authenticity of metadata is crucial for maintaining the security and trustworthiness of the MATF framework. The specific mechanisms for ensuring metadata authenticity are beyond the scope of this document and must be defined by the federation or regulatory bodies.
 
 
 # Metadata Repository
 
-The FedAE metadata repository acts as a central vault, securely storing all information about all participating federation members and their respective entities. This information, known as federation metadata, is presented as a JWS [@!RFC7515]to ensure its authenticity and integrity.
+The MATF metadata repository acts as a central vault, securely storing all information about all participating federation members and their respective entities. This information, known as federation metadata, is presented as a JWS [@!RFC7515]to ensure its authenticity and integrity.
 
 The metadata repository is subject to stringent security measures to safeguard the integrity of the stored information. This MAY involve:
 
@@ -163,7 +163,7 @@ Before member metadata is added to the federation's repository, the submitted me
 -   Certificate Verification: The issuer certificates listed in the metadata are validated to ensure that the algorithms used in the certificates are well-known and secure, and that the certificates are currently valid and have not expired
 -   Tag Validation: Ensures that tags (see (#servers-clients)) in the metadata adhere to the defined tag structure, verifying both mandatory and optional tags. This process is crucial for maintaining consistency and preventing unauthorized tags within a federation.
 
-The FedAE metadata repository serves as the vital foundation for establishing trust and enabling secure communication within a FedAE environment. By providing a central, secure, and controlled repository for critical information, the metadata repository empowers members to confidently discover other trusted entities, and establish secure connections for seamless interaction.
+The MATF metadata repository serves as the vital foundation for establishing trust and enabling secure communication within a MATF environment. By providing a central, secure, and controlled repository for critical information, the metadata repository empowers members to confidently discover other trusted entities, and establish secure connections for seamless interaction.
 
 
 ## Metadata Submission
@@ -173,7 +173,7 @@ It is up to the federation to determine which channels should be provided to mem
 
 ## Maintaining Up-to-Date Metadata
 
-In a FedAE federation, accurate and current metadata is essential for ensuring secure and reliable communication between members. This necessitates maintaining up-to-date metadata accessible by all members.
+In a MATF federation, accurate and current metadata is essential for ensuring secure and reliable communication between members. This necessitates maintaining up-to-date metadata accessible by all members.
 
 -   Federation Metadata: The federation operator publishes a JWS containing an aggregate of all entity metadata. This JWS serves as the source of truth for information about all members within the federation. Outdated information in the JWS can lead to issues like failed connections, discovery challenges, and potential security risks.
 -   Local Metadata: Each member maintains a local metadata store containing information about other members within the federation. This information is retrieved from the federation's publicly accessible JWS. Outdated data in the local store can hinder a member's ability to discover and connect with other relevant entities.
@@ -196,17 +196,17 @@ All communication established within the federation leverages mutual TLS authent
 
 ## Public Key Pinning
 
-FedAE implements public key pinning as specified in [@!RFC7469]. Public key pinning associates one or more unique public keys with each endpoint within the federation, stored in the federation metadata. During a connection, clients and servers extract the public key from the received certificate and validate it against the pre-configured public key pins retrieved from the federation metadata.
+MATF implements public key pinning as specified in [@!RFC7469]. Public key pinning associates one or more unique public keys with each endpoint within the federation, stored in the federation metadata. During a connection, clients and servers extract the public key from the received certificate and validate it against the pre-configured public key pins retrieved from the federation metadata.
 
 
 ### Benefits of Public Key Pinning
 
-The decision to utilize public key pinning in the FedAE framework was driven by several critical factors aimed at enhancing security and ensuring trust:
+The decision to utilize public key pinning in the MATF framework was driven by several critical factors aimed at enhancing security and ensuring trust:
 
 
 #### Interfederation Trust
 
-In interfederation environments, where multiple federations need to trust each other, public key pinning remains effective. Each federation can pin the public keys of entities in other federations, ensuring trust across boundaries. Unlike private certificate chains, which can become complex and difficult to manage across multiple federations, public key pinning provides a straightforward mechanism for establishing trust. FedAE interfederation addresses this challenge by aggregating metadata from all participating federations into a unified metadata repository. This shared metadata enables secure communication between entities in different federations, ensuring consistent key validation and robust cross-federation trust and security.
+In interfederation environments, where multiple federations need to trust each other, public key pinning remains effective. Each federation can pin the public keys of entities in other federations, ensuring trust across boundaries. Unlike private certificate chains, which can become complex and difficult to manage across multiple federations, public key pinning provides a straightforward mechanism for establishing trust. MATF interfederation addresses this challenge by aggregating metadata from all participating federations into a unified metadata repository. This shared metadata enables secure communication between entities in different federations, ensuring consistent key validation and robust cross-federation trust and security.
 
 
 #### Fortifying Security Against Threats
@@ -224,7 +224,7 @@ The use of self-signed certificates within the federation leverages public key p
 If any certificate in a certificate chain is compromised, the revocation process can be complex and slow. This complexity arises because not only the compromised certificate but potentially multiple certificates within
 the chain might need to be revoked and reissued. Public key pinning mitigates this complexity by allowing clients to explicitly trust a specific public key, thereby reducing dependency on the entire certificate chain's integrity.
 
-If a leaf certificate is compromised within a FedAE federation, the revocation process involves removing the pin associated with the compromised certificate and updating the metadata with a pin from a new certificate. This eliminates the need for traditional revocation mechanisms and focuses the trust relationship on the specific, updated public key.
+If a leaf certificate is compromised within a MATF federation, the revocation process involves removing the pin associated with the compromised certificate and updating the metadata with a pin from a new certificate. This eliminates the need for traditional revocation mechanisms and focuses the trust relationship on the specific, updated public key.
 
 
 ## Pin Discovery and Preloading
@@ -432,7 +432,7 @@ A list of the entity's servers and clients.
 
 ## Metadata Schema
 
-The FedAE metadata schema is defined in (#json-schema-for-fedae-metadata). This schema specifies the format for describing entities involved in FedAE and their associated information.
+The MATF metadata schema is defined in (#json-schema-for-matf-metadata). This schema specifies the format for describing entities involved in MATF and their associated information.
 
 Note: The schema in Appendix A is folded due to line length limitations as specified in [@RFC8792].
 
@@ -513,7 +513,7 @@ The following protected JWS header parameters are REQUIRED:
 
 *    `iss` (Issuer)
     
-     A URI uniquely identifying the issuing federation. This plays a critical role in trust establishment within the FedAE framework. The `iss` claim differentiates federations, preventing ambiguity and ensuring that entities are recognized within their intended context. Verification of the `iss` claim enables recipients to determine the origin of the information and establish trust with entities within the identified federation [@!RFC7519], section 4.1.1. The `iss` claim is registered for use as a JOSE header parameter as per [@!RFC7519], section 5.3.
+     A URI uniquely identifying the issuing federation. This plays a critical role in trust establishment within the MATF framework. The `iss` claim differentiates federations, preventing ambiguity and ensuring that entities are recognized within their intended context. Verification of the `iss` claim enables recipients to determine the origin of the information and establish trust with entities within the identified federation [@!RFC7519], section 4.1.1. The `iss` claim is registered for use as a JOSE header parameter as per [@!RFC7519], section 5.3.
 
 *    `kid` (Key Identifier)
     
@@ -531,7 +531,7 @@ The following is a non-normative example of a signature protected header.
     "alg": "ES256",
     "exp": 1707739718,
     "iat": 1706875718,
-    "iss": "https://fedae.example.com",
+    "iss": "https://matf.example.com",
     "kid": "c2fb760e-f4b6-4f7e-b17a-7115d2826d51"
 }
 ~~~
@@ -541,7 +541,7 @@ The following is a non-normative example of a signature protected header.
 
 The examples in this section are non-normative.
 
-The following example describes a scenario within the federation "Skolfederation" where FedAE is already established. Both clients and servers are registered members of the federation. In this scenario, clients aim to manage cross-domain user accounts within the service. The standard used for account management is SS 12000:2018 (i.e., a SCIM extension).
+The following example describes a scenario within the federation "Skolfederation" where MATF is already established. Both clients and servers are registered members of the federation. In this scenario, clients aim to manage cross-domain user accounts within the service. The standard used for account management is SS 12000:2018 (i.e., a SCIM extension).
 
 ~~~ ascii-art
 +---------------------------------------------+
@@ -623,18 +623,18 @@ Example of public key pinning with curl. Line breaks are for readability only.
 ~~~
 
 
-# Deployments of the FedAE Framework
+# Deployments of the MATF Framework
 
-The FedAE framework has proven its practical value and robustness through successful deployments in several environments.
+The MATF framework has proven its practical value and robustness through successful deployments in several environments.
 
 
 ## Skolfederation Moa
 
-Skolfederation Moa [@Moa], is a federation designed to secure communication between digital educational resources and schools. FedAE is developed to meet Moa's needs and enables secure data exchange for schools, municipalities, educational platforms, and services across Sweden.
+Skolfederation Moa [@Moa], is a federation designed to secure communication between digital educational resources and schools. MATF is developed to meet Moa's needs and enables secure data exchange for schools, municipalities, educational platforms, and services across Sweden.
 
 The community plays a crucial role in this type of federation. Members are active participants, and the FO ensures the federation runs smoothly and serves their needs. Moa's success highlights the importance of collaboration, with members and the FO working together to maintain trust, security, and interoperability in the education sector.
 
-The deployment of FedAE in the Swedish education sector has provided several key insights. Maintaining an accurate registry of metadata ownership with reliable contact information is essential for troubleshooting and ensuring accountability. The deployment also demonstrated the importance of setting reasonable expiration times for metadata. Too short an expiration can hinder the ability to implement contingency plans for publishing new metadata during outages.
+The deployment of MATF in the Swedish education sector has provided several key insights. Maintaining an accurate registry of metadata ownership with reliable contact information is essential for troubleshooting and ensuring accountability. The deployment also demonstrated the importance of setting reasonable expiration times for metadata. Too short an expiration can hinder the ability to implement contingency plans for publishing new metadata during outages.
 
 Metadata validation is necessary to maintain a stable federation. While manual validation may be sufficient in the early stages of a federation, it becomes unmanageable as the federation scales. Without an automated validation process, incorrect metadata uploaded by members is likely to go undetected, leading to publication of incorrect metadata.
 
@@ -643,20 +643,20 @@ The signing key is needed to sign metadata. Under fallback scenarios, even if me
 
 ## Swedish National Agency for Education
 
-The Swedish National Agency for Education [@SkolverketFedAE] leverages FedAE within its digital national test platform to establish a robust authentication mechanism. The platform utilizes an API for client verification prior to secure data transfer to the agency's test service, ensuring the integrity and confidentiality of educational data.
+The Swedish National Agency for Education [@SkolverketMATF] leverages MATF within its digital national test platform to establish a robust authentication mechanism. The platform utilizes an API for client verification prior to secure data transfer to the agency's test service, ensuring the integrity and confidentiality of educational data.
 
 ## Sambruk's EGIL
 
-Sambruk's EGIL [@EGIL], a platform providing digital services to municipalities, has successfully integrated the FedAE framework. This deployment demonstrates the framework's adaptability to support a wide range of digital service infrastructures.
+Sambruk's EGIL [@EGIL], a platform providing digital services to municipalities, has successfully integrated the MATF framework. This deployment demonstrates the framework's adaptability to support a wide range of digital service infrastructures.
 
-These deployments highlight the effectiveness of the FedAE framework in enhancing security and interoperability within the educational sector.
+These deployments highlight the effectiveness of the MATF framework in enhancing security and interoperability within the educational sector.
 
 
 # Security Considerations
 
 ## Security Risks and Trust Management
 
-The security risks associated with the FedAE framework are confined to each individual federation. Both the federation operator and federation members share the responsibility of maintaining trust and security within the federation. Proper handling and management of metadata, as well as thorough vetting of federation members, are crucial to sustaining this trust and security. Each federation operates within a trust framework, which includes its own security policies and procedures to ensure the integrity and reliability of the federation.
+The security risks associated with the MATF framework are confined to each individual federation. Both the federation operator and federation members share the responsibility of maintaining trust and security within the federation. Proper handling and management of metadata, as well as thorough vetting of federation members, are crucial to sustaining this trust and security. Each federation operates within a trust framework, which includes its own security policies and procedures to ensure the integrity and reliability of the federation.
 
 
 ## TLS
@@ -671,12 +671,12 @@ Regularly updating the local copy of federation metadata is essential for access
 
 ## Verifying the Federation Metadata Signature
 
-Ensuring data integrity and security within the FedAE framework relies on verifying the signature of downloaded federation metadata. This verification process confirms the data's origin, ensuring it comes from the intended source and has not been altered by unauthorized parties. By establishing the authenticity of the metadata, trust is maintained in the information it contains, including valid member public key pins and issuer certificates. To achieve a robust implementation, it is crucial to consider the security aspects outlined in [@!RFC7515]. Key points include handling algorithm selection, protecting against key compromise, and ensuring the integrity of the signature process.
+Ensuring data integrity and security within the MATF framework relies on verifying the signature of downloaded federation metadata. This verification process confirms the data's origin, ensuring it comes from the intended source and has not been altered by unauthorized parties. By establishing the authenticity of the metadata, trust is maintained in the information it contains, including valid member public key pins and issuer certificates. To achieve a robust implementation, it is crucial to consider the security aspects outlined in [@!RFC7515]. Key points include handling algorithm selection, protecting against key compromise, and ensuring the integrity of the signature process.
 
 
 ## Time Synchronization
 
-Maintaining synchronized clocks across all federation members is critical for the security of the FedAE framework. Inaccurate timestamps can compromise the validity of digital signatures and certificates, hinder reliable log analysis, and potentially expose the system to time-based attacks. Therefore, all federation members MUST employ methods to ensure their system clocks are synchronized with a reliable time source.
+Maintaining synchronized clocks across all federation members is critical for the security of the MATF framework. Inaccurate timestamps can compromise the validity of digital signatures and certificates, hinder reliable log analysis, and potentially expose the system to time-based attacks. Therefore, all federation members MUST employ methods to ensure their system clocks are synchronized with a reliable time source.
 
 
 # Acknowledgements
@@ -702,9 +702,9 @@ This document has no IANA actions.
 {backmatter}
 
 
-# JSON Schema for FedAE Metadata
+# JSON Schema for MATF Metadata
 
-This JSON schema defines the format of FedAE metadata.
+This JSON schema defines the format of MATF metadata.
 
 Version: 1.0.0
 ```json
@@ -713,7 +713,7 @@ Version: 1.0.0
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://fedae.se/schema/fedae-metadata-schema.json",
-    "title": "JSON Schema for Federated Authentication of Entities",
+    "title": "JSON Schema for Mutually Authenticating TLS in the context of Federations",
     "description": "Version: 1.0.0",
     "type": "object",
     "additionalProperties": true,
@@ -923,7 +923,7 @@ Version: 1.0.0
     </front>
 </reference>
 
-<reference anchor='SkolverketFedAE' target='https://github.com/skolverket/dnp-usermanagement/blob/main/authentication-api/README.md'>
+<reference anchor='SkolverketMATF' target='https://github.com/skolverket/dnp-usermanagement/blob/main/authentication-api/README.md'>
     <front>
         <title>Authentication API for User Management</title>
         <author>
