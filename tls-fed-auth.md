@@ -34,7 +34,9 @@
 
 .# Abstract
 
-This document describes the Federated Authentication of Entities (FedAE) framework, enabling secure machine-to-machine communication within a federation. Both clients and servers perform mutual TLS authentication, establishing trust based on a centrally managed trust anchor published by the federation. Additionally, FedAE ensures unambiguous identification of entities, as only authorized members within the federation can publish metadata, further mitigating risks associated with unauthorized entities impersonating legitimate participants. This framework promotes seamless and secure interoperability across different trust domains adhering to common policies and standards within the federation.
+This informational independent submission to the RFC series describes a means to use TLS 1.3 to perform machine-to-machine mutual authentication within federations. This memo is not a standard. It does not modify the TLS protocol in any way, nor does it require changes to common TLS libraries. TLS is specified and standardized by the IETF's TLS working group.
+
+This document defines a framework that enables interoperable trust management for federated machine-to-machine communication. It introduces a centrally managed trust anchor and a controlled metadata publication process, ensuring that only authorized members are identifiable within the federation. This supports unambiguous entity identification and reduces the risk of impersonation, promoting secure and policy-aligned interaction across organizational boundaries.
 
 {mainmatter}
 
