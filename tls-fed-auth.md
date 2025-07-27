@@ -713,7 +713,8 @@ Version: 1.0.0
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://mtlsfed.se/schema/matf-metadata-schema.json",
-    "title": "JSON Schema for Mutually Authenticating TLS in the context of Federations",
+    "title": "JSON Schema for Mutually Authenticating TLS in the con\
+\text of Federations,",
     "description": "Version: 1.0.0",
     "type": "object",
     "additionalProperties": true,
