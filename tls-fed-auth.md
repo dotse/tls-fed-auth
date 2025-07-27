@@ -36,7 +36,7 @@
 
 This informational independent submission to the RFC series describes a means to use TLS 1.3 to perform machine-to-machine mutual authentication within federations. This memo is not a standard. It does not modify the TLS protocol in any way, nor does it require changes to common TLS libraries. TLS is specified and standardized by the IETF's TLS working group.
 
-This document defines a framework that enables interoperable trust management for federated machine-to-machine communication. It introduces a centrally managed trust anchor and a controlled metadata publication process, ensuring that only authorized members are identifiable within the federation. This supports unambiguous entity identification and reduces the risk of impersonation, promoting secure and policy-aligned interaction across organizational boundaries.
+The framework enables interoperable trust management for federated machine-to-machine communication. It introduces a centrally managed trust anchor and a controlled metadata publication process, ensuring that only authorized members are identifiable within the federation. These mechanisms support unambiguous entity identification and reduce the risk of impersonation, promoting secure and policy-aligned interaction across organizational boundaries.
 
 {mainmatter}
 
@@ -49,8 +49,7 @@ MATF is designed specifically for secure authentication in machine-to-machine co
 
 This work is not a product of the IETF, does not represent a standard, and has not achieved community consensus. It aims to address specific federation challenges and provide a framework for secure communication.
 
-TLS is specified and standardized by the IETF's TLS working group. For more information, see the TLS Working Group page at:
-[https://datatracker.ietf.org/wg/tls/about/](https://datatracker.ietf.org/wg/tls/about/). TLS 1.3 is defined in [@!RFC8446].
+TLS is specified by the IETF TLS Working Group. TLS 1.3 is defined in [@!RFC8446]. Additional information about the TLS Working Group is available at [https://datatracker.ietf.org/wg/tls/about/](https://datatracker.ietf.org/wg/tls/about/).
 
 
 ##  Reserved Words
@@ -135,9 +134,9 @@ To ensure the security and integrity of the MATF framework, a member vetting pro
 
 The following are non-normative references to established frameworks:
 
--   eIDAS: The eIDAS regulation establishes a framework for electronic identification and trust services within the European Union. It ensures secure and standardized electronic interactions across member states, facilitating mutual recognition of electronic IDs. Operators can refer to the eIDAS framework for guidance on robust authentication and identity verification processes. See [@eIDAS].
+-   eIDAS: The eIDAS regulation establishes a framework for electronic identification and trust services within the European Union. It ensures secure and standardized electronic interactions across member states, facilitating mutual recognition of electronic IDs. Operators can refer to the eIDAS framework for guidance on robust authentication and identity verification processes [@eIDAS].
 
--   eduGAIN: eduGAIN is an interfederation service connecting identity federations worldwide, primarily within the research and education sectors. It ensures high standards of security and interoperability, allowing institutions to collaborate seamlessly. eduGAIN's processes for vetting can serve as a useful reference. See [@eduGAIN].
+-   eduGAIN: eduGAIN is an interfederation service connecting identity federations worldwide, primarily within the research and education sectors. It ensures high standards of security and interoperability, allowing institutions to collaborate seamlessly. eduGAIN's processes for vetting, as described in [@eduGAIN], can serve as a useful reference.
 
 
 ## Metadata Authenticity
@@ -159,9 +158,9 @@ Before member metadata is added to the federation's repository, the submitted me
 
 -   Format Validation: The system checks if the submitted metadata adheres to the defined schema and format specifications.
 -   Unique Entity ID: Checks are performed to ensure that the entity_id in the submitted metadata is not already registered by another member. Each entity within the federation must have a unique identifier.
--   Unique Public Key Pins: Public key pins [@!RFC7469] are used to identify client entities within the federation metadata during the connection validation process. When a server validates a client's TLS connection, it extracts the pin from the client's TLS certificate and matches it against entries in the federation metadata. The requirements for pin uniqueness and usage are detailed in Section (#servers-clients). 
+-   Unique Public Key Pins: Public key pins [@!RFC7469] are used to identify client entities within the federation metadata during the connection validation process. When a server validates a client's TLS connection, it extracts the pin from the client's TLS certificate and matches it against entries in the federation metadata. The requirements for pin uniqueness and usage are detailed in (#servers-clients). 
 -   Certificate Verification: The issuer certificates listed in the metadata are validated to ensure that the algorithms used in the certificates are well-known and secure, and that the certificates are currently valid and have not expired
--   Tag Validation: Ensures that tags (see (#servers-clients)) in the metadata adhere to the defined tag structure, verifying both mandatory and optional tags. This process is crucial for maintaining consistency and preventing unauthorized tags within a federation.
+-   Tag Validation: Ensures that tags, as defined in (#servers-clients) in the metadata adhere to the defined tag structure, verifying both mandatory and optional tags. This process is crucial for maintaining consistency and preventing unauthorized tags within a federation.
 
 The MATF metadata repository serves as the vital foundation for establishing trust and enabling secure communication within a MATF environment. By providing a central, secure, and controlled repository for critical information, the metadata repository empowers members to confidently discover other trusted entities, and establish secure connections for seamless interaction.
 
@@ -182,7 +181,7 @@ The following outlines the procedures for keeping metadata up-to-date:
 
 -   Federation Operator Role: The federation operator plays a crucial role in maintaining data integrity within the federation. Their responsibilities include:
     -   Defining regulations for metadata management that MUST include, at a minimum but not limited to, expiration and cache time management.
-    -   Implementing mechanisms to update the published federation metadata, ensuring it adheres to the expiration time (exp, see (#metadata-signing)) and cache TTL (cache_ttl, see (#federation-metadata-claims)) specifications.
+    -   Implementing mechanisms to update the published federation metadata, ensuring it adheres to the expiration time (exp as defined in (#metadata-signing)) and cache TTL (cache_ttl as defined in (#federation-metadata-claims)) specifications.
 
 -   Member Responsibility: Members must follow the federation's metadata management regulations and refresh their local metadata store according to the defined expiration and cache regulations.
 
@@ -224,7 +223,7 @@ The use of self-signed certificates within the federation leverages public key p
 If any certificate in a certificate chain is compromised, the revocation process can be complex and slow. This complexity arises because not only the compromised certificate but potentially multiple certificates within
 the chain might need to be revoked and reissued. Public key pinning mitigates this complexity by allowing clients to explicitly trust a specific public key, thereby reducing dependency on the entire certificate chain's integrity.
 
-If a leaf certificate is compromised within a MATF federation, the revocation process involves removing the pin associated with the compromised certificate and updating the metadata with a pin from a new certificate. This eliminates the need for traditional revocation mechanisms and focuses the trust relationship on the specific, updated public key.
+If a leaf certificate is compromised within a MATF federation, the revocation process involves removing the pin associated with the compromised certificate and publishing updated metadata that includes a new pin corresponding to the replacement certificate. This approach eliminates reliance on traditional certificate revocation mechanisms and shifts the trust relationship to the specific, updated public key identified by its pin.
 
 
 ## Pin Discovery and Preloading
@@ -274,9 +273,9 @@ If bypassing standard CA validation is possible, it SHOULD be done. If not, the 
 Federation metadata is published as a JWS [@!RFC7515]. The payload contains statements
 about federation members entities.
 
-Metadata is used for authentication and service discovery. A client selects a server based on metadata claims (e.g., organization, tags). The client then use the selected server claims base_uri, pins and if needed issuers to establish a connection.
+Metadata is used for authentication and service discovery. A client selects a server based on metadata claims (e.g., organization, tags). The client then uses the selected server claims base_uri, pins and if needed issuers to establish a connection.
 
-Upon receiving a connection, a server validates the received client certificate using the client's published pins. Server MAY also check other claims such as organization and tags to determine if the connections is accepted or terminated.
+Upon receiving a connection, a server validates the received client certificate using the client's published pins. Server MAY also check other claims such as organization and tags to determine if the connection is accepted or terminated.
 
 
 ## Federation Metadata claims
@@ -293,7 +292,7 @@ This section defines the set of claims that can be included in metadata.
 
 -   cache_ttl (OPTIONAL)
 
-    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header (see (#metadata-signing)). Once expired, metadata MUST no longer be trusted. If omitted, a mechanism to refresh metadata MUST still exist to ensure the metadata remains valid.
+    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header, defined in (#metadata-signing). Once expired, metadata MUST no longer be trusted. If omitted, a mechanism to refresh metadata MUST still exist to ensure the metadata remains valid.
 
     -   Data Type: Integer
     -   Syntax: Integer representing the duration in seconds.
@@ -304,7 +303,7 @@ This section defines the set of claims that can be included in metadata.
     Contains the list of entities within the federation.
 
     -   Data Type: Array of Objects
-    -   Syntax: Each object MUST conform the entity definition (see Section (#entities)).
+    -   Syntax: Each object MUST conform to the entity definition, as specified in (#entities).
 
 
 ### Entities
@@ -346,14 +345,14 @@ Metadata contains a list of entities that may be used for communication within t
     Contains the list of servers within the entity.
 
     -    Data Type: Array of Objects
-    -    Syntax: Each object MUST conform to the server definition (see (#servers-clients)).
+    -    Syntax: Each object MUST conform to the server definition, as specified in (#servers-clients).
 
 -   clients (OPTIONAL)
 
     Contains the list of clients within the entity.
     
     -    Data Type: Array of Objects
-    -    Syntax: Each object MUST conform to the client definition (see (#servers-clients)).
+    -    Syntax: Each object MUST conform to the client definition, as specified in (#servers-clients).
 
 
 #### Servers / Clients
@@ -393,7 +392,7 @@ A list of the entity's servers and clients.
 
         -   digest (REQUIRED)
 
-            The public key of the end-entity certificate converted to a Subject Public Key Information (SPKI) fingerprint, as specified in section 2.4 of [@!RFC7469]. For clients, the digest MUST be globally unique for unambiguous identification. However, within the same entity_id object, the same digest MAY be assigned to multiple clients.
+            The public key of the end-entity certificate converted to a Subject Public Key Information (SPKI) fingerprint, as specified in Section 2.4 of [@!RFC7469]. For clients, the digest MUST be globally unique for unambiguous identification. However, within the same entity_id object, the same digest MAY be assigned to multiple clients.
 
             -   Data Type: String
             -   Syntax: SPKI fingerprint.
@@ -495,29 +494,29 @@ The following is a non-normative example of a metadata statement. Line breaks wi
 
 ## Metadata Signing
 
-Federation metadata is signed using JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. Federation metadata signatures are RECOMMENDED to be created using the algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@RFC7518]. However, to accommodate evolving cryptographic standards, alternative algorithms MAY be used, provided they meet the security requirements of the federation.
+Federation metadata is signed using JWS and published using JWS JSON Serialization according to the General JWS JSON Serialization Syntax defined in [@!RFC7515]. Federation metadata signatures are RECOMMENDED to be created using the algorithm _ECDSA using P-256 and SHA-256_ ("ES256") as defined in [@!RFC7518]. However, to accommodate evolving cryptographic standards, alternative algorithms MAY be used, provided they meet the security requirements of the federation.
 
 The following protected JWS header parameters are REQUIRED:
 
 *    `alg` (Algorithm)
     
-     Identifies the algorithm used to generate the JWS signature [@!RFC7515], section 4.1.1.
+     Identifies the algorithm used to generate the JWS signature [@!RFC7515], Section 4.1.1.
 
 *    `iat` (Issued At)
     
-     Identifies the time at which the signature was issued. Its value MUST be a number containing a NumericDate [@!RFC7519], section 4.1.6, although `iat` is typically used as a JWT claim, it is placed here in the JWS header.
+     Identifies the time at which the signature was issued. Its value MUST be a number containing a NumericDate [@!RFC7519], Section 4.1.6, although `iat` is typically used as a JWT claim, it is placed here in the JWS header.
 
 *    `exp` (Expiration Time)
     
-     Identifies the expiration time on or after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST match the value of `exp`. Its value MUST be a number containing a NumericDate [@!RFC7519], section 4.1.4, and the claim is also placed in the JWS header, consistent with this framework.
+     Identifies the expiration time on or after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST match the value of `exp`. Its value MUST be a number containing a NumericDate [@!RFC7519], Section 4.1.4, and the claim is also placed in the JWS header, consistent with this framework.
 
 *    `iss` (Issuer)
     
-     A URI uniquely identifying the issuing federation. This plays a critical role in trust establishment within the MATF framework. The `iss` claim differentiates federations, preventing ambiguity and ensuring that entities are recognized within their intended context. Verification of the `iss` claim enables recipients to determine the origin of the information and establish trust with entities within the identified federation [@!RFC7519], section 4.1.1. The `iss` claim is registered for use as a JOSE header parameter as per [@!RFC7519], section 5.3.
+     A URI uniquely identifying the issuing federation. This plays a critical role in trust establishment within the MATF framework. The `iss` claim differentiates federations, preventing ambiguity and ensuring that entities are recognized within their intended context. Verification of the `iss` claim enables recipients to determine the origin of the information and establish trust with entities within the identified federation [@!RFC7519], Section 4.1.1. The `iss` claim is registered for use as a JOSE header parameter as per [@!RFC7519], Section 5.3.
 
 *    `kid` (Key Identifier)
     
-     Identifies the signing key in the key set used to sign the JWS [@!RFC7515], section 4.1.4.
+     Identifies the signing key in the key set used to sign the JWS [@!RFC7515], Section 4.1.4.
 
 Note: Although `iss` is registered for use in JOSE headers, `iat` and `exp` are not. However, this specification explicitly places these values in the protected JWS header to bind metadata validity information directly to the signature. Implementers should be aware of this usage and process these parameters accordingly.
 
@@ -586,7 +585,7 @@ When the client wants to connect to a remote server (identified by an entity ide
 
 1. Find possible server candidates by filtering the remote entity's list of servers based on tags.
 2. Connect to the server URI. Include the entity's list of certificate issuers in the TLS clients list of trusted CAs, or trust the listed pins explicitly.
-3. If pinning was not used, validate the received server certificate using the entity's published pins.
+3. If pinning is not used during the TLS handshake, the client MUST perform a post-connection validation against the entity's published pins.
 4. Commence transactions.
 
 
@@ -661,7 +660,7 @@ The security risks associated with the MATF framework are confined to each indiv
 
 ## TLS
 
-The security considerations for TLS 1.3 [@!RFC8446] are detailed in Section 10, along with Appendices C, D, and E of RFC 8446.
+The security considerations for TLS 1.3 are detailed in Section 10 and Appendices C, D, and E of [@!RFC8446].
 
 
 ## Federation Metadata Updates
@@ -671,7 +670,7 @@ Regularly updating the local copy of federation metadata is essential for access
 
 ## Verifying the Federation Metadata Signature
 
-Ensuring data integrity and security within the MATF framework relies on verifying the signature of downloaded federation metadata. This verification process confirms the data's origin, ensuring it comes from the intended source and has not been altered by unauthorized parties. By establishing the authenticity of the metadata, trust is maintained in the information it contains, including valid member public key pins and issuer certificates. To achieve a robust implementation, it is crucial to consider the security aspects outlined in [@!RFC7515]. Key points include handling algorithm selection, protecting against key compromise, and ensuring the integrity of the signature process.
+Ensuring data integrity and security within the MATF framework relies on verifying the signature of downloaded federation metadata. This verification process confirms the data's origin, ensuring it comes from the intended source and has not been altered by unauthorized parties. By establishing the authenticity of the metadata, trust is maintained in the information it contains, including valid member public key pins and issuer certificates. To achieve a robust implementation, it is crucial to consider the security aspects outlined in [@!RFC7515], which describes security considerations related to algorithm selection, key compromise, and signature integrity.
 
 
 ## Time Synchronization
@@ -683,7 +682,7 @@ Maintaining synchronized clocks across all federation members is critical for th
 
 This project was funded through the NGI0 PET Fund, a fund established by NLnet with financial support from the European Commission's Next Generation Internet programme, under the aegis of DG Communications Networks, Content and Technology under grant agreement No 825310.
 
-The authors would like to thank the following people for the detailed review and suggestions:
+The authors thank the following people for the detailed review and suggestions:
 
 *   Rasmus Larsson
 *   Mats Dufberg
@@ -704,7 +703,7 @@ This document has no IANA actions.
 
 # JSON Schema for MATF Metadata
 
-This JSON schema defines the format of MATF metadata.
+The following JSON Schema defines the structure of MATF metadata. It conforms to draft 2020-12 of the JSON Schema standard.
 
 Version: 1.0.0
 ```json
