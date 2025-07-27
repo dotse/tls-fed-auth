@@ -11,7 +11,7 @@
     [seriesInfo]
     status = "informational"
     name = "Internet-Draft"
-    value = "draft-halen-matf-01"
+    value = "draft-halen-matf-00"
     stream = "independent"
 
     [[author]]
