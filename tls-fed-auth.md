@@ -15,14 +15,6 @@
     stream = "independent"
 
     [[author]]
-    initials="J."
-    surname="Schlyter"
-    fullname="Jakob Schlyter"
-    organization="Kirei AB"
-        [author.address]
-        email="jakob@kirei.se"
-
-    [[author]]
     initials="S."
     surname="Halén"
     fullname="Stefan Halén"
@@ -30,6 +22,14 @@
         [author.address]
         email="stefan.halen@internetstiftelsen.se"
 
+    [[author]]
+    initials="J."
+    surname="Schlyter"
+    fullname="Jakob Schlyter"
+    organization="Kirei AB"
+        [author.address]
+        email="jakob@kirei.se"
+        
 %%%
 
 .# Abstract
