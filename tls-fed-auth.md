@@ -6,12 +6,12 @@
     ipr = "trust200902"
     submissiontype = "independent"
     area = "Internet"
-    date = 2025-07-30T00:00:00Z
+    date = 2025-08-26T00:00:00Z
 
     [seriesInfo]
     status = "informational"
     name = "Internet-Draft"
-    value = "draft-halen-fedae-02"
+    value = "draft-halen-fedae-03"
     stream = "independent"
 
     [[author]]
@@ -278,9 +278,33 @@ Metadata is used for authentication and service discovery. A client selects a se
 Upon receiving a connection, a server validates the received client certificate using the client's published pins. Server MAY also check other claims such as organization and tags to determine if the connection is accepted or terminated.
 
 
-## Federation Metadata claims
+## Federation Metadata Claims
 
 This section defines the set of claims that can be included in metadata.
+
+-   iat (REQUIRED)
+  
+    Identifies the time at which the federation metadata was issued.
+
+    - Data Type: Integer
+    - Syntax: NumericDate as defined in [@!RFC7519], Section 4.1.6
+    - Example: `1755514949`
+
+-   exp (REQUIRED)
+  
+    Identifies the expiration time on or after which the federation metadata is no longer valid. Once the exp time has passed, the metadata MUST be rejected regardless of cache state.
+
+    - Data Type: Integer
+    - Syntax: NumericDate as defined in [@!RFC7519], Section 4.1.4
+    - Example: `1756119888`
+
+-   iss (REQUIRED)
+    
+    A URI uniquely identifying the issuing federation. This value differentiates federations, prevents ambiguity, and ensures that entities are recognized within their intended context. Verification of the iss claim enables recipients to determine the origin of the information and to establish trust with entities within the identified federation.
+
+    - Data Type: String
+    - Syntax: URI, as defined in [@!RFC7519], Section 4.1.1
+    - Example: `"https://federation.example.org"`
 
 -   version (REQUIRED)
     
@@ -288,17 +312,17 @@ This section defines the set of claims that can be included in metadata.
 
     -   Data Type: String
     -   Syntax: Must adhere to Semantic Versioning (https://semver.org).
-    -   Example: `1.0.0`
+    -   Example: `"1.0.0"`
 
 -   cache_ttl (OPTIONAL)
 
-    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS header, defined in (#metadata-signing). Once expired, metadata MUST no longer be trusted. If omitted, a mechanism to refresh metadata MUST still exist to ensure the metadata remains valid.
+    Specifies the duration in seconds for caching downloaded federation metadata, allowing for independent caching outside of specific HTTP configurations, particularly useful when the communication mechanism isn't HTTP-based. In the event of a metadata publication outage, members can rely on cached metadata until it expires, as indicated by the exp claim in the JWS payload, defined in (#metadata-signing). Once expired, metadata MUST no longer be trusted. If omitted, a mechanism to refresh metadata MUST still exist to ensure the metadata remains valid.
 
     -   Data Type: Integer
     -   Syntax: Integer representing the duration in seconds.
     -   Example: `3600`
 
--   Entities (REQUIRED)
+-   entities (REQUIRED)
 
     Contains the list of entities within the federation.
 
@@ -442,6 +466,9 @@ The following is a non-normative example of a metadata statement. Line breaks wi
 
 ~~~ json
 {
+  "exp": 1756988684,
+  "iat": 1756124684,
+  "iss": "https://prod.kontosynk.se",
   "version": "1.0.0",
   "cache_ttl": 3600,
   "entities": [{
@@ -502,23 +529,9 @@ The following protected JWS header parameters are REQUIRED:
     
      Identifies the algorithm used to generate the JWS signature [@!RFC7515], Section 4.1.1.
 
-*    `iat` (Issued At)
-    
-     Identifies the time at which the signature was issued. Its value MUST be a number containing a NumericDate [@!RFC7519], Section 4.1.6, although `iat` is typically used as a JWT claim, it is placed here in the JWS header.
-
-*    `exp` (Expiration Time)
-    
-     Identifies the expiration time on or after which the signature and federation metadata are no longer valid. The expiration time of the federation metadata MUST match the value of `exp`. Its value MUST be a number containing a NumericDate [@!RFC7519], Section 4.1.4, and the claim is also placed in the JWS header, consistent with this framework.
-
-*    `iss` (Issuer)
-    
-     A URI uniquely identifying the issuing federation. This plays a critical role in trust establishment within the MATF framework. The `iss` claim differentiates federations, preventing ambiguity and ensuring that entities are recognized within their intended context. Verification of the `iss` claim enables recipients to determine the origin of the information and establish trust with entities within the identified federation [@!RFC7519], Section 4.1.1. The `iss` claim is registered for use as a JOSE header parameter as per [@!RFC7519], Section 5.3.
-
 *    `kid` (Key Identifier)
     
      Identifies the signing key in the key set used to sign the JWS [@!RFC7515], Section 4.1.4.
-
-Note: Although `iss` is registered for use in JOSE headers, `iat` and `exp` are not. However, this specification explicitly places these values in the protected JWS header to bind metadata validity information directly to the signature. Implementers should be aware of this usage and process these parameters accordingly.
 
 
 ## Example Signature Protected Header
@@ -528,9 +541,6 @@ The following is a non-normative example of a signature protected header.
 ~~~ json
 {
     "alg": "ES256",
-    "exp": 1707739718,
-    "iat": 1706875718,
-    "iss": "https://matf.example.com",
     "kid": "c2fb760e-f4b6-4f7e-b17a-7115d2826d51"
 }
 ~~~
@@ -718,10 +728,44 @@ Version: 1.0.0
     "type": "object",
     "additionalProperties": true,
     "required": [
+        "iat",
+        "exp",
+        "iss",
         "version",
         "entities"
     ],
     "properties": {
+        "iat": {
+            "title": "Issued at",
+            "description": "Time at which the metadata was issued (U\
+\NIX timestamp)",
+            "type": "integer",
+            "minimum": 0,
+            "examples": [
+                1755514949
+            ]
+        },
+        "exp": {
+            "title": "Expiration time",
+            "description": "Time at which the metadata expires (UNIX\
+\ timestamp)",
+            "type": "integer",
+            "minimum": 0,
+            "examples": [
+                1756119888
+            ]
+        },
+        "iss": {
+            "title": "The federation issuing the metadata",
+            "description": "A URI that uniquely identifies the feder\
+\ation that issued the metadata",
+            "type": "string",
+            "format": "uri",
+            "minLength": 1,
+            "examples": [
+                "https://example.com/federation"
+            ]
+        },
         "version": {
             "title": "Metadata schema version",
             "description": "Schema version follows semantic versioni\
@@ -734,8 +778,8 @@ Version: 1.0.0
         },
         "cache_ttl": {
             "title": "Metadata cache TTL",
-            "description": "How long (in seconds) to cache metadata.\
-\ Effective maximum TTL is the minimum of HTTP Expire and TTL",
+            "description": "How long in seconds to cache metadata. T\
+\he effective maximum is bounded by the exp claim.",
             "type": "integer",
             "minimum": 0,
             "examples": [
@@ -744,6 +788,7 @@ Version: 1.0.0
         },
         "entities": {
             "type": "array",
+            "minItems": 1,
             "items": {
                 "$ref": "#/$defs/entity"
             }
@@ -784,6 +829,7 @@ Version: 1.0.0
 \r each issuer, the issuer's root CA certificate is included in the \
 \x509certificate property (PEM-encoded).",
                     "type": "array",
+                    "minItems": 1,
                     "items": {
                         "$ref": "#/$defs/cert_issuers"
                     }
@@ -840,6 +886,7 @@ Version: 1.0.0
                 "pins": {
                     "title": "Certificate pin set",
                     "type": "array",
+                    "minItems": 1,
                     "items": {
                         "$ref": "#/$defs/pin_directive"
                     }
@@ -850,10 +897,16 @@ Version: 1.0.0
             "title": "Certificate issuers",
             "type": "object",
             "additionalProperties": false,
+            "required": [
+                "x509certificate"
+            ],
             "properties": {
                 "x509certificate": {
                     "title": "X.509 Certificate (PEM)",
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "^-----BEGIN CERTIFICATE-----(?:\\r?\\
+\\n)(?:[A-Za-z0-9+/=]{64}\\r?\\n)*(?:[A-Za-z0-9+/=]{1,64}\\r?\\n)---\
+\--END CERTIFICATE-----(?:\\r?\\n)?$"
                 }
             }
         },
@@ -879,8 +932,7 @@ Version: 1.0.0
                 "digest": {
                     "title": "Directive value (Base64)",
                     "type": "string",
-                    "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+\
-\/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+                    "pattern": "^[A-Za-z0-9+/]{43}=$",
                     "examples": [
                         "HiMkrb4phPSP+OvGqmZd6sGvy7AUn4k3XEe8OMBrzt8\
 \="
