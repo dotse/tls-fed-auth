@@ -466,9 +466,9 @@ The following is a non-normative example of a metadata statement. Line breaks wi
 
 ~~~ json
 {
-  "exp": 1756988684,
-  "iat": 1756124684,
-  "iss": "https://prod.kontosynk.se",
+  "exp": 1755514949,
+  "iat": 1756119888,
+  "iss": "https://federation.example.org",
   "version": "1.0.0",
   "cache_ttl": 3600,
   "entities": [{
